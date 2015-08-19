@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>Pocket Scrum</title>
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+
+<body>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row tk-header-row">
+            <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">menu</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left">
+                <a class="mdl-menu__item" href="/#/userstories">User Stories</a>
+                <a class="mdl-menu__item" href="/#/pictures">Pictures</a>
+            </ul>
+            <span class="mdl-layout-title tk-app-title">Pocket Scrum</span>
+
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-menu__item" href="/#/userstories">User Stories</a>
+                <a class="mdl-menu__item" href="/#/pictures">Pictures</a>
+            </nav>
+        </div>
+    </header>
+    <main class="mdl-layout__content">
+        <ng-view></ng-view>
+    </main>
+</div>
+<!-- Angular -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+
+<!-- this app -->
+<script src="./app/app-compiled.js"></script>
+<script src="./app/picsList/picsListController-compiled.js"></script>
+<script src="./app/stores/dispatcher-compiled.js"></script>
+<script src="./app/stores/picsStore-compiled.js"></script>
+<script src="./app/stores/picsActions-compiled.js"></script>
+
+</body>
+</html>
