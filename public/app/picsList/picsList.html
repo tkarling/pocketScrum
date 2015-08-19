@@ -7,8 +7,7 @@
 
 <table>
     <tr ng-repeat="pic in pictures.pics track by $id(pic)">
-        <td>{{pic.pic}}</td>
-        <td>{{pic.qty}}</td>
+        <td>{{pic.thumbnail}}</td>
         <td>
             <button ng-click="pictures.removePic(pic)">x</button>
         </td>

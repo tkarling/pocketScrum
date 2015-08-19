@@ -44,11 +44,13 @@ angular.module("myApp").service("picsActions", picsActions);
 var PicsStore = (function (_EventEmitter) {
     _inherits(PicsStore, _EventEmitter);
 
-    function PicsStore() {
+    function PicsStore(picsService) {
         _classCallCheck(this, PicsStore);
 
         _get(Object.getPrototypeOf(PicsStore.prototype), "constructor", this).call(this);
+        this.picsService = picsService;
         this.pics = [];
+        this.emitChange();
     }
 
     _createClass(PicsStore, [{
@@ -70,15 +72,19 @@ var PicsStore = (function (_EventEmitter) {
     }, {
         key: "emitChange",
         value: function emitChange() {
-            this.emit("change");
+            var self = this;
+            this.picsService.getThumbnails().then(function (thumbnails) {
+                self.pics = thumbnails;
+                self.emit("change");
+            });
         }
     }]);
 
     return PicsStore;
 })(EventEmitter);
 
-angular.module("myApp").service("picsStore", function (dispatcher) {
-    var picsStore = new PicsStore();
+angular.module("myApp").service("picsStore", function (dispatcher, picsService) {
+    var picsStore = new PicsStore(picsService);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

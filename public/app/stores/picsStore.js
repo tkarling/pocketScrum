@@ -26,9 +26,11 @@ angular.module("myApp").service("picsActions", picsActions);
 
 
 class PicsStore extends EventEmitter {
-    constructor() {
+    constructor(picsService) {
         super();
+        this.picsService = picsService;
         this.pics = [];
+        this.emitChange();
     }
 
     getPics() {
@@ -45,12 +47,16 @@ class PicsStore extends EventEmitter {
     }
 
     emitChange() {
-        this.emit("change");
+        var self = this;
+        this.picsService.getThumbnails().then(function(thumbnails) {
+            self.pics = thumbnails;
+            self.emit("change");
+        });
     }
 }
 
-angular.module("myApp").service("picsStore", function (dispatcher) {
-    var picsStore = new PicsStore();
+angular.module("myApp").service("picsStore", function (dispatcher, picsService) {
+    var picsStore = new PicsStore(picsService);
 
     dispatcher.addListener(function (action) {
         switch(action.actionType){
