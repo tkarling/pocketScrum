@@ -3,21 +3,26 @@
 var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
 
-angular.module("myApp").service("picsActions", function (dispatcher) {
-    this.addPic = function(item) {
+class picsActions {
+    constructor() {
+    }
+
+    addPic(item) {
         dispatcher.emit({
             actionType: ADD_PIC,
             item: item
         });
-    };
+    }
 
-    this.removePic = function(item) {
+    removePic(item) {
         dispatcher.emit({
             actionType: REMOVE_PIC,
             item: item
         });
-    };
-});
+    }
+}
+angular.module("myApp").service("picsActions", picsActions);
+
 
 class PicsStore extends EventEmitter {
     constructor() {
