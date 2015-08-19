@@ -4,18 +4,19 @@ var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
 
 class picsActions {
-    constructor() {
+    constructor(dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     addPic(item) {
-        dispatcher.emit({
+        this.dispatcher.emit({
             actionType: ADD_PIC,
             item: item
         });
     }
 
     removePic(item) {
-        dispatcher.emit({
+        this.dispatcher.emit({
             actionType: REMOVE_PIC,
             item: item
         });

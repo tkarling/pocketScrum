@@ -12,14 +12,16 @@ var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
 
 var picsActions = (function () {
-    function picsActions() {
+    function picsActions(dispatcher) {
         _classCallCheck(this, picsActions);
+
+        this.dispatcher = dispatcher;
     }
 
     _createClass(picsActions, [{
         key: "addPic",
         value: function addPic(item) {
-            dispatcher.emit({
+            this.dispatcher.emit({
                 actionType: ADD_PIC,
                 item: item
             });
@@ -27,7 +29,7 @@ var picsActions = (function () {
     }, {
         key: "removePic",
         value: function removePic(item) {
-            dispatcher.emit({
+            this.dispatcher.emit({
                 actionType: REMOVE_PIC,
                 item: item
             });

@@ -3,3 +3,12 @@
 .idea/*.xml
 .idea/*/*.xml
 
+node_modules/*
+
+server-compiled.js
+server-compiled.js.map
+*/*-compiled.js
+*/*.map
+
+
+
