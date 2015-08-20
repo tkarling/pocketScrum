@@ -1,3 +1,26 @@
+<!--<section>-->
+    <!--<div style="text-align: center;">-->
+        <!--<button class="btn btn-default" ng-file-select ng-file-change="upload($files)" ng-multiple="multiple">-->
+            <!--Upload Image-->
+        <!--</button>-->
+        <!--<div style="color:red;" ng-if="pictures.user.uploadError">{{pictures.user.uploadError}}</div>-->
+    <!--</div>-->
+<!--</section>-->
+
+<legend>Upload on file select</legend>
+<button type="file" ngf-select="pictures.uploadFiles($file)"
+        accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+    Select File</button>
+<br>
+File:
+<div style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+      <span class="progress" ng-show="pictures.f.progress >= 0">
+          <div style="width:{{pictures.f.progress}}%"
+               ng-bind="pictures.f.progress + '%'"></div>
+      </span>
+</div>
+{{pictures.errorMsg}}
+
 <div>
 <h4>Pics</h4>
 <form ng-submit="pictures.addPic(pictures.newPic)">

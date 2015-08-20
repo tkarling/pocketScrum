@@ -1,9 +1,8 @@
 
 .idea/*
-.idea/*.xml
-.idea/*/*.xml
 
 node_modules/*
+bower_components/*
 
 server-compiled.js
 server-compiled.js.map
@@ -11,4 +10,5 @@ server-compiled.js.map
 */*.map
 
 
-
+public/bower_components/*
+upload/*
