@@ -1,9 +1,9 @@
 "use strict";
 
 class picsService {
-    constructor($http) {
+    constructor($http, MY_SERVER) {
         console.log("init picsService");
-        this.url = "http://localhost:3039/api/pocketScrum/thumbnail";
+        this.url = MY_SERVER.url + "/thumbnail";
         this.$http = $http;
     }
 

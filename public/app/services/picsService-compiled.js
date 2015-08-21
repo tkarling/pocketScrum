@@ -5,11 +5,11 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var picsService = (function () {
-    function picsService($http) {
+    function picsService($http, MY_SERVER) {
         _classCallCheck(this, picsService);
 
         console.log("init picsService");
-        this.url = "http://localhost:3039/api/pocketScrum/thumbnail";
+        this.url = MY_SERVER.url + "/thumbnail";
         this.$http = $http;
     }
 

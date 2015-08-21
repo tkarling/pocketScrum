@@ -5,9 +5,10 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PicsListController = (function () {
-    function PicsListController(picsStore, picsActions, Upload, $timeout) {
+    function PicsListController(MY_SERVER, picsStore, picsActions, Upload, $timeout) {
         _classCallCheck(this, PicsListController);
 
+        this.url = MY_SERVER.url;
         this.picsStore = picsStore;
         this.picsActions = picsActions;
         this.Upload = Upload;
@@ -18,10 +19,6 @@ var PicsListController = (function () {
         picsStore.addListener(function () {
             self.resetPics();
         });
-
-        //this.$watch('files', function() {
-        //    this.upload(this.files);
-        //});
     }
 
     _createClass(PicsListController, [{
@@ -47,7 +44,7 @@ var PicsListController = (function () {
             console.log("file", file);
             if (file && !file.$error) {
                 file.upload = this.Upload.upload({
-                    url: 'http://localhost:3039/api/pocketScrum/uploads',
+                    url: this.url + "/uploads",
                     file: file
                 });
 
@@ -56,6 +53,7 @@ var PicsListController = (function () {
                     self.$timeout(function () {
                         file.result = response.data;
                         console.log("result", file.result);
+                        self.resultUrl = self.url + "/designpic/?id=" + file.result;
                     });
                 }, function (response) {
                     if (response.status > 0) self.errorMsg = response.status + ': ' + response.data;
@@ -66,36 +64,6 @@ var PicsListController = (function () {
                 });
             }
         }
-
-        //upload(files) {
-        //    var thisUser = "moi";
-        //    if (files && files.length) {
-        //        var file = files[0];
-        //        Upload.upload({
-        //            url: 'http://localhost:3039',
-        //            fields: {
-        //                'username': thisUser
-        //            },
-        //            file: file
-        //        }).progress(function(evt) {
-        //            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-        //            console.log('progress: ' + progressPercentage + '% ' +
-        //                evt.config.file.name);
-        //        }).success(function(data, status, headers, config) {
-        //            this.image = data;
-        //            if (this.image.uploadError) {
-        //                this.user.uploadError = this.image.uploadError;
-        //                console.log('error on hand');
-        //            } else {
-        //                this.user.uploadError = '';
-        //                //UserImage.saveUserImage(thisUser, $scope.image.path, function(data) {
-        //                //    $scope.loadUserImage(data.username);
-        //                //});
-        //            }
-        //        });
-        //    }
-        //}
-
     }]);
 
     return PicsListController;

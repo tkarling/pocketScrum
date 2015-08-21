@@ -1,39 +1,41 @@
-<!--<section>-->
-    <!--<div style="text-align: center;">-->
-        <!--<button class="btn btn-default" ng-file-select ng-file-change="upload($files)" ng-multiple="multiple">-->
-            <!--Upload Image-->
-        <!--</button>-->
-        <!--<div style="color:red;" ng-if="pictures.user.uploadError">{{pictures.user.uploadError}}</div>-->
-    <!--</div>-->
-<!--</section>-->
-
-<legend>Upload on file select</legend>
-<button type="file" ngf-select="pictures.uploadFiles($file)"
-        accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-    Select File</button>
-<br>
-File:
-<div style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+<style>
+    img {
+        max-height: 30%;
+        max-width: 90%;
+        margin: 0px auto;
+    }
+</style>
+<div>
+    <legend>Upload on file select</legend>
+    <button type="file" ngf-select="pictures.uploadFiles($file)"
+            accept="image/*" ngf-max-height="1000" ngf-max-size="4MB">
+        Select File
+    </button>
+    <br>
+    File:
+    <div style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
       <span class="progress" ng-show="pictures.f.progress >= 0">
           <div style="width:{{pictures.f.progress}}%"
                ng-bind="pictures.f.progress + '%'"></div>
       </span>
+    </div>
+    {{pictures.errorMsg}}
+    <img ng-src="{{pictures.resultUrl}}"/>
 </div>
-{{pictures.errorMsg}}
 
 <div>
-<h4>Pics</h4>
-<form ng-submit="pictures.addPic(pictures.newPic)">
-    <input type="text" ng-model="pictures.newPic">
-    <button type="submit">Add</button>
-</form>
+    <h4>Pics</h4>
+    <form ng-submit="pictures.addPic(pictures.newPic)">
+        <input type="text" ng-model="pictures.newPic">
+        <button type="submit">Add</button>
+    </form>
 
-<table>
-    <tr ng-repeat="pic in pictures.pics track by $id(pic)">
-        <td>{{pic.thumbnail}}</td>
-        <td>
-            <button ng-click="pictures.removePic(pic)">x</button>
-        </td>
-    </tr>
-</table>
+    <table>
+        <tr ng-repeat="pic in pictures.pics track by $id(pic)">
+            <td>{{pic.thumbnail}}</td>
+            <td>
+                <button ng-click="pictures.removePic(pic)">x</button>
+            </td>
+        </tr>
+    </table>
 </div>

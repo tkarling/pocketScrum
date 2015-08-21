@@ -1,7 +1,8 @@
 "use strict";
 
 class PicsListController {
-    constructor(picsStore, picsActions, Upload, $timeout) {
+    constructor(MY_SERVER, picsStore, picsActions, Upload, $timeout) {
+        this.url = MY_SERVER.url;
         this.picsStore = picsStore;
         this.picsActions = picsActions;
         this.Upload = Upload;
@@ -13,9 +14,6 @@ class PicsListController {
             self.resetPics();
         });
 
-        //this.$watch('files', function() {
-        //    this.upload(this.files);
-        //});
     }
 
     resetPics() {
@@ -36,7 +34,7 @@ class PicsListController {
         console.log("file", file);
         if (file && !file.$error) {
             file.upload = this.Upload.upload({
-                url: 'http://localhost:3039/api/pocketScrum/uploads',
+                url: this.url + "/uploads",
                 file: file
             });
 
@@ -44,7 +42,8 @@ class PicsListController {
             file.upload.then(function (response) {
                 self.$timeout(function () {
                     file.result = response.data;
-                    console.log("result" file.result);
+                    console.log("result", file.result);
+                    self.resultUrl = self.url + "/designpic/?id=" + file.result;
                 });
             }, function (response) {
                 if (response.status > 0)
@@ -57,34 +56,6 @@ class PicsListController {
             });
         }
     }
-    //upload(files) {
-    //    var thisUser = "moi";
-    //    if (files && files.length) {
-    //        var file = files[0];
-    //        Upload.upload({
-    //            url: 'http://localhost:3039',
-    //            fields: {
-    //                'username': thisUser
-    //            },
-    //            file: file
-    //        }).progress(function(evt) {
-    //            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-    //            console.log('progress: ' + progressPercentage + '% ' +
-    //                evt.config.file.name);
-    //        }).success(function(data, status, headers, config) {
-    //            this.image = data;
-    //            if (this.image.uploadError) {
-    //                this.user.uploadError = this.image.uploadError;
-    //                console.log('error on hand');
-    //            } else {
-    //                this.user.uploadError = '';
-    //                //UserImage.saveUserImage(thisUser, $scope.image.path, function(data) {
-    //                //    $scope.loadUserImage(data.username);
-    //                //});
-    //            }
-    //        });
-    //    }
-    //}
 
 }
 
