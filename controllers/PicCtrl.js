@@ -1,5 +1,11 @@
 var fs = require('fs');
+var lwip = require('lwip');
 var Pic = require('../models/Pic');
+
+var getImageType = function(mimetype) {
+    return mimetype.substring(6,mimetype.length);
+}
+
 
 module.exports = {
 
@@ -16,11 +22,23 @@ module.exports = {
             newPic.img.name = imgName;
             newPic.img.contentType = mimetype;
             newPic.save(function (err, result) {
-                fs.unlink(tmp_path, function (uerr) {
-                    if (uerr) console.log("error deleting tmp file", uerr);
+                console.log("newPic.save", result);
+                lwip.open(tmp_path, getImageType(mimetype), function(err, image) {
+                    console.log("lwip.open", image);
+                    if (err) console.log("lwip.open error", err);
+                    image.resize(100, 100, function (err, image) {
+                        console.log("image.scale", image);
+                        if (err) console.log("image.scale error", err);
+                        image.writeFile('./upload/output.jpg', function (err) {
+                            console.log("image.writeFile");
+                            //fs.unlink(tmp_path, function (uerr) {
+                            //    if (uerr) console.log("error deleting tmp file", uerr);
+                            //});
+                            if (err) return res.status(500).send(err);
+                            else res.send(result._id);
+                        });
+                    });
                 });
-                if (err) return res.status(500).send(err);
-                else res.send(result._id);
             });
         });
 
