@@ -5,3 +5,13 @@
 .tk-app-title {
     padding-left: 4px;
 }
+
+html, body {
+    width: 100%;
+}
+
+.ps-page-content {
+    margin: auto;
+    padding: 2%;
+    max-width: 800px;
+}

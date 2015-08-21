@@ -38,8 +38,15 @@ var PicsListController = (function () {
             this.picsActions.removePic(pic);
         }
     }, {
-        key: "uploadFiles",
-        value: function uploadFiles(file) {
+        key: "resetImage",
+        value: function resetImage() {
+            this.f = undefined;
+            this.resultUrl = "";
+            console.log("resetImage");
+        }
+    }, {
+        key: "uploadFile",
+        value: function uploadFile(file) {
             this.f = file;
             console.log("file", file);
             if (file && !file.$error) {

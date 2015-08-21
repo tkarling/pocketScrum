@@ -29,7 +29,13 @@ class PicsListController {
         this.picsActions.removePic(pic);
     }
 
-    uploadFiles(file) {
+    resetImage () {
+        this.f = undefined;
+        this.resultUrl = "";
+        console.log("resetImage");
+    }
+
+    uploadFile(file) {
         this.f = file;
         console.log("file", file);
         if (file && !file.$error) {
