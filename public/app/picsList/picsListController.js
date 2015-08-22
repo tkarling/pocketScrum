@@ -9,23 +9,15 @@ class PicsListController {
         this.$timeout = $timeout;
         this.resetPics();
 
+        this.picsBaseUrl = this.url + "/designpic";
+        this.thumbnailUrl = this.url + "/thumbnail/?id=";
+        this.fullPicUrl = this.url + "/fullpic/?id=";
+
         var self = this;
         picsStore.addListener(function () {
             self.resetPics();
         });
 
-    }
-
-    getPicsBaseUrl() {
-        return this.url + "/designpic";
-    }
-
-    getThumbnailUrl(picId) {
-        return this.url + "/thumbnail/?id=" + picId;
-    }
-
-    getFullPicUrl(picId) {
-        return this.url + "/fullpic/?id=" + picId;
     }
 
     resetPics() {
@@ -41,18 +33,13 @@ class PicsListController {
         this.picsActions.removePic(pic);
     }
 
-    resetImage () {
-        this.f = undefined;
-        this.addedPicUrl = "";
-        console.log("resetImage");
-    }
-
     uploadFile(file) {
+        this.addedPicUrl = "";
         this.f = file;
         console.log("file", file);
         if (file && !file.$error) {
             file.upload = this.Upload.upload({
-                url: this.getPicsBaseUrl(),
+                url: this.picsBaseUrl,
                 file: file
             });
 
@@ -61,8 +48,8 @@ class PicsListController {
                 self.$timeout(function () {
                     file.result = response.data;
                     console.log("result", file.result);
-                    self.addedThumbnailUrl = self.getThumbnailUrl(file.result);
-                    self.addedPicUrl = self.getFullPicUrl(file.result);
+                    self.addedPicUrl = self.fullPicUrl + file.result;
+                    self.f = undefined;
                 });
             }, function (response) {
                 if (response.status > 0)

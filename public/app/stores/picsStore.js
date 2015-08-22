@@ -48,8 +48,8 @@ class PicsStore extends EventEmitter {
 
     emitChange() {
         var self = this;
-        this.picsService.getThumbnails().then(function(thumbnails) {
-            self.pics = thumbnails;
+        this.picsService.getPicDatas().then(function(picDatas) {
+            self.pics = picDatas;
             self.emit("change");
         });
     }

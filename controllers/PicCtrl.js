@@ -32,12 +32,18 @@ module.exports = {
                     scaledImage.toBuffer(imgType, function(err, buffer){
                         if (err) console.log("toBuffer error", err);
                         newPic.thumbnail = createPicImage(buffer, thumbnailName, mimetype);
-                        newPic.save(function (err, result) {
+                        newPic.save(function (perr, picsResult) {
                             fs.unlink(tmp_path, function (uerr) {
                                 if (uerr) console.log("error deleting tmp file", uerr);
                             });
-                            if (err) return res.status(500).send(err);
-                            else res.send(result._id);
+                            if (perr) return res.status(500).send(perr);
+
+                            var newPicData = new PicData;
+                            newPicData.picId = picsResult._id;
+                            newPicData.save(function(derr, dataResult) {
+                                if (derr) return res.status(500).send(derr);
+                                else res.send(picsResult._id);
+                            });
                         });
                     });
                 });
@@ -57,7 +63,7 @@ module.exports = {
         });
     },
 
-    read: function (req, res) {
+    read: function (req, res, next) {
         Pic.findById(req.query.id, function (err, doc) {
             if (err) return next(err);
             res.contentType(doc.img.contentType);
@@ -65,7 +71,7 @@ module.exports = {
         });
     },
 
-    readThumbnail: function (req, res) {
+    readThumbnail: function (req, res, next) {
         Pic.findById(req.query.id, function (err, doc) {
             //console.log("readThumbnail", doc);
             if (err) return next(err);

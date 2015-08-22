@@ -1,8 +1,12 @@
 <style>
-    img {
+    .ps-detailled-img {
         max-height: 30%;
         max-width: 90%;
         margin: 0px auto;
+    }
+
+    .ps-thumbnail-img {
+        margin: 1%;
     }
 
     .ps-add-button-container {
@@ -10,43 +14,40 @@
     }
 </style>
 <div class="ps-page-content">
-    <div class="ps-add-button-container">
+    <div class="ps-page-content ps-add-button-container">
         <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored ec-add-button"
                 type="file" ngf-select="pictures.uploadFile($file)"
-                accept="image/*" ngf-max-height="1000" ngf-max-size="4MB" ng-click="pictures.resetImage()">
+                accept="image/*"  ngf-max-size="4MB">
+            <!--ngf-max-height="1000"-->
             <i class="material-icons">add</i>
         </button>
     </div>
-    <div ng-if="pictures.f">
-        <br>
+    <div ng-if="pictures.f || pictures.addedPicUrl">
+        <div>
         File:
-        <div style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+        <span style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
       <span class="progress" ng-show="pictures.f.progress >= 0">
-          <div style="width:{{pictures.f.progress}}%"
-               ng-bind="pictures.f.progress + '%'"></div>
+          <span style="width:{{pictures.f.progress}}%"
+               ng-bind="pictures.f.progress + '%'"></span>
       </span>
+        </span>
         </div>
         {{pictures.errorMsg}}
-        <img ng-src="{{pictures.addedThumbnailUrl}}"/>
-        <img ng-src="{{pictures.addedPicUrl}}"/>
+        <img class="ps-detailled-img" ng-src="{{pictures.addedPicUrl}}"/>
     </div>
 
-    <div>
-        <h4>Pics</h4>
-
+    <div class="ps-page-content">
+        <!--<h4>Pics</h4>-->
         <!--<form ng-submit="pictures.addPic(pictures.newPic)">-->
-            <!--<input type="text" ng-model="pictures.newPic">-->
-            <!--<button type="submit">Add</button>-->
+        <!--<input type="text" ng-model="pictures.newPic">-->
+        <!--<button type="submit">Add</button>-->
         <!--</form>-->
 
-        <table>
-            <tr ng-repeat="pic in pictures.pics track by $id(pic)">
-                <td>{{pic.thumbnail}}</td>
-                <img ng-src="{{getThumbnailUrl(pic.picId)}}"/>
-                <td>
-                    <button ng-click="pictures.removePic(pic)">x</button>
-                </td>
-            </tr>
-        </table>
+        <div style="text-align: left;">
+            <span ng-repeat="pic in pictures.pics track by $id(pic)">
+                <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
+                <!--<button ng-click="pictures.removePic(pic)">x</button>-->
+            </span>
+        </div>
     </div>
 </div>

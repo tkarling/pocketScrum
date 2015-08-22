@@ -9,13 +9,13 @@ var picsService = (function () {
         _classCallCheck(this, picsService);
 
         console.log("init picsService");
-        this.url = MY_SERVER.url + "/picdata";
+        this.url = MY_SERVER.url + "/designpic";
         this.$http = $http;
     }
 
     _createClass(picsService, [{
-        key: "getThumbnails",
-        value: function getThumbnails() {
+        key: "getPicDatas",
+        value: function getPicDatas() {
             return this.$http.get(this.url).then(function (response) {
                 return response.data;
             });

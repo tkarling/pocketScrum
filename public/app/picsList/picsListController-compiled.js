@@ -15,6 +15,10 @@ var PicsListController = (function () {
         this.$timeout = $timeout;
         this.resetPics();
 
+        this.picsBaseUrl = this.url + "/designpic";
+        this.thumbnailUrl = this.url + "/thumbnail/?id=";
+        this.fullPicUrl = this.url + "/fullpic/?id=";
+
         var self = this;
         picsStore.addListener(function () {
             self.resetPics();
@@ -22,21 +26,6 @@ var PicsListController = (function () {
     }
 
     _createClass(PicsListController, [{
-        key: "getPicsBaseUrl",
-        value: function getPicsBaseUrl() {
-            return this.url + "/designpic";
-        }
-    }, {
-        key: "getThumbnailUrl",
-        value: function getThumbnailUrl(picId) {
-            return this.url + "/thumbnail/?id=" + picId;
-        }
-    }, {
-        key: "getFullPicUrl",
-        value: function getFullPicUrl(picId) {
-            return this.url + "/fullpic/?id=" + picId;
-        }
-    }, {
         key: "resetPics",
         value: function resetPics() {
             this.pics = this.picsStore.getPics();
@@ -53,20 +42,14 @@ var PicsListController = (function () {
             this.picsActions.removePic(pic);
         }
     }, {
-        key: "resetImage",
-        value: function resetImage() {
-            this.f = undefined;
-            this.addedPicUrl = "";
-            console.log("resetImage");
-        }
-    }, {
         key: "uploadFile",
         value: function uploadFile(file) {
+            this.addedPicUrl = "";
             this.f = file;
             console.log("file", file);
             if (file && !file.$error) {
                 file.upload = this.Upload.upload({
-                    url: this.getPicsBaseUrl(),
+                    url: this.picsBaseUrl,
                     file: file
                 });
 
@@ -75,8 +58,8 @@ var PicsListController = (function () {
                     self.$timeout(function () {
                         file.result = response.data;
                         console.log("result", file.result);
-                        self.addedThumbnailUrl = self.getThumbnailUrl(file.result);
-                        self.addedPicUrl = self.getFullPicUrl(file.result);
+                        self.addedPicUrl = self.fullPicUrl + file.result;
+                        self.f = undefined;
                     });
                 }, function (response) {
                     if (response.status > 0) self.errorMsg = response.status + ': ' + response.data;
