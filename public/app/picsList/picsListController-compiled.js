@@ -22,6 +22,21 @@ var PicsListController = (function () {
     }
 
     _createClass(PicsListController, [{
+        key: "getPicsBaseUrl",
+        value: function getPicsBaseUrl() {
+            return this.url + "/designpic";
+        }
+    }, {
+        key: "getThumbnailUrl",
+        value: function getThumbnailUrl(picId) {
+            return this.url + "/thumbnail/?id=" + picId;
+        }
+    }, {
+        key: "getFullPicUrl",
+        value: function getFullPicUrl(picId) {
+            return this.url + "/fullpic/?id=" + picId;
+        }
+    }, {
         key: "resetPics",
         value: function resetPics() {
             this.pics = this.picsStore.getPics();
@@ -51,7 +66,7 @@ var PicsListController = (function () {
             console.log("file", file);
             if (file && !file.$error) {
                 file.upload = this.Upload.upload({
-                    url: this.url + "/designpic",
+                    url: this.getPicsBaseUrl(),
                     file: file
                 });
 
@@ -60,8 +75,8 @@ var PicsListController = (function () {
                     self.$timeout(function () {
                         file.result = response.data;
                         console.log("result", file.result);
-                        self.addedPicUrl = self.url + "/fullpic/?id=" + file.result;
-                        self.addedThumbnailUrl = self.url + "/thumbnail/?id=" + file.result;
+                        self.addedThumbnailUrl = self.getThumbnailUrl(file.result);
+                        self.addedPicUrl = self.getFullPicUrl(file.result);
                     });
                 }, function (response) {
                     if (response.status > 0) self.errorMsg = response.status + ': ' + response.data;

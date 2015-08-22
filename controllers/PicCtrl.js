@@ -1,7 +1,7 @@
 var fs = require('fs');
 var lwip = require('lwip');
 var Pic = require('../models/Pic');
-var Thumbnail = require('../models/Thumbnail');
+var PicData = require('../models/PicData');
 
 var getImageType = function (mimetype) {
     return mimetype.substring(6, mimetype.length);

@@ -22,17 +22,15 @@ var PicCtrl = require("./controllers/PicCtrl");
 
 
 var type = upload.single('file');
-app.post('/api/pocketScrum/designpic', type, PicCtrl.upload);
-//app.post("/api/pocketScrum/designpic", PicCtrl.create);
-app.get("/api/pocketScrum/fullpic", PicCtrl.read);
-app.get("/api/pocketScrum/thumbnail", PicCtrl.readThumbnail);
-//app.put("/api/pocketScrum/designpic", PicCtrl.update);
-app.delete("/api/pocketScrum/designpic", PicCtrl.delete);
+app.post('/api/pocketScrum/designpic', type, PicCtrl.upload);   // add one pic, thumb & data
 
-app.post("/api/pocketScrum/picdata", ThumbnailCtrl.create);
-app.get("/api/pocketScrum/picdata", ThumbnailCtrl.read);
-app.put("/api/pocketScrum/picdata", ThumbnailCtrl.update);
-app.delete("/api/pocketScrum/picdata", ThumbnailCtrl.delete);
+app.get("/api/pocketScrum/designpic", ThumbnailCtrl.read);      // get list of pic data
+app.get("/api/pocketScrum/fullpic", PicCtrl.read);              // get one full pic image
+app.get("/api/pocketScrum/thumbnail", PicCtrl.readThumbnail);   // get one thumbnail image
+
+app.put("/api/pocketScrum/designpic", PicCtrl.update);          // update pic data for one pic
+
+app.delete("/api/pocketScrum/designpic", PicCtrl.delete);       // delete one pic, thumb & data
 
 
 var mongoose = require('mongoose');

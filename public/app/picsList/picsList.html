@@ -34,14 +34,15 @@
     <div>
         <h4>Pics</h4>
 
-        <form ng-submit="pictures.addPic(pictures.newPic)">
-            <input type="text" ng-model="pictures.newPic">
-            <button type="submit">Add</button>
-        </form>
+        <!--<form ng-submit="pictures.addPic(pictures.newPic)">-->
+            <!--<input type="text" ng-model="pictures.newPic">-->
+            <!--<button type="submit">Add</button>-->
+        <!--</form>-->
 
         <table>
             <tr ng-repeat="pic in pictures.pics track by $id(pic)">
                 <td>{{pic.thumbnail}}</td>
+                <img ng-src="{{getThumbnailUrl(pic.picId)}}"/>
                 <td>
                     <button ng-click="pictures.removePic(pic)">x</button>
                 </td>

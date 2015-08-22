@@ -1,16 +1,16 @@
-var Thumbnail = require('../models/Thumbnail');
+var PicData = require('../models/PicData');
 
 module.exports = {
 
     create: function(req, res) {
-        var newThumbnail = new Thumbnail(req.body);
+        var newThumbnail = new PicData(req.body);
         newThumbnail.save(function(err, result) {
             if (err) return res.status(500).send(err);
             else res.send(result);
         });
     },
     read: function(req, res) {
-        Thumbnail.find(req.query)
+        PicData.find(req.query)
             .exec(function(err, result) {
                 if (err) return res.status(500).send(err);
                 else res.send(result);
@@ -18,14 +18,14 @@ module.exports = {
     },
 
     update: function(req, res) {
-        Thumbnail.findByIdAndUpdate(req.query.id, req.body, function(err, result) {
+        PicData.findByIdAndUpdate(req.query.id, req.body, function(err, result) {
             if (err) return res.status(500).send(err);
             else res.send(result);
         });
     },
 
     delete: function(req, res) {
-        Thumbnail.findByIdAndRemove(req.query.id, function(err, result) {
+        PicData.findByIdAndRemove(req.query.id, function(err, result) {
             if (err) return res.status(500).send(err);
             else res.send(result);
         });
