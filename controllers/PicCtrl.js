@@ -1,11 +1,15 @@
 var fs = require('fs');
 var lwip = require('lwip');
 var Pic = require('../models/Pic');
+var Thumbnail = require('../models/Thumbnail');
 
-var getImageType = function(mimetype) {
-    return mimetype.substring(6,mimetype.length);
+var getImageType = function (mimetype) {
+    return mimetype.substring(6, mimetype.length);
 }
 
+var createPicImage = function (image, name, contentType) {
+    return {data: image, name: name, contentType: contentType}
+};
 
 module.exports = {
 
@@ -13,35 +17,39 @@ module.exports = {
         var tmp_path = req.file.path;
         var mimetype = req.file.mimetype;
         var imgName = req.file.originalname;
-        console.log("tmp_path", tmp_path, mimetype, req.file);
+        console.log("tmp_path", tmp_path, imgName, mimetype, req.file);
 
         var newPic = new Pic;
+        console.log("newPic 1", newPic);
         fs.readFile(tmp_path, function (err, data) {
             if (err) return res.status(500).send(err);
-            newPic.img.data = data;
-            newPic.img.name = imgName;
-            newPic.img.contentType = mimetype;
-            newPic.save(function (err, result) {
-                console.log("newPic.save", result);
-                lwip.open(tmp_path, getImageType(mimetype), function(err, image) {
-                    console.log("lwip.open", image);
-                    if (err) console.log("lwip.open error", err);
-                    image.resize(100, 100, function (err, image) {
-                        console.log("image.scale", image);
-                        if (err) console.log("image.scale error", err);
-                        image.writeFile('./upload/output.jpg', function (err) {
-                            console.log("image.writeFile");
-                            //fs.unlink(tmp_path, function (uerr) {
-                            //    if (uerr) console.log("error deleting tmp file", uerr);
-                            //});
-                            if (err) return res.status(500).send(err);
-                            else res.send(result._id);
+            newPic.img = createPicImage(data, imgName, mimetype);
+            console.log("newPic 2", newPic);
+            lwip.open(tmp_path, getImageType(mimetype), function (err, image) {
+                console.log("lwip.open", image);
+                if (err) console.log("lwip.open error", err);
+                image.resize(100, 100, function (err, scaledImage) {
+                    console.log("image.scale", scaledImage);
+                    if (err) console.log("image.scale error", err);
+                    scaledImage.writeFile('./upload/output.jpg', function (err) {
+                        if (err) console.log("writeFile error", err);
+                        fs.readFile('./upload/output.jpg', function (err, tdata) {
+                            if (err) console.log("thumb fs.readFile error", err);
+                            newPic.thumbnail = createPicImage(tdata, imgName, mimetype);
+                            console.log("newPic before save", newPic);
+                            newPic.save(function (err, result) {
+                                console.log("newPic.save", result);
+                                fs.unlink(tmp_path, function (uerr) {
+                                    if (uerr) console.log("error deleting tmp file", uerr);
+                                });
+                                if (err) return res.status(500).send(err);
+                                else res.send(result._id);
+                            });
                         });
                     });
                 });
             });
         });
-
     },
 
     create: function (req, res) {
@@ -61,6 +69,15 @@ module.exports = {
             if (err) return next(err);
             res.contentType(doc.img.contentType);
             res.send(doc.img.data);
+        });
+    },
+
+    readThumbnail: function (req, res) {
+        Pic.findById(req.query.id, function (err, doc) {
+            console.log("readThumbnail", doc);
+            if (err) return next(err);
+            res.contentType(doc.thumbnail.contentType);
+            res.send(doc.thumbnail.data);
         });
     },
 

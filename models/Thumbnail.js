@@ -6,8 +6,7 @@ var schema = new mongoose.Schema ({
             type: String
         //}
     }],
-    thumbnail: { type: String, required: true},
-    fullPic: {
+    picId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Pic",
         required: true

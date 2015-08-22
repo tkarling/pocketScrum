@@ -20,17 +20,19 @@ app.use(cors());
 var ThumbnailCtrl = require("./controllers/ThumbnailCtrl");
 var PicCtrl = require("./controllers/PicCtrl");
 
-app.post("/api/pocketScrum/thumbnail", ThumbnailCtrl.create);
-app.get("/api/pocketScrum/thumbnail", ThumbnailCtrl.read);
-app.put("/api/pocketScrum/thumbnail", ThumbnailCtrl.update);
-app.delete("/api/pocketScrum/thumbnail", ThumbnailCtrl.delete);
 
 var type = upload.single('file');
-app.post('/api/pocketScrum/uploads', type, PicCtrl.upload);
-app.post("/api/pocketScrum/designpic", PicCtrl.create);
-app.get("/api/pocketScrum/designpic", PicCtrl.read);
-app.put("/api/pocketScrum/designpic", PicCtrl.update);
+app.post('/api/pocketScrum/designpic', type, PicCtrl.upload);
+//app.post("/api/pocketScrum/designpic", PicCtrl.create);
+app.get("/api/pocketScrum/fullpic", PicCtrl.read);
+app.get("/api/pocketScrum/thumbnail", PicCtrl.readThumbnail);
+//app.put("/api/pocketScrum/designpic", PicCtrl.update);
 app.delete("/api/pocketScrum/designpic", PicCtrl.delete);
+
+app.post("/api/pocketScrum/picdata", ThumbnailCtrl.create);
+app.get("/api/pocketScrum/picdata", ThumbnailCtrl.read);
+app.put("/api/pocketScrum/picdata", ThumbnailCtrl.update);
+app.delete("/api/pocketScrum/picdata", ThumbnailCtrl.delete);
 
 
 var mongoose = require('mongoose');

@@ -3,7 +3,7 @@
 class picsService {
     constructor($http, MY_SERVER) {
         console.log("init picsService");
-        this.url = MY_SERVER.url + "/thumbnail";
+        this.url = MY_SERVER.url + "/picdata";
         this.$http = $http;
     }
 

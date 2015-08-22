@@ -9,7 +9,7 @@ var picsService = (function () {
         _classCallCheck(this, picsService);
 
         console.log("init picsService");
-        this.url = MY_SERVER.url + "/thumbnail";
+        this.url = MY_SERVER.url + "/picdata";
         this.$http = $http;
     }
 

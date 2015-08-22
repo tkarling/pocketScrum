@@ -31,7 +31,7 @@ class PicsListController {
 
     resetImage () {
         this.f = undefined;
-        this.resultUrl = "";
+        this.addedPicUrl = "";
         console.log("resetImage");
     }
 
@@ -40,7 +40,7 @@ class PicsListController {
         console.log("file", file);
         if (file && !file.$error) {
             file.upload = this.Upload.upload({
-                url: this.url + "/uploads",
+                url: this.url + "/designpic",
                 file: file
             });
 
@@ -49,7 +49,8 @@ class PicsListController {
                 self.$timeout(function () {
                     file.result = response.data;
                     console.log("result", file.result);
-                    self.resultUrl = self.url + "/designpic/?id=" + file.result;
+                    self.addedPicUrl = self.url + "/fullpic/?id=" + file.result;
+                    self.addedThumbnailUrl = self.url + "/thumbnail/?id=" + file.result;
                 });
             }, function (response) {
                 if (response.status > 0)
