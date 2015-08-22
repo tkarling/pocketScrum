@@ -88,9 +88,18 @@ module.exports = {
     },
 
     delete: function (req, res) {
-        Pic.findByIdAndRemove(req.query.id, function (err, result) {
+        var picDataId = req.query.id;
+
+        PicData.findById(picDataId, function (err, doc) {
             if (err) return res.status(500).send(err);
-            else res.send(result);
+            var picId = doc.picId;
+            Pic.findByIdAndRemove(picId, function (perr, result) {
+                if (perr) return res.status(500).send(perr);
+                PicData.findByIdAndRemove(picDataId, function (derr, result) {
+                    if (derr) return res.status(500).send(derr);
+                    else res.send(result);
+                });
+            });
         });
     }
 };

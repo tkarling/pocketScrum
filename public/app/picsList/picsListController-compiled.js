@@ -16,8 +16,8 @@ var PicsListController = (function () {
         this.resetPics();
 
         this.picsBaseUrl = this.url + "/designpic";
-        this.thumbnailUrl = this.url + "/thumbnail/?id=";
-        this.fullPicUrl = this.url + "/fullpic/?id=";
+        this.thumbnailUrl = this.url + "/thumbnail?id=";
+        this.fullPicUrl = this.url + "/fullpic?id=";
 
         var self = this;
         picsStore.addListener(function () {
@@ -56,10 +56,7 @@ var PicsListController = (function () {
                 var self = this;
                 file.upload.then(function (response) {
                     self.$timeout(function () {
-                        file.result = response.data;
-                        console.log("result", file.result);
-                        self.addedPicUrl = self.fullPicUrl + file.result;
-                        self.f = undefined;
+                        self.addedPicUrl = self.fullPicUrl + response.data;
                     });
                 }, function (response) {
                     if (response.status > 0) self.errorMsg = response.status + ': ' + response.data;

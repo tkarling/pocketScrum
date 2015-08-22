@@ -66,8 +66,7 @@ var PicsStore = (function (_EventEmitter) {
     }, {
         key: "removePic",
         value: function removePic(pic) {
-            var index = this.pics.indexOf(pic);
-            this.pics.splice(index, 1);
+            return this.picsService.removePic(pic);
         }
     }, {
         key: "emitChange",
@@ -94,8 +93,9 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
                 break;
 
             case REMOVE_PIC:
-                picsStore.removePic(action.item);
-                picsStore.emitChange();
+                picsStore.removePic(action.item).then(function (response) {
+                    picsStore.emitChange();
+                });
                 break;
         }
     });

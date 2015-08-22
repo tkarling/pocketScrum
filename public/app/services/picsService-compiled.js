@@ -8,15 +8,17 @@ var picsService = (function () {
     function picsService($http, MY_SERVER) {
         _classCallCheck(this, picsService);
 
-        console.log("init picsService");
-        this.url = MY_SERVER.url + "/designpic";
+        //console.log("init picsService");
+        this.url = MY_SERVER.url;
+        this.picsBaseUrl = MY_SERVER.url + "/designpic";
+        this.picsBaseUrlWId = MY_SERVER.url + "/designpic?id=";
         this.$http = $http;
     }
 
     _createClass(picsService, [{
         key: "getPicDatas",
         value: function getPicDatas() {
-            return this.$http.get(this.url).then(function (response) {
+            return this.$http.get(this.picsBaseUrl).then(function (response) {
                 return response.data;
             });
         }
@@ -30,7 +32,9 @@ var picsService = (function () {
         }
     }, {
         key: "removePic",
-        value: function removePic(pic) {}
+        value: function removePic(pic) {
+            return this.$http["delete"](this.picsBaseUrlWId + pic._id);
+        }
     }]);
 
     return picsService;

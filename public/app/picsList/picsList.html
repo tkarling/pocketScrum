@@ -12,24 +12,43 @@
     .ps-add-button-container {
         text-align: right;
     }
+
+    .ps-img-container {
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        /*border:1px solid red;*/
+        /* background:url('http://jsfiddle.net/img/initializing.png') no-repeat;
+        width:186px;
+        height:157px;*/
+    }
+
+    .ps-delete-button {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        /*width:100px;*/
+        /*height:30px;*/
+    }
 </style>
 <div class="ps-page-content">
     <div class="ps-page-content ps-add-button-container">
         <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored ec-add-button"
                 type="file" ngf-select="pictures.uploadFile($file)"
-                accept="image/*"  ngf-max-size="4MB">
+                accept="image/*" ngf-max-size="4MB">
             <!--ngf-max-height="1000"-->
             <i class="material-icons">add</i>
         </button>
     </div>
-    <div ng-if="pictures.f || pictures.addedPicUrl">
+
+    <div ng-if="pictures.f || pictures.addedPicUrl" class="ps-page-content ps-detailled-img">
         <div>
-        File:
+            File:
         <span style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
-      <span class="progress" ng-show="pictures.f.progress >= 0">
-          <span style="width:{{pictures.f.progress}}%"
-               ng-bind="pictures.f.progress + '%'"></span>
-      </span>
+          <span class="progress" ng-show="pictures.f.progress >= 0">
+              <span style="width:{{pictures.f.progress}}%"
+                    ng-bind="pictures.f.progress + '%'"></span>
+          </span>
         </span>
         </div>
         {{pictures.errorMsg}}
@@ -45,7 +64,14 @@
 
         <div style="text-align: left;">
             <span ng-repeat="pic in pictures.pics track by $id(pic)">
-                <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
+                <div class="ps-img-container">
+                    <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
+                    <button class="ps-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                            ng-click="pictures.removePic(pic)">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+                <!--<img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>-->
                 <!--<button ng-click="pictures.removePic(pic)">x</button>-->
             </span>
         </div>
