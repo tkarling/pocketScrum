@@ -29,43 +29,19 @@ var PicsListController = (function () {
         key: "resetPics",
         value: function resetPics() {
             this.pics = this.picsStore.getPics();
+            this.currentPic = this.picsStore.getCurrentPic();
+            this.errorMsg = this.picsStore.getErrorMsg();
         }
     }, {
         key: "addPic",
         value: function addPic(pic) {
+            this.f = pic;
             this.picsActions.addPic(pic);
-            this.newPic = "";
         }
     }, {
         key: "removePic",
         value: function removePic(pic) {
             this.picsActions.removePic(pic);
-        }
-    }, {
-        key: "uploadFile",
-        value: function uploadFile(file) {
-            this.addedPicUrl = "";
-            this.f = file;
-            console.log("file", file);
-            if (file && !file.$error) {
-                file.upload = this.Upload.upload({
-                    url: this.picsBaseUrl,
-                    file: file
-                });
-
-                var self = this;
-                file.upload.then(function (response) {
-                    self.$timeout(function () {
-                        self.addedPicUrl = self.fullPicUrl + response.data;
-                    });
-                }, function (response) {
-                    if (response.status > 0) self.errorMsg = response.status + ': ' + response.data;
-                });
-
-                file.upload.progress(function (evt) {
-                    file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                });
-            }
         }
     }]);
 

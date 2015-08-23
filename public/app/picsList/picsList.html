@@ -34,25 +34,25 @@
 <div class="ps-page-content">
     <div class="ps-page-content ps-add-button-container">
         <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored ec-add-button"
-                type="file" ngf-select="pictures.uploadFile($file)"
+                type="file" ngf-select="pictures.addPic($file)"
                 accept="image/*" ngf-max-size="4MB">
             <!--ngf-max-height="1000"-->
             <i class="material-icons">add</i>
         </button>
     </div>
 
-    <div ng-if="pictures.f || pictures.addedPicUrl" class="ps-page-content ps-detailled-img">
+    <div ng-if="pictures.f || pictures.currentPic.picId" class="ps-page-content ps-detailled-img">
         <div>
             File:
-        <span style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
-          <span class="progress" ng-show="pictures.f.progress >= 0">
-              <span style="width:{{pictures.f.progress}}%"
-                    ng-bind="pictures.f.progress + '%'"></span>
+        <span style="font:smaller">{{pictures.currentPic.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+          <span class="progress" ng-show="pictures.currentPic.progress >= 0">
+              <span style="width:{{pictures.currentPic.progress}}%"
+                    ng-bind="pictures.currentPic.progress + '%'"></span>
           </span>
         </span>
         </div>
         {{pictures.errorMsg}}
-        <img class="ps-detailled-img" ng-src="{{pictures.addedPicUrl}}"/>
+        <img class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
     </div>
 
     <div class="ps-page-content">

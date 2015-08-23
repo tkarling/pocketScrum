@@ -25,8 +25,8 @@ module.exports = {
         fs.readFile(tmp_path, function (err, data) {
             if (err) return res.status(500).send(err);
             newPic.img = createPicImage(data, imgName, mimetype);
-            lwip.open(tmp_path, imgType, function (err, image) {
-                if (err) console.log("lwip.open error", err);
+            lwip.open(tmp_path, imgType, function (oerr, image) {
+                if (oerr) return res.status(500).send(oerr);
                 image.resize(100, 100, function (err, scaledImage) {
                     if (err) console.log("image.scale error", err);
                     scaledImage.toBuffer(imgType, function(err, buffer){
@@ -39,10 +39,11 @@ module.exports = {
                             if (perr) return res.status(500).send(perr);
 
                             var newPicData = new PicData;
+                            newPicData.name = imgName;
                             newPicData.picId = picsResult._id;
                             newPicData.save(function(derr, dataResult) {
                                 if (derr) return res.status(500).send(derr);
-                                else res.send(picsResult._id);
+                                else res.send(dataResult);
                             });
                         });
                     });

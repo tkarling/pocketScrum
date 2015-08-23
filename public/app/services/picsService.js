@@ -1,12 +1,13 @@
 "use strict";
 
 class picsService {
-    constructor($http, MY_SERVER) {
+    constructor($http, Upload, MY_SERVER) {
         //console.log("init picsService");
         this.url = MY_SERVER.url;
         this.picsBaseUrl = MY_SERVER.url + "/designpic";
         this.picsBaseUrlWId = MY_SERVER.url + "/designpic?id=";
         this.$http = $http;
+        this.Upload = Upload;
     }
 
     getPicDatas() {
@@ -15,11 +16,11 @@ class picsService {
         });
     }
 
-    getPic() {
-    }
-
     addPic(pic) {
-        console.log("adding pic");
+        return this.Upload.upload({
+            url: this.picsBaseUrl,
+            file: pic
+        });
     }
 
     removePic(pic) {

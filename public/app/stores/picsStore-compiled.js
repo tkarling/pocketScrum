@@ -49,7 +49,11 @@ var PicsStore = (function (_EventEmitter) {
 
         _get(Object.getPrototypeOf(PicsStore.prototype), "constructor", this).call(this);
         this.picsService = picsService;
+
         this.pics = [];
+        this.currentPic = {};
+        this.errorMsg = "";
+
         this.emitChange();
     }
 
@@ -59,9 +63,32 @@ var PicsStore = (function (_EventEmitter) {
             return this.pics;
         }
     }, {
+        key: "getCurrentPic",
+        value: function getCurrentPic() {
+            return this.currentPic;
+        }
+    }, {
+        key: "getErrorMsg",
+        value: function getErrorMsg() {
+            return this.errorMsg;
+        }
+    }, {
         key: "addPic",
         value: function addPic(pic) {
-            this.pics.push({ qty: 1, pic: pic });
+            //this.pics.push({qty: 1, pic: pic});
+            var self = this;
+            this.errorMsg = "";
+            return this.picsService.addPic(pic).then(function (response) {
+                var progress = self.currentPic.progress;
+                self.currentPic = response.data;
+                self.currentPic.progress = progress;
+            }, function (error) {
+                if (error.status > 0) console.log("addPic error", error);
+                self.errorMsg = error.status + ': ' + error.statusText;
+            }, function (evt) {
+                self.currentPic.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                self.emitChange();
+            });
         }
     }, {
         key: "removePic",
@@ -88,8 +115,9 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {
             case ADD_PIC:
-                picsStore.addPic(action.item);
-                picsStore.emitChange();
+                picsStore.addPic(action.item).then(function (response) {
+                    picsStore.emitChange();
+                });
                 break;
 
             case REMOVE_PIC:
@@ -107,6 +135,14 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
 
     this.getPics = function () {
         return picsStore.getPics();
+    };
+
+    this.getCurrentPic = function () {
+        return picsStore.getCurrentPic();
+    };
+
+    this.getErrorMsg = function () {
+        return picsStore.getErrorMsg();
     };
 });
 

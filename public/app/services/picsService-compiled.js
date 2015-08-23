@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var picsService = (function () {
-    function picsService($http, MY_SERVER) {
+    function picsService($http, Upload, MY_SERVER) {
         _classCallCheck(this, picsService);
 
         //console.log("init picsService");
@@ -13,6 +13,7 @@ var picsService = (function () {
         this.picsBaseUrl = MY_SERVER.url + "/designpic";
         this.picsBaseUrlWId = MY_SERVER.url + "/designpic?id=";
         this.$http = $http;
+        this.Upload = Upload;
     }
 
     _createClass(picsService, [{
@@ -23,12 +24,12 @@ var picsService = (function () {
             });
         }
     }, {
-        key: "getPic",
-        value: function getPic() {}
-    }, {
         key: "addPic",
         value: function addPic(pic) {
-            console.log("adding pic");
+            return this.Upload.upload({
+                url: this.picsBaseUrl,
+                file: pic
+            });
         }
     }, {
         key: "removePic",
