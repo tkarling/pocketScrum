@@ -92,6 +92,7 @@ var PicsStore = (function (_EventEmitter) {
             }, function (error) {
                 if (error.status > 0) console.log("addPic error", error);
                 self.errorMsg = error.status + ': ' + error.statusText;
+                self.currentPic = {};
             }, function (evt) {
                 self.currentPic.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 self.emitSetChange();

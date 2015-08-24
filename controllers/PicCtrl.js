@@ -27,23 +27,26 @@ module.exports = {
             newPic.img = createPicImage(data, imgName, mimetype);
             lwip.open(tmp_path, imgType, function (oerr, image) {
                 if (oerr) return res.status(500).send(oerr);
-                image.contain(100, 100, "black", function (err, scaledImage) {
+                image.contain(150, 150, function (err, croppedImage) {
                     if (err) console.log("image.scale error", err);
-                    scaledImage.toBuffer(imgType, function(err, buffer){
-                        if (err) console.log("toBuffer error", err);
-                        newPic.thumbnail = createPicImage(buffer, thumbnailName, mimetype);
-                        newPic.save(function (perr, picsResult) {
-                            fs.unlink(tmp_path, function (uerr) {
-                                if (uerr) console.log("error deleting tmp file", uerr);
-                            });
-                            if (perr) return res.status(500).send(perr);
+                    image.crop(100, 100, function (err, croppedImage) {
+                        if (err) console.log("image.crop error", err);
+                        croppedImage.toBuffer(imgType, function (err, buffer) {
+                            if (err) console.log("toBuffer error", err);
+                            newPic.thumbnail = createPicImage(buffer, thumbnailName, mimetype);
+                            newPic.save(function (perr, picsResult) {
+                                fs.unlink(tmp_path, function (uerr) {
+                                    if (uerr) console.log("error deleting tmp file", uerr);
+                                });
+                                if (perr) return res.status(500).send(perr);
 
-                            var newPicData = new PicData;
-                            newPicData.name = imgName;
-                            newPicData.picId = picsResult._id;
-                            newPicData.save(function(derr, dataResult) {
-                                if (derr) return res.status(500).send(derr);
-                                else res.send(dataResult);
+                                var newPicData = new PicData;
+                                newPicData.name = imgName;
+                                newPicData.picId = picsResult._id;
+                                newPicData.save(function (derr, dataResult) {
+                                    if (derr) return res.status(500).send(derr);
+                                    else res.send(dataResult);
+                                });
                             });
                         });
                     });

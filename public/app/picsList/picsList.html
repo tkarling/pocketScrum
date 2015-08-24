@@ -46,8 +46,12 @@
     </div>
 
     <div style="height:50%;" ng-if="pictures.currentPic.picId" class="ps-container">
-        {{pictures.errorMsg}}
-        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
+        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img"
+             ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"
+                ng-click="pictures.selectPic({})"/>
+    </div>
+    <div ng-if="pictures.errorMsg">
+        Could not get picture: {{pictures.errorMsg}}
     </div>
 
     <div ng-if="pictures.f || pictures.currentPic.picId" class="ps-container">
