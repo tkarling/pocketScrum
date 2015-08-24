@@ -88,9 +88,7 @@ var PicsStore = (function (_EventEmitter) {
             var self = this;
             this.errorMsg = "";
             return this.picsService.addPic(pic).then(function (response) {
-                var progress = self.currentPic.progress;
                 self.currentPic = response.data;
-                self.currentPic.progress = progress;
             }, function (error) {
                 if (error.status > 0) console.log("addPic error", error);
                 self.errorMsg = error.status + ': ' + error.statusText;

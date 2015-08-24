@@ -63,9 +63,7 @@ class PicsStore extends EventEmitter {
         this.errorMsg = "";
         return this.picsService.addPic(pic)
             .then(function (response) {
-                var progress = self.currentPic.progress;
                 self.currentPic = response.data;
-                self.currentPic.progress = progress;
             }, function (error) {
                 if (error.status > 0)
                 console.log("addPic error", error);

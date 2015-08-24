@@ -1,8 +1,7 @@
 <style>
     .ps-detailled-img {
-        max-height: 30%;
         max-width: 90%;
-        margin: 0px auto;
+        height: 100%;
     }
 
     .ps-thumbnail-img {
@@ -30,9 +29,14 @@
         /*width:100px;*/
         /*height:30px;*/
     }
+
+    .ps-thumbnails {
+        /*position: absolute;*/
+        /*bottom: 0;*/
+    }
 </style>
 <div class="ps-page-content">
-    <div class="ps-page-content ps-add-button-container">
+    <div style="height:36px;" class="ps-add-button-container">
         <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored ec-add-button"
                 type="file" ngf-select="pictures.addPic($file)"
                 accept="image/*" ngf-max-size="4MB">
@@ -41,21 +45,23 @@
         </button>
     </div>
 
-    <div ng-if="pictures.f || pictures.currentPic.picId" class="ps-page-content ps-detailled-img">
-        <div>
-            File:
+    <div style="height:50%;" ng-if="pictures.currentPic.picId" class="ps-container">
+        {{pictures.errorMsg}}
+        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
+    </div>
+
+    <div ng-if="pictures.f || pictures.currentPic.picId" class="ps-container">
+        File:
         <span style="font:smaller">{{pictures.currentPic.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
           <span class="progress" ng-show="pictures.currentPic.progress >= 0">
               <span style="width:{{pictures.currentPic.progress}}%"
                     ng-bind="pictures.currentPic.progress + '%'"></span>
           </span>
         </span>
-        </div>
-        {{pictures.errorMsg}}
-        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
     </div>
 
-    <div class="ps-page-content">
+
+    <div class="ps-container ps-thumbnails">
         <!--<h4>Pics</h4>-->
         <!--<form ng-submit="pictures.addPic(pictures.newPic)">-->
         <!--<input type="text" ng-model="pictures.newPic">-->
