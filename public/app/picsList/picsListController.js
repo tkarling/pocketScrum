@@ -16,14 +16,20 @@ class PicsListController {
         var self = this;
         picsStore.addListener(function () {
             self.resetPics();
+            picsStore.addListener(function () {
+                self.resetCurrentPic();
+            });
         });
 
     }
 
     resetPics() {
         this.pics = this.picsStore.getPics();
-        this.currentPic = this.picsStore.getCurrentPic();
         this.errorMsg = this.picsStore.getErrorMsg();
+    }
+
+    resetCurrentPic() {
+        this.currentPic = this.picsStore.getCurrentPic();
     }
 
     addPic(pic) {
@@ -41,9 +47,14 @@ class PicsListController {
     }
 
     selectPic(pic) {
+        //this.savePic();
         this.f = undefined;
         //console.log("selectPic", pic);
         this.picsActions.selectPic(pic);
+    }
+
+    savePic() {
+        this.picsActions.savePic(this.currentPic);
     }
 
 }

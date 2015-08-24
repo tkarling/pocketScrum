@@ -1,21 +1,23 @@
 <style>
-    .ps-detailled-img {
-        max-width: 90%;
-        height: 100%;
-    }
-
-    .ps-thumbnail-img {
-        margin: 1%;
-    }
-
     .ps-add-button-container {
         text-align: right;
     }
 
-    .ps-img-container {
+    .ps-detailled-img {
+        max-width: 90%;
+        max-height: 300px;
+    }
+
+    .ps-thumbnail-img {
+        padding:2%;
+        width: 96%;
+    }
+
+    .ps-thumbnail-container {
         position: relative;
         display: inline-block;
         text-align: center;
+        max-width:28%;
         /*border:1px solid red;*/
         /* background:url('http://jsfiddle.net/img/initializing.png') no-repeat;
         width:186px;
@@ -34,6 +36,10 @@
         /*position: absolute;*/
         /*bottom: 0;*/
     }
+
+    .ps-notes-container {
+        width: 100%;
+    }
 </style>
 <div class="ps-page-content">
     <div style="height:36px;" class="ps-add-button-container">
@@ -45,23 +51,26 @@
         </button>
     </div>
 
-    <div style="height:50%;" ng-if="pictures.currentPic.picId" class="ps-container">
-        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img"
-             ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"
-                ng-click="pictures.selectPic({})"/>
-    </div>
-    <div ng-if="pictures.errorMsg">
-        Could not get picture: {{pictures.errorMsg}}
+    <div ng-if="pictures.errorMsg || pictures.f.$error" class="ps-container">
+        {{pictures.errorMsg}}
+        <span style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
     </div>
 
-    <div ng-if="pictures.f || pictures.currentPic.picId" class="ps-container">
-        File:
-        <span style="font:smaller">{{pictures.currentPic.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+    <div ng-if="pictures.currentPic.picId" class="ps-container">
+        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img"
+             ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"
+             ng-click="pictures.selectPic({})"/>
+        <div>
+            {{pictures.currentPic.name}}
           <span class="progress" ng-show="pictures.currentPic.progress >= 0">
               <span style="width:{{pictures.currentPic.progress}}%"
                     ng-bind="pictures.currentPic.progress + '%'"></span>
           </span>
-        </span>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ps-notes-container">
+            <textarea class="mdl-textfield__input" type="text" rows="1" id="schools" placeholder="notes"></textarea>
+            <label class="mdl-textfield__label" for="schools"></label>
+        </div>
     </div>
 
 
@@ -74,7 +83,7 @@
 
         <div style="text-align: left;">
             <span ng-repeat="pic in pictures.pics track by $id(pic)">
-                <div class="ps-img-container" ng-click="pictures.selectPic(pic)">
+                <div class="ps-thumbnail-container" ng-click="pictures.selectPic(pic)">
                     <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
                     <button class="ps-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                             ng-click="pictures.removePic(pic, $event)">

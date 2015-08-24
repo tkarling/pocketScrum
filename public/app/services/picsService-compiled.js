@@ -36,6 +36,12 @@ var picsService = (function () {
         value: function removePic(pic) {
             return this.$http["delete"](this.picsBaseUrlWId + pic._id);
         }
+    }, {
+        key: "savePic",
+        value: function savePic(pic) {
+            console.log("savePic", pic);
+            return this.$http.put(this.picsBaseUrlWId + pic._id, pic);
+        }
     }]);
 
     return picsService;

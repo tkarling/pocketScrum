@@ -11,6 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
 var SELECT_PIC = "SELECT_PIC";
+var SAVE_PIC = "SAVE_PIC";
 
 var picsActions = (function () {
     function picsActions(dispatcher) {
@@ -40,6 +41,14 @@ var picsActions = (function () {
         value: function selectPic(item) {
             this.dispatcher.emit({
                 actionType: SELECT_PIC,
+                item: item
+            });
+        }
+    }, {
+        key: "savePic",
+        value: function savePic(item) {
+            this.dispatcher.emit({
+                actionType: SAVE_PIC,
                 item: item
             });
         }
@@ -107,6 +116,11 @@ var PicsStore = (function (_EventEmitter) {
             return this.picsService.removePic(pic);
         }
     }, {
+        key: "savePic",
+        value: function savePic(pic) {
+            return this.picsService.savePic(pic);
+        }
+    }, {
         key: "selectPic",
         value: function selectPic(pic) {
             this.currentPic = pic;
@@ -143,6 +157,12 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
 
             case REMOVE_PIC:
                 picsStore.removePic(action.item).then(function (response) {
+                    picsStore.emitSetChange();
+                });
+                break;
+
+            case SAVE_PIC:
+                picsStore.savePic(action.item).then(function (response) {
                     picsStore.emitSetChange();
                 });
                 break;

@@ -22,6 +22,9 @@ var PicsListController = (function () {
         var self = this;
         picsStore.addListener(function () {
             self.resetPics();
+            picsStore.addListener(function () {
+                self.resetCurrentPic();
+            });
         });
     }
 
@@ -29,8 +32,12 @@ var PicsListController = (function () {
         key: "resetPics",
         value: function resetPics() {
             this.pics = this.picsStore.getPics();
-            this.currentPic = this.picsStore.getCurrentPic();
             this.errorMsg = this.picsStore.getErrorMsg();
+        }
+    }, {
+        key: "resetCurrentPic",
+        value: function resetCurrentPic() {
+            this.currentPic = this.picsStore.getCurrentPic();
         }
     }, {
         key: "addPic",
@@ -51,9 +58,15 @@ var PicsListController = (function () {
     }, {
         key: "selectPic",
         value: function selectPic(pic) {
+            //this.savePic();
             this.f = undefined;
             //console.log("selectPic", pic);
             this.picsActions.selectPic(pic);
+        }
+    }, {
+        key: "savePic",
+        value: function savePic() {
+            this.picsActions.savePic(this.currentPic);
         }
     }]);
 

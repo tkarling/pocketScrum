@@ -26,6 +26,11 @@ class picsService {
     removePic(pic) {
         return this.$http.delete(this.picsBaseUrlWId + pic._id);
     }
+
+    savePic(pic) {
+        console.log("savePic", pic);
+        return this.$http.put(this.picsBaseUrlWId + pic._id, pic);
+    }
 }
 
 angular.module("myApp").service("picsService", picsService);

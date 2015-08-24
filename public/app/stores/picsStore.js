@@ -3,6 +3,7 @@
 var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
 var SELECT_PIC = "SELECT_PIC";
+var SAVE_PIC = "SAVE_PIC";
 
 class picsActions {
     constructor(dispatcher) {
@@ -26,6 +27,13 @@ class picsActions {
     selectPic(item) {
         this.dispatcher.emit({
             actionType: SELECT_PIC,
+            item: item
+        });
+    }
+
+    savePic(item) {
+        this.dispatcher.emit({
+            actionType: SAVE_PIC,
             item: item
         });
     }
@@ -83,6 +91,10 @@ class PicsStore extends EventEmitter {
         return this.picsService.removePic(pic);
     }
 
+    savePic(pic) {
+        return this.picsService.savePic(pic);
+    }
+
     selectPic(pic) {
         this.currentPic = pic;
     }
@@ -115,6 +127,12 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
 
             case REMOVE_PIC:
                 picsStore.removePic(action.item).then(function (response) {
+                    picsStore.emitSetChange();
+                });
+                break;
+
+            case SAVE_PIC:
+                picsStore.savePic(action.item).then(function (response) {
                     picsStore.emitSetChange();
                 });
                 break;
