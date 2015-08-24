@@ -10,6 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var ADD_PIC = "ADD_PIC";
 var REMOVE_PIC = "REMOVE_PIC";
+var SELECT_PIC = "SELECT_PIC";
 
 var picsActions = (function () {
     function picsActions(dispatcher) {
@@ -34,6 +35,14 @@ var picsActions = (function () {
                 item: item
             });
         }
+    }, {
+        key: "selectPic",
+        value: function selectPic(item) {
+            this.dispatcher.emit({
+                actionType: SELECT_PIC,
+                item: item
+            });
+        }
     }]);
 
     return picsActions;
@@ -54,7 +63,7 @@ var PicsStore = (function (_EventEmitter) {
         this.currentPic = {};
         this.errorMsg = "";
 
-        this.emitChange();
+        this.emitSetChange();
     }
 
     _createClass(PicsStore, [{
@@ -87,22 +96,35 @@ var PicsStore = (function (_EventEmitter) {
                 self.errorMsg = error.status + ': ' + error.statusText;
             }, function (evt) {
                 self.currentPic.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                self.emitChange();
+                self.emitSetChange();
             });
         }
     }, {
         key: "removePic",
         value: function removePic(pic) {
+            if (this.currentPic.picId == pic.picId) {
+                this.currentPic = {};
+            }
             return this.picsService.removePic(pic);
         }
     }, {
-        key: "emitChange",
-        value: function emitChange() {
+        key: "selectPic",
+        value: function selectPic(pic) {
+            this.currentPic = pic;
+        }
+    }, {
+        key: "emitSetChange",
+        value: function emitSetChange() {
             var self = this;
             this.picsService.getPicDatas().then(function (picDatas) {
                 self.pics = picDatas;
                 self.emit("change");
             });
+        }
+    }, {
+        key: "emitChange",
+        value: function emitChange() {
+            this.emit("change");
         }
     }]);
 
@@ -116,14 +138,19 @@ angular.module("myApp").service("picsStore", function (dispatcher, picsService) 
         switch (action.actionType) {
             case ADD_PIC:
                 picsStore.addPic(action.item).then(function (response) {
-                    picsStore.emitChange();
+                    picsStore.emitSetChange();
                 });
                 break;
 
             case REMOVE_PIC:
                 picsStore.removePic(action.item).then(function (response) {
-                    picsStore.emitChange();
+                    picsStore.emitSetChange();
                 });
+                break;
+
+            case SELECT_PIC:
+                picsStore.selectPic(action.item);
+                picsStore.emitChange();
                 break;
         }
     });

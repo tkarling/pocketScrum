@@ -27,7 +27,7 @@ module.exports = {
             newPic.img = createPicImage(data, imgName, mimetype);
             lwip.open(tmp_path, imgType, function (oerr, image) {
                 if (oerr) return res.status(500).send(oerr);
-                image.resize(100, 100, function (err, scaledImage) {
+                image.contain(100, 100, function (err, scaledImage) {
                     if (err) console.log("image.scale error", err);
                     scaledImage.toBuffer(imgType, function(err, buffer){
                         if (err) console.log("toBuffer error", err);

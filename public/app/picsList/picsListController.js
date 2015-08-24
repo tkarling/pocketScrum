@@ -31,8 +31,19 @@ class PicsListController {
         this.picsActions.addPic(pic);
     }
 
-    removePic(pic) {
+    removePic(pic, event) {
+        this.f = undefined;
         this.picsActions.removePic(pic);
+        if(event){
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    }
+
+    selectPic(pic) {
+        this.f = undefined;
+        //console.log("selectPic", pic);
+        this.picsActions.selectPic(pic);
     }
 
 }

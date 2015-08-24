@@ -40,8 +40,20 @@ var PicsListController = (function () {
         }
     }, {
         key: "removePic",
-        value: function removePic(pic) {
+        value: function removePic(pic, event) {
+            this.f = undefined;
             this.picsActions.removePic(pic);
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        }
+    }, {
+        key: "selectPic",
+        value: function selectPic(pic) {
+            this.f = undefined;
+            //console.log("selectPic", pic);
+            this.picsActions.selectPic(pic);
         }
     }]);
 

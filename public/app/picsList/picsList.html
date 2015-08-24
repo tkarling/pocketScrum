@@ -52,7 +52,7 @@
         </span>
         </div>
         {{pictures.errorMsg}}
-        <img class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
+        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img" ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"/>
     </div>
 
     <div class="ps-page-content">
@@ -64,10 +64,10 @@
 
         <div style="text-align: left;">
             <span ng-repeat="pic in pictures.pics track by $id(pic)">
-                <div class="ps-img-container">
+                <div class="ps-img-container" ng-click="pictures.selectPic(pic)">
                     <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
                     <button class="ps-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
-                            ng-click="pictures.removePic(pic)">
+                            ng-click="pictures.removePic(pic, $event)">
                         <i class="material-icons">delete</i>
                     </button>
                 </div>
