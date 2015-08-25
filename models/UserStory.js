@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema ({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
         type: String
@@ -16,7 +17,8 @@ var schema = new mongoose.Schema ({
             'done',
             'impeded',
             'rejected'
-        ]
+        ],
+        default: "not started"
     },
     reasonForImpeded: {
         type: String

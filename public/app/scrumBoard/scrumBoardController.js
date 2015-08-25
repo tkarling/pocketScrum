@@ -24,9 +24,11 @@ class ScrumBoardController {
     }
 
     addStory(story) {
-        this.newStory.status = "not started";
-        this.userStoryActions.addStory(this.newStory);
-        this.newStory = {};
+        if(this.newStory.name) {
+            this.newStory.status = "not started";
+            this.userStoryActions.addStory(this.newStory);
+            this.newStory = {};
+        }
     }
 
     removeStory(story, event) {

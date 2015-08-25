@@ -18,6 +18,7 @@ app.use(cors());
 
 // API
 var PicCtrl = require("./controllers/PicCtrl");
+var StoryCtrl = require("./controllers/UserStoryCtrl");
 
 
 var type = upload.single('file');
@@ -28,8 +29,13 @@ app.get("/api/pocketScrum/fullpic", PicCtrl.readFullPic);              // get on
 app.get("/api/pocketScrum/thumbnail", PicCtrl.readThumbnail);   // get one thumbnail image
 
 app.put("/api/pocketScrum/designpic", PicCtrl.update);          // update pic data for one pic
-
 app.delete("/api/pocketScrum/designpic", PicCtrl.delete);       // delete one pic, thumb & data
+
+
+app.post('/api/pocketScrum/stories', StoryCtrl.create);
+app.get("/api/pocketScrum/stories", StoryCtrl.read);
+app.put("/api/pocketScrum/stories", StoryCtrl.update);
+app.delete("/api/pocketScrum/stories", StoryCtrl.delete);
 
 
 var mongoose = require('mongoose');
