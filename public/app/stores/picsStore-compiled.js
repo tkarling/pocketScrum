@@ -96,12 +96,15 @@ var PicsStore = (function (_EventEmitter) {
             //this.pics.push({qty: 1, pic: pic});
             var self = this;
             this.errorMsg = "";
+            self.currentPic = {};
             return this.picsService.addPic(pic).then(function (response) {
                 self.currentPic = response.data;
             }, function (error) {
-                if (error.status > 0) console.log("addPic error", error);
-                self.errorMsg = error.status + ': ' + error.statusText;
-                self.currentPic = {};
+                if (error.status > 0) {
+                    console.log("addPic error", error);
+                    self.errorMsg = error.status + ': ' + error.statusText;
+                    //self.currentPic = {};
+                }
             }, function (evt) {
                 self.currentPic.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 self.emitSetChange();
@@ -110,6 +113,7 @@ var PicsStore = (function (_EventEmitter) {
     }, {
         key: "removePic",
         value: function removePic(pic) {
+            this.errorMsg = "";
             if (this.currentPic.picId == pic.picId) {
                 this.currentPic = {};
             }
@@ -118,11 +122,13 @@ var PicsStore = (function (_EventEmitter) {
     }, {
         key: "savePic",
         value: function savePic(pic) {
+            this.errorMsg = "";
             return this.picsService.savePic(pic);
         }
     }, {
         key: "selectPic",
         value: function selectPic(pic) {
+            this.errorMsg = "";
             this.currentPic = pic;
         }
     }, {
