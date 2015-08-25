@@ -13,5 +13,5 @@ html, body, main, ng-view {
 
 .ps-page-content {
     margin: auto;
-    padding: 2%;
+    padding: 0px 2%;
 }

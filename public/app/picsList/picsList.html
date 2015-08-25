@@ -1,10 +1,18 @@
 <style>
-    .ps-add-button-container {
+    .ps-tool-container {
         text-align: right;
+        padding:4% 0px;
     }
 
-    .ps-detailled-img {
-        max-width: 100%;
+    .ps-search-box {
+        float: left;
+        display: inline;
+        width: calc(100% - 72px);
+    }
+
+    .ps-thumbnails {
+        /*position: absolute;*/
+        /*bottom: 0;*/
     }
 
     .ps-thumbnail-img {
@@ -19,25 +27,31 @@
         max-width: 29%;
     }
 
-    .ps-delete-button {
+    .ps-small-delete-button {
         position: absolute;
         bottom: 10px;
         right: 10px;
     }
 
-    .ps-thumbnails {
-        /*position: absolute;*/
-        /*bottom: 0;*/
-    }
 
     .ps-notes-container {
         width: 100%;
     }
+
+    .ps-detailled-img {
+        max-width: 100%;
+    }
 </style>
 <div class="mdl-grid ps-page-content">
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
-        <div style="height:36px;" class="ps-add-button-container">
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored ec-add-button"
+        <div class="ps-tool-container">
+            <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                    ng-click="pictures.deleteVisible = ! pictures.deleteVisible">
+                <i class="material-icons">delete</i>
+            </button>
+            <button ng-if="! pictures.deleteVisible"
+                    class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                     type="file" ngf-select="pictures.addPic($file)"
                     accept="image/*" ngf-max-size="4MB">
                 <!--ngf-max-height="1000"-->
@@ -47,17 +61,11 @@
 
 
         <div class="ps-thumbnails">
-            <!--<h4>Pics</h4>-->
-            <!--<form ng-submit="pictures.addPic(pictures.newPic)">-->
-            <!--<input type="text" ng-model="pictures.newPic">-->
-            <!--<button type="submit">Add</button>-->
-            <!--</form>-->
-
             <div style="text-align: left;">
-            <span ng-repeat="pic in pictures.pics track by $id(pic)">
+            <span ng-repeat="pic in pictures.pics | filter: search as results track by $id(pic)">
                 <div class="ps-thumbnail-container" ng-click="pictures.selectPic(pic)">
                     <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
-                    <button class="ps-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                    <button ng-if="pictures.deleteVisible" class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                             ng-click="pictures.removePic(pic, $event)">
                         <i class="material-icons">delete</i>
                     </button>
