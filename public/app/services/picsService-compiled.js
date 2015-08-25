@@ -11,7 +11,7 @@ var picsService = (function () {
         //console.log("init picsService");
         this.url = MY_SERVER.url;
         this.picsBaseUrl = MY_SERVER.url + "/designpic";
-        this.picsBaseUrlWId = MY_SERVER.url + "/designpic?id=";
+        this.picsBaseUrlWId = this.picsBaseUrl + "?id=";
         this.$http = $http;
         this.Upload = Upload;
     }

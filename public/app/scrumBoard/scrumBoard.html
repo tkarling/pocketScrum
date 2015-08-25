@@ -1,0 +1,54 @@
+<style>
+    .ps-tool-container {
+        text-align: right;
+        padding: 4% 0px;
+    }
+
+    .ps-search-box {
+        float: left;
+        display: inline;
+        width: calc(100% - 72px);
+    }
+</style>
+<!--Hello{{scrumBoard.test}}-->
+
+<div class="mdl-grid ps-page-content">
+
+    <section>
+        <form name="myForm" submit="scrumBoard.addStory()">
+                <input style="height:40px;" class="mdl-textfield__input" type="text" ng-model="scrumBoard.newStory.name"
+                       placeholder="new story name"/>
+        </form>
+    </section>
+    <br>
+
+    {{scrumBoard.errorMsg}}
+    <!--<div class="mdl-cell mdl-cell&#45;&#45;3-col mdl-cell&#45;&#45;4-col-phone">-->
+    <div class="ps-tool-container">
+        <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search"/>
+        <button ng-if="! scrumBoard.deleteVisible"
+                class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                ng-click="scrumBoard.addStory()">
+            <i class="material-icons">add</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
+            <i class="material-icons">delete</i>
+        </button>
+    </div>
+
+    <div class="ps-story-sheet">
+        <div class="ps-user-story"
+             ng-repeat="story in scrumBoard.stories | filter: search as results track by $id(story)"
+             ng-click="scrumBoard.editStory(story)">
+            <img class="ps-team-member-img" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.avatar}}"/>
+            {{story.name}}
+            <button ng-if="scrumBoard.deleteVisible"
+                    class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                    ng-click="scrumBoard.removeStory(story, $event)">
+                <i class="material-icons">delete</i>
+            </button>
+        </div>
+    </div>
+    <!--</div>-->
+</div>

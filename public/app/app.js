@@ -8,12 +8,16 @@ angular.module("myApp")
     })
     .config(function($routeProvider) {
         $routeProvider
-            .when("/picsList", {
+            .when("/pictures", {
                 templateUrl: "./app/picsList/picsList.html",
                 controller: "PicsListController as pictures"
             })
+            .when("/scrumBoard", {
+                templateUrl: "./app/scrumBoard/scrumBoard.html",
+                controller: "ScrumBoardController as scrumBoard"
+            })
             .otherwise({
-                redirectTo: "/picsList"
+                redirectTo: "/scrumBoard"
             });
 
     });
