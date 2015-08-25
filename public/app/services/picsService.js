@@ -28,7 +28,7 @@ class picsService {
     }
 
     savePic(pic) {
-        console.log("savePic", pic);
+        //console.log("savePic", pic);
         return this.$http.put(this.picsBaseUrlWId + pic._id, pic);
     }
 }

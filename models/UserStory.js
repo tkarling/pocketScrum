@@ -4,6 +4,9 @@ var schema = new mongoose.Schema ({
     name: {
         type: String
     },
+    description: {
+        type: String
+    },
     status: {
         type: String,
         lowercase: true,
@@ -14,6 +17,9 @@ var schema = new mongoose.Schema ({
             'impeded',
             'rejected'
         ]
+    },
+    reasonForImpeded: {
+        type: String
     },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,

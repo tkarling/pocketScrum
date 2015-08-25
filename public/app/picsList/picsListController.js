@@ -8,6 +8,7 @@ class PicsListController {
         this.Upload = Upload;
         this.$timeout = $timeout;
         this.resetPics();
+        this.resetCurrentPic();
 
         this.picsBaseUrl = this.url + "/designpic";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
@@ -47,14 +48,18 @@ class PicsListController {
     }
 
     selectPic(pic) {
-        //this.savePic();
-        this.f = undefined;
-        //console.log("selectPic", pic);
-        this.picsActions.selectPic(pic);
+        this.savePic();
+        if(pic._id !== this.currentPic._id) {
+            this.f = undefined;
+            //console.log("selectPic", pic);
+            this.picsActions.selectPic(pic);
+        }
     }
 
     savePic() {
-        this.picsActions.savePic(this.currentPic);
+        if(this.currentPic._id) {
+            this.picsActions.savePic(this.currentPic);
+        }
     }
 
 }

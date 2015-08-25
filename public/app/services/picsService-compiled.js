@@ -39,7 +39,7 @@ var picsService = (function () {
     }, {
         key: "savePic",
         value: function savePic(pic) {
-            console.log("savePic", pic);
+            //console.log("savePic", pic);
             return this.$http.put(this.picsBaseUrlWId + pic._id, pic);
         }
     }]);

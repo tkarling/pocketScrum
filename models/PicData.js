@@ -4,6 +4,9 @@ var schema = new mongoose.Schema ({
     name: {
         type: String
     },
+    note: {
+        type: String
+    },
     keywords: [{
             type: String
     }],

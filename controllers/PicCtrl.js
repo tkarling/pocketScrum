@@ -54,20 +54,16 @@ module.exports = {
             });
         });
     },
-
-    create: function (req, res) {
-        var imgPath = './images/';
-        var newPic = new Pic;
-        newPic.img.data = fs.readFileSync(imgPath + req.query.file + ".jpg");
-        newPic.img.contentType = 'image/jpg';
-        newPic.save(function (err, result) {
-            //console.log("result", result);
-            if (err) return res.status(500).send(err);
-            else res.send(result._id);
-        });
+    
+    read: function(req, res) {
+        PicData.find(req.query)
+            .exec(function(err, result) {
+                if (err) return res.status(500).send(err);
+                else res.send(result);
+            });
     },
 
-    read: function (req, res, next) {
+    readFullPic: function (req, res, next) {
         Pic.findById(req.query.id, function (err, doc) {
             if (err) return next(err);
             res.contentType(doc.img.contentType);
@@ -85,9 +81,17 @@ module.exports = {
     },
 
     update: function (req, res) {
-        Pic.findByIdAndUpdate(req.query.id, req.body, function (err, result) {
+        console.log("update", req.query.id, req.body);
+        var id = req.query.id;
+        var updatedObject = req.body;
+        PicData.findByIdAndUpdate(id, updatedObject, {
+            new: true
+        }, function (err, result) {
             if (err) return res.status(500).send(err);
-            else res.send(result);
+            else {
+                console.log("update result", result);
+                res.send(result);
+            }
         });
     },
 

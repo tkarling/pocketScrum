@@ -17,15 +17,14 @@ app.use(cors());
 
 
 // API
-var ThumbnailCtrl = require("./controllers/ThumbnailCtrl");
 var PicCtrl = require("./controllers/PicCtrl");
 
 
 var type = upload.single('file');
 app.post('/api/pocketScrum/designpic', type, PicCtrl.upload);   // add one pic, thumb & data
 
-app.get("/api/pocketScrum/designpic", ThumbnailCtrl.read);      // get list of pic data
-app.get("/api/pocketScrum/fullpic", PicCtrl.read);              // get one full pic image
+app.get("/api/pocketScrum/designpic", PicCtrl.read);      // get list of pic data
+app.get("/api/pocketScrum/fullpic", PicCtrl.readFullPic);              // get one full pic image
 app.get("/api/pocketScrum/thumbnail", PicCtrl.readThumbnail);   // get one thumbnail image
 
 app.put("/api/pocketScrum/designpic", PicCtrl.update);          // update pic data for one pic

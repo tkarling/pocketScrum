@@ -14,6 +14,7 @@ var PicsListController = (function () {
         this.Upload = Upload;
         this.$timeout = $timeout;
         this.resetPics();
+        this.resetCurrentPic();
 
         this.picsBaseUrl = this.url + "/designpic";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
@@ -58,15 +59,19 @@ var PicsListController = (function () {
     }, {
         key: "selectPic",
         value: function selectPic(pic) {
-            //this.savePic();
-            this.f = undefined;
-            //console.log("selectPic", pic);
-            this.picsActions.selectPic(pic);
+            this.savePic();
+            if (pic._id !== this.currentPic._id) {
+                this.f = undefined;
+                //console.log("selectPic", pic);
+                this.picsActions.selectPic(pic);
+            }
         }
     }, {
         key: "savePic",
         value: function savePic() {
-            this.picsActions.savePic(this.currentPic);
+            if (this.currentPic._id) {
+                this.picsActions.savePic(this.currentPic);
+            }
         }
     }]);
 
