@@ -14,11 +14,4 @@ html, body, main, ng-view {
 .ps-page-content {
     margin: auto;
     padding: 2%;
-    max-width: 800px;
-    height: 80%;
-}
-
-.ps-container {
-    padding: 1% 0px;
-    text-align: center;
 }
