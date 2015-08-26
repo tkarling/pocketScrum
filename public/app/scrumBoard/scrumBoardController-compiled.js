@@ -16,6 +16,7 @@ var ScrumBoardController = (function () {
         this.storiesBaseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
+        this.statuses = ["not started", "in progress", "impeded", "done"];
 
         var self = this;
         userStoryStore.addListener(function () {

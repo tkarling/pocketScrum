@@ -10,6 +10,7 @@ class ScrumBoardController {
         this.storiesBaseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
+        this.statuses = ["not started", "in progress", "impeded", "done"];
 
         var self = this;
         userStoryStore.addListener(function () {
@@ -41,6 +42,7 @@ class ScrumBoardController {
 
     editStory(story) {
     }
+
 }
 
 angular.module("myApp").controller("ScrumBoardController", ScrumBoardController);
