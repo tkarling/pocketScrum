@@ -22,28 +22,56 @@
         margin: 2% 0px;
     }
 
-    .ps-story-group {
+    .ps-group {
         padding: 1%;
-        border: 2px solid blue;
+        border: 3px solid blue;
         display: inline-block;
         text-align: left;
+        display: flex;
+        flex-direction: column;
     }
 
     .ps-group-item {
+        border: 2px solid blue;
+        box-sizing: border-box
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: left;
-        flex-wrap: nowrap;
+        padding: 1%;
+        margin: 1% 0px;
+        /*flex-direction: row;*/
+        /*justify-content: left;*/
+        /*flex-wrap: nowrap;*/
     }
 
-    .ps-group-item span {
-        padding-left: 2%;
-    }
-
-    .ps-avatar {
+    .ps-group-item .ps-avatar {
         width: 30px;
         height: 30px;
+        margin: 2% 0px;
     }
+
+    .ps-group-item .ps-group-item-content {
+        width:calc(100% - 30px);
+        padding-left: 2%
+    }
+
+    .ps-group-item .ps-first-row {
+        /*border: 1px solid orange;*/
+    }
+
+    .ps-group-item .ps-second-row {
+        /*border: 1px solid purple;*/
+    }
+
+    .ps-group-item .ps-feature {
+        /*border: 1px solid blue;*/
+        float: left;
+    }
+
+    .ps-group-item .ps-sprint-release {
+        /*border: 1px solid green;*/
+        float: right;
+    }
+
 </style>
 
 <div class="mdl-grid ps-page-content">
@@ -66,7 +94,7 @@
     </div>
 
     <div class="ps-groups">
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-story-group"
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
              ng-repeat="status in scrumBoard.statuses">
             <h5>{{status}}</h5>
             <div class="ps-group-item"
@@ -78,9 +106,12 @@
                     <i class="material-icons">delete</i>
                 </button>
                 <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}55dd009fa2909451656e9114"/>
-                <span>
-                    <div>{{story.name}}</div>
-                    <div>sprint-1</div>
+                <div class="ps-group-item-content">
+                    <div class="ps-first-row">{{story.name}}</div>
+                    <div class="ps-second-row">
+                        <span class="ps-feature">Feature X</span>
+                        <span class="ps-sprint-release">sprint-1</span>
+                    </div>
                 </span>
             </div>
         </div>
