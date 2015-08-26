@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myApp", ["ngRoute", "ngFileUpload"]);
+angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop"]);
 
 angular.module("myApp").service("MY_SERVER", function ($location) {
     this.url = "http://" + $location.host() + ":" + $location.port() + "/api/pocketScrum";

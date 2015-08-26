@@ -43,6 +43,12 @@ class ScrumBoardController {
     editStory(story) {
     }
 
+    handleDrop(status) {
+        console.log("handleDrop called", status);
+
+    }
+
+
 }
 
 angular.module("myApp").controller("ScrumBoardController", ScrumBoardController);

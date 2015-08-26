@@ -51,6 +51,11 @@ var ScrumBoardController = (function () {
     }, {
         key: "editStory",
         value: function editStory(story) {}
+    }, {
+        key: "handleDrop",
+        value: function handleDrop(status) {
+            console.log("handleDrop called", status);
+        }
     }]);
 
     return ScrumBoardController;

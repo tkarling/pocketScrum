@@ -38,9 +38,6 @@
         display: flex;
         padding: 1%;
         margin: 1% 0px;
-        /*flex-direction: row;*/
-        /*justify-content: left;*/
-        /*flex-wrap: nowrap;*/
     }
 
     .ps-group-item .ps-avatar {
@@ -95,10 +92,11 @@
 
     <div class="ps-groups">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
-             ng-repeat="status in scrumBoard.statuses">
+             droppable drop="scrumBoard.handleDrop"
+             ng-repeat="status in scrumBoard.statuses" moi="{{status}}">
             <h5>{{status}}</h5>
-            <div class="ps-group-item"
-                 ng-repeat="story in scrumBoard.stories | filter: search as results track by $id(story)"
+            <div class="ps-group-item" draggable
+                 ng-repeat="story in scrumBoard.stories | filter: status as results track by $id(story)"
                  ng-click="scrumBoard.editStory(story)">
                 <button ng-if="scrumBoard.deleteVisible"
                         class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
