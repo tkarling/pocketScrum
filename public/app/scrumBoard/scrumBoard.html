@@ -92,12 +92,13 @@
 
     <div class="ps-groups">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
-             droppable drop="scrumBoard.handleDrop"
-             ng-repeat="status in scrumBoard.statuses" moi="{{status}}">
+             droppable drop="scrumBoard.handleDrop" ctrl="scrumBoard"
+             ng-repeat="status in scrumBoard.statuses" new-status="{{status}}">
             <h5>{{status}}</h5>
-            <div class="ps-group-item" draggable
+            <div class="ps-group-item" draggable dr-dragend="scrumBoard.handleDragEnd"
+                 dr-ctrl="scrumBoard" dr-index="$index"
                  ng-repeat="story in scrumBoard.stories | filter: status as results track by $id(story)"
-                 ng-click="scrumBoard.editStory(story)">
+                 ng-click="scrumBoard.editStory(story)" dr-story="story">
                 <button ng-if="scrumBoard.deleteVisible"
                         class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                         ng-click="scrumBoard.removeStory(story, $event)">

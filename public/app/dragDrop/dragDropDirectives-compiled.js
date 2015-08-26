@@ -4,33 +4,43 @@
 
 var app = angular.module('dragDrop', []);
 app.directive('draggable', function () {
-    return function (scope, element) {
-        // this gives us the native JS object
-        var el = element[0];
+    return {
+        scope: {
+            drDragend: '&',
+            drStory: '=',
+            drCtrl: '=',
+            drIndex: '@'
+        },
 
-        el.draggable = true;
+        link: function link(scope, element) {
+            // this gives us the native JS object
+            var el = element[0];
 
-        el.addEventListener('dragstart', function (e) {
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('Text', this.id);
-            this.classList.add('drag');
-            //console.log("added drag");
-            return false;
-        }, false);
+            el.draggable = true;
 
-        el.addEventListener('dragend', function (e) {
-            this.classList.remove('drag');
-            //console.log("removed drag");
-            return false;
-        }, false);
+            el.addEventListener('dragstart', function (e) {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('Text', this.id);
+                this.classList.add('drag');
+                //console.log("added drag");
+                return false;
+            }, false);
+
+            el.addEventListener('dragend', function (e) {
+                this.classList.remove('drag');
+                scope.drDragend()(scope.drCtrl, scope.drStory);
+                return false;
+            }, false);
+        }
     };
 });
 
-app.directive('droppable', function () {
+app.directive('droppable', function ($timeout) {
     return {
         scope: {
             drop: '&',
-            moi: '@'
+            newStatus: '@',
+            ctrl: '='
         },
         link: function link(scope, element) {
             // again we need the native object
@@ -62,46 +72,13 @@ app.directive('droppable', function () {
                 if (e.stopPropagation) e.stopPropagation();
 
                 this.classList.remove('over');
-                //console.log("removed over from drop");
-
-                console.log("moi", scope.moi);
-                //scope.drop()("moi");
-                scope.drop()(scope.moi);
-
-                //var binId = this.id;
-                ////var item = document.getElementById(e.dataTransfer.getData('Text'));
-                ////this.appendChild(item);
-                //// call the passed drop function
-                //scope.$apply(function(scope) {
-                //    var fn = scope.drop();
-                //    if ('undefined' !== typeof fn) {
-                //        fn(item.id, binId);
-                //    }
-                //});
-
-                //scope.$apply(function(scope) {
-                //    console.log("in $apply");
-                //    //scope.drop();
-                //    var fn = scope.drop();
-                //    //if ('undefined' !== typeof fn) {
-                //        fn();
-                //    //}
-                //});
+                $timeout(function () {
+                    scope.drop()(scope.ctrl, scope.newStatus);
+                }, 300);
 
                 return false;
             }, false);
         }
-        //,
-        //controller : function($scope){
-        //    var exVm = this;
-        //    exVm.min = 3;
-        //    exVm.max = $scope.max;
-        //    console.log('CTRL: $scope.max = %i', $scope.max);
-        //    console.log('CTRL: exVm.min = %i', exVm.min);
-        //    console.log('CTRL: exVm.max = %i', exVm.max);
-        //},
-        //controllerAs: 'exVm',
-        //bindToController: true, //required in 1.3+ with controllerAs
     };
 });
 

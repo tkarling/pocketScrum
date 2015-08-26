@@ -16,17 +16,17 @@ class userStoryService {
     }
 
     addStory(story) {
-        console.log("addStory", story);
+        //console.log("addStory", story);
         return this.$http.post(this.storiesBaseUrl, story);
     }
 
     removeStory(story) {
-        console.log("removeStory", story);
+        //console.log("removeStory", story);
         return this.$http.delete(this.storiesBaseUrlWId + story._id);
     }
 
     saveStory(story) {
-        console.log("saveStory", story);
+        //console.log("saveStory", story);
         return this.$http.put(this.storiesBaseUrlWId + story._id, story);
     }
 }

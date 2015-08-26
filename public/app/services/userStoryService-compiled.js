@@ -25,19 +25,19 @@ var userStoryService = (function () {
     }, {
         key: "addStory",
         value: function addStory(story) {
-            console.log("addStory", story);
+            //console.log("addStory", story);
             return this.$http.post(this.storiesBaseUrl, story);
         }
     }, {
         key: "removeStory",
         value: function removeStory(story) {
-            console.log("removeStory", story);
+            //console.log("removeStory", story);
             return this.$http["delete"](this.storiesBaseUrlWId + story._id);
         }
     }, {
         key: "saveStory",
         value: function saveStory(story) {
-            console.log("saveStory", story);
+            //console.log("saveStory", story);
             return this.$http.put(this.storiesBaseUrlWId + story._id, story);
         }
     }]);

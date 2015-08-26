@@ -41,11 +41,19 @@ class ScrumBoardController {
     }
 
     editStory(story) {
+
     }
 
-    handleDrop(status) {
-        console.log("handleDrop called", status);
+    handleDragEnd(ctrl, story) {
+        ctrl.draggedStory = story;
+    }
 
+
+
+    handleDrop(ctrl, status) {
+        ctrl.draggedStory.status = status;
+        ctrl.userStoryActions.saveStory(ctrl.draggedStory);
+        ctrl.draggedStory = undefined;
     }
 
 
