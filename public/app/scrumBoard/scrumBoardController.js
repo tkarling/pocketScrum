@@ -44,16 +44,16 @@ class ScrumBoardController {
 
     }
 
-    handleDragEnd(ctrl, story) {
-        ctrl.draggedStory = story;
+    setDraggedStory(story) {
+        this.draggedStory = story;
     }
 
 
 
-    handleDrop(ctrl, status) {
-        ctrl.draggedStory.status = status;
-        ctrl.userStoryActions.saveStory(ctrl.draggedStory);
-        ctrl.draggedStory = undefined;
+    setStatus(status) {
+        this.draggedStory.status = status;
+        this.userStoryActions.saveStory(this.draggedStory);
+        this.draggedStory = undefined;
     }
 
 

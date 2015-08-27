@@ -92,13 +92,15 @@
 
     <div class="ps-groups">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
-             droppable drop="scrumBoard.handleDrop" ctrl="scrumBoard"
-             ng-repeat="status in scrumBoard.statuses" new-status="{{status}}">
+             droppable drop-fn="scrumBoard.setStatus" drop-ctrl="scrumBoard"
+             ng-repeat="status in scrumBoard.statuses" drop-value="{{status}}">
+
             <h5>{{status}}</h5>
-            <div class="ps-group-item" draggable dr-dragend="scrumBoard.handleDragEnd"
-                 dr-ctrl="scrumBoard" dr-index="$index"
+            <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
+                 drag-ctrl="scrumBoard" drag-index="$index"
                  ng-repeat="story in scrumBoard.stories | filter: status as results track by $id(story)"
-                 ng-click="scrumBoard.editStory(story)" dr-story="story">
+                 ng-click="scrumBoard.editStory(story)" drag-item="story">
+
                 <button ng-if="scrumBoard.deleteVisible"
                         class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                         ng-click="scrumBoard.removeStory(story, $event)">
@@ -112,6 +114,7 @@
                         <span class="ps-sprint-release">sprint-1</span>
                     </div>
                 </span>
+
             </div>
         </div>
     </div>

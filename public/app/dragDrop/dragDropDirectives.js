@@ -4,10 +4,10 @@ var app = angular.module('dragDrop', []);
 app.directive('draggable', function () {
     return {
         scope: {
-            drDragend: '&',
-            drStory: '=',
-            drCtrl: '=',
-            drIndex:  '@'
+            dragstartFn: '&',
+            dragCtrl: '=',
+            dragItem: '=',
+            dragIndex:  '@'
         }
         ,
         link: function (scope, element) {
@@ -19,6 +19,7 @@ app.directive('draggable', function () {
             el.addEventListener(
                 'dragstart',
                 function (e) {
+                    scope.dragstartFn().call(scope.dragCtrl, scope.dragItem);
                     e.dataTransfer.effectAllowed = 'move';
                     e.dataTransfer.setData('Text', this.id);
                     this.classList.add('drag');
@@ -32,7 +33,7 @@ app.directive('draggable', function () {
                 'dragend',
                 function (e) {
                     this.classList.remove('drag');
-                    scope.drDragend()(scope.drCtrl, scope.drStory);
+                    //scope.dragstartFn().call(scope.dragCtrl, scope.dragItem);
                     return false;
                 },
                 false
@@ -44,9 +45,9 @@ app.directive('draggable', function () {
 app.directive('droppable', function ($timeout) {
     return {
         scope: {
-            drop: '&',
-            newStatus: '@',
-            ctrl: '='
+            dropFn: '&',
+            dropCtrl: '=',
+            dropValue: '@'
         },
         link: function (scope, element) {
             // again we need the native object
@@ -56,7 +57,7 @@ app.directive('droppable', function ($timeout) {
                 'dragover',
                 function (e) {
                     e.dataTransfer.dropEffect = 'move';
-                    // allows us to drop
+                    // allows us to dropFn
                     if (e.preventDefault) e.preventDefault();
                     this.classList.add('over');
                     //console.log("added over from dragover");
@@ -92,10 +93,7 @@ app.directive('droppable', function ($timeout) {
                     if (e.stopPropagation) e.stopPropagation();
 
                     this.classList.remove('over');
-                    $timeout(function () {
-                        scope.drop()(scope.ctrl, scope.newStatus);
-
-                    }, 300);
+                    scope.dropFn().call(scope.dropCtrl, scope.dropValue);
 
                     return false;
                 },

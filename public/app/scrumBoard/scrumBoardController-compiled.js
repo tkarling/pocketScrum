@@ -52,16 +52,16 @@ var ScrumBoardController = (function () {
         key: "editStory",
         value: function editStory(story) {}
     }, {
-        key: "handleDragEnd",
-        value: function handleDragEnd(ctrl, story) {
-            ctrl.draggedStory = story;
+        key: "setDraggedStory",
+        value: function setDraggedStory(story) {
+            this.draggedStory = story;
         }
     }, {
-        key: "handleDrop",
-        value: function handleDrop(ctrl, status) {
-            ctrl.draggedStory.status = status;
-            ctrl.userStoryActions.saveStory(ctrl.draggedStory);
-            ctrl.draggedStory = undefined;
+        key: "setStatus",
+        value: function setStatus(status) {
+            this.draggedStory.status = status;
+            this.userStoryActions.saveStory(this.draggedStory);
+            this.draggedStory = undefined;
         }
     }]);
 
