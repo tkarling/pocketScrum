@@ -15,6 +15,10 @@ var schema = new mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Pic"
     }
+    //, currentProject: {
+    //    type: mongoose.Schema.Types.ObjectId,
+    //    ref: "Project"
+    //}
 
 });
 

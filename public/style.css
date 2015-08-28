@@ -102,7 +102,7 @@ header img {
   margin: 2%;
 }
 .scrumBoard .ps-group-item .ps-group-item-content {
-  padding-left: 2%;
+  padding: 0px 2%;
 }
 .scrumBoard .ps-group-item .ps-first-row {
   /*border: 1px solid orange;*/

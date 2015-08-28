@@ -8,6 +8,10 @@
 //    },
 //    description: {
 //        type: String
+//    },
+//    project: {
+//        type: mongoose.Schema.Types.ObjectId,
+//        ref: "Project"
 //    }
 //});
 //
