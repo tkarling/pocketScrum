@@ -20,6 +20,9 @@ var schema = new mongoose.Schema ({
         ],
         default: "not started"
     },
+    order: {
+        type: Number
+    },
     reasonForImpeded: {
         type: String
     },

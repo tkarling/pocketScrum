@@ -11,14 +11,16 @@
 
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
+    <header class="mdl-layout__header" ng-controller="MainController as main">
         <div class="mdl-layout__header-row tk-header-row">
-            <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon">
+            <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon"
+                    ng-click="main.updateThumbnail()">
                 <i class="material-icons">menu</i>
             </button>
             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left">
                 <a class="mdl-menu__item" href="/#/scrumBoard">Scrum Board</a>
                 <a class="mdl-menu__item" href="/#/pictures">Pictures</a>
+                <a class="mdl-menu__item" href="/api/pocketScrum/logout">Logout</a>
             </ul>
             <span class="mdl-layout-title tk-app-title">Pocket Scrum</span>
 
@@ -27,6 +29,7 @@
                 <a class="mdl-menu__item" href="/#/scrumBoard">Scrum Board</a>
                 <a class="mdl-menu__item" href="/#/pictures">Pictures</a>
             </nav>
+            <img class="ps-avatar" ng-src="{{main.thumbnailUrl}}"/>
         </div>
     </header>
     <main class="mdl-layout__content">
@@ -51,6 +54,8 @@
 <script src="./app/stores/userStoryStore-compiled.js"></script>
 <script src="./app/services/userStoryService-compiled.js"></script>
 <script src="./app/dragDrop/dragDropDirectives-compiled.js"></script>
+<script src="./app/auth/authController-compiled.js"></script>
+<script src="./app/auth/authService-compiled.js"></script>
 
 
 </body>

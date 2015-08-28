@@ -12,3 +12,9 @@ server-compiled.js.map
 
 public/bower_components/*
 upload/*
+
+keys.js
+
+keys-compiled.js
+
+keys-compiled.js.map

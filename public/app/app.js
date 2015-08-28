@@ -8,6 +8,10 @@ angular.module("myApp")
     })
     .config(function($routeProvider) {
         $routeProvider
+            .when("/login", {
+                templateUrl: "./app/auth/auth.html",
+                controller: "AuthController as auth"
+            })
             .when("/pictures", {
                 templateUrl: "./app/picsList/picsList.html",
                 controller: "PicsListController as pictures"
@@ -17,7 +21,7 @@ angular.module("myApp")
                 controller: "ScrumBoardController as scrumBoard"
             })
             .otherwise({
-                redirectTo: "/scrumBoard"
+                redirectTo: "/login"
             });
 
     });
