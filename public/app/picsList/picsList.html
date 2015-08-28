@@ -1,53 +1,8 @@
-<style>
-    .ps-tool-container {
-        text-align: right;
-        padding: 4% 0px;
-    }
-
-    .ps-search-box {
-        float: left;
-        display: inline;
-        width: calc(100% - 72px);
-    }
-
-    .ps-thumbnails {
-        display: flex;
-        flex-direction: row;
-        justify-content: left;
-        flex-wrap: wrap;
-    }
-
-    .ps-thumbnail-img {
-        padding: 2%;
-        width: 96%;
-    }
-
-    .ps-thumbnail-container {
-        position: relative;
-        display: inline-block;
-        text-align: center;
-        max-width: 33%;
-    }
-
-    .ps-small-delete-button {
-        position: absolute;
-        bottom: 2%;
-        right: 2%;
-    }
-
-    .ps-notes-container {
-        width: 100%;
-    }
-
-    .ps-detailled-img {
-        max-width: 100%;
-    }
-</style>
-<div class="mdl-grid ps-page-content">
+<div class="pics-list mdl-grid ps-page-content">
 
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
         <div class="ps-tool-container">
-            <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
+            <input style="width: calc(100% - 72px);" class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
             <button ng-if="! pictures.deleteVisible"
                     class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                     type="file" ngf-select="pictures.addPic($file)"

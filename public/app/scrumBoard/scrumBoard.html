@@ -1,84 +1,9 @@
-<style>
-    .ps-tool-container {
-        text-align: right;
-        padding: 0px;
-    }
-
-    .ps-search-box {
-        float: left;
-        display: inline;
-        width: calc(100% - 72px);
-    }
-
-    .ps-groups {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: left;
-        flex-wrap: wrap;
-    }
-
-    .ps-groups h5 {
-        margin: 2% 0px;
-    }
-
-    .ps-group {
-        padding: 1%;
-        border: 3px solid blue;
-        display: inline-block;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .ps-group-item {
-        border: 2px solid blue;
-        box-sizing: border-box
-        width: 100%;
-        display: flex;
-        padding: 1%;
-        margin: 1% 0px;
-    }
-
-    .ps-group-item .ps-avatar {
-        width: 30px;
-        height: 30px;
-        margin: 2% 0px;
-    }
-
-    .ps-group-item .ps-group-item-content {
-        width:calc(100% - 30px);
-        padding-left: 2%
-    }
-
-    .ps-group-item .ps-first-row {
-        /*border: 1px solid orange;*/
-    }
-
-    .ps-group-item .ps-second-row {
-        /*border: 1px solid purple;*/
-    }
-
-    .ps-group-item .ps-feature {
-        /*border: 1px solid blue;*/
-        float: left;
-    }
-
-    .ps-group-item .ps-sprint-release {
-        /*border: 1px solid green;*/
-        float: right;
-    }
-
-</style>
-
-<div class="mdl-grid ps-page-content">
-
-
+<div class="scrumBoard mdl-grid ps-page-content">
     {{scrumBoard.errorMsg}}
     <div class="mdl-cell mdl-cell--12-col ps-tool-container">
         <input class="mdl-textfield__input" type="text" ng-model="scrumBoard.newStory.name"
                placeholder="new story name"/>
-        <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search"/>
+        <input style= "width: calc(100% - 72px)" class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search"/>
         <button ng-if="! scrumBoard.deleteVisible"
                 class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                 ng-click="scrumBoard.addStory()">
@@ -107,13 +32,13 @@
                     <i class="material-icons">delete</i>
                 </button>
                 <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}55dd009fa2909451656e9114"/>
-                <div class="ps-group-item-content">
+                <div class="ps-group-item-content" style="width:calc(100% - 30px);">
                     <div class="ps-first-row">{{story.name}}</div>
                     <div class="ps-second-row">
                         <span class="ps-feature">Feature X</span>
                         <span class="ps-sprint-release">sprint-1</span>
                     </div>
-                </span>
+                </div>
 
             </div>
         </div>

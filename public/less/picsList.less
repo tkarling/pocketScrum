@@ -1,0 +1,46 @@
+.pics-list {
+  .ps-tool-container {
+    text-align: right;
+    padding: @default-padding 0px;
+  }
+
+  .ps-search-box {
+    float: left;
+    display: inline;
+    //width: calc(100% - (@icon-width+8px));
+    //defined in html as less cannot calculate this
+  }
+
+  .ps-thumbnails {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+  }
+
+  .ps-thumbnail-img {
+    padding: @default-padding;
+    width: 100 - 2*@default-padding;
+  }
+
+  .ps-thumbnail-container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    max-width: 33%;
+  }
+
+  .ps-small-delete-button {
+    position: absolute;
+    bottom: @default-padding;
+    right: @default-padding;
+  }
+
+  .ps-notes-container {
+    width: 100%;
+  }
+
+  .ps-detailled-img {
+    max-width: 100%;
+  }
+}

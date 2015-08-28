@@ -1,0 +1,120 @@
+.tk-header-row {
+  padding-left: 16px;
+}
+.tk-app-title {
+  padding-left: 4px;
+}
+html,
+body,
+main,
+ng-view {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.ps-page-content {
+  margin: auto;
+  padding: 0px 2%;
+}
+header img {
+  width: 30px;
+  height: auto;
+}
+.login-page .ps-auth-page-content {
+  margin: 2%;
+}
+.login-page .ps-auth-page-content .mdl-card {
+  margin: auto;
+  min-height: initial;
+}
+.pics-list .ps-tool-container {
+  text-align: right;
+  padding: 2% 0px;
+}
+.pics-list .ps-search-box {
+  float: left;
+  display: inline;
+}
+.pics-list .ps-thumbnails {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+.pics-list .ps-thumbnail-img {
+  padding: 2%;
+  width: 96%;
+}
+.pics-list .ps-thumbnail-container {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  max-width: 33%;
+}
+.pics-list .ps-small-delete-button {
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+}
+.pics-list .ps-notes-container {
+  width: 100%;
+}
+.pics-list .ps-detailled-img {
+  max-width: 100%;
+}
+.scrumBoard .ps-tool-container {
+  text-align: right;
+  padding: 0px;
+}
+.scrumBoard .ps-search-box {
+  float: left;
+  display: inline;
+}
+.scrumBoard .ps-groups {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+.scrumBoard .ps-groups h5 {
+  margin: 2% 0px;
+}
+.scrumBoard .ps-group {
+  padding: 1%;
+  border: 3px solid blue;
+  display: inline-block;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.scrumBoard .ps-group-item {
+  border: 2px solid blue;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  margin: 2% 0px;
+}
+.scrumBoard .ps-group-item .ps-avatar {
+  width: 30px;
+  height: 30px;
+  margin: 2%;
+}
+.scrumBoard .ps-group-item .ps-group-item-content {
+  padding-left: 2%;
+}
+.scrumBoard .ps-group-item .ps-first-row {
+  /*border: 1px solid orange;*/
+}
+.scrumBoard .ps-group-item .ps-second-row {
+  /*border: 1px solid purple;*/
+}
+.scrumBoard .ps-group-item .ps-feature {
+  /*border: 1px solid blue;*/
+  float: left;
+}
+.scrumBoard .ps-group-item .ps-sprint-release {
+  /*border: 1px solid green;*/
+  float: right;
+}

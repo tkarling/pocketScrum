@@ -1,0 +1,72 @@
+.scrumBoard {
+  .ps-tool-container {
+    text-align: right;
+    padding: 0px;
+  }
+
+  .ps-search-box {
+    float: left;
+    display: inline;
+    //width: calc(100% - 72px);
+    //defined in html as less cannot calculate this
+  }
+
+  .ps-groups {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    flex-wrap: wrap;
+  }
+
+  .ps-groups h5 {
+    margin: 2% 0px;
+  }
+
+  .ps-group {
+    padding: 1%;
+    border: 3px solid blue;
+    display: inline-block;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ps-group-item {
+    border: 2px solid blue;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    margin: @default-padding 0px;
+  }
+
+  .ps-group-item .ps-avatar {
+    width: 30px;
+    height: 30px;
+    margin: @default-padding;
+  }
+
+  .ps-group-item .ps-group-item-content {
+    padding-left: @default-padding;
+    //width:calc(100% - 30px);
+    //defined in html as less cannot calculate this
+  }
+
+  .ps-group-item .ps-first-row {
+    /*border: 1px solid orange;*/
+  }
+
+  .ps-group-item .ps-second-row {
+    /*border: 1px solid purple;*/
+  }
+
+  .ps-group-item .ps-feature {
+    /*border: 1px solid blue;*/
+    float: left;
+  }
+
+  .ps-group-item .ps-sprint-release {
+    /*border: 1px solid green;*/
+    float: right;
+  }
+}
