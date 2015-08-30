@@ -77,6 +77,7 @@ var PicCtrl = require("./controllers/PicCtrl");
 var StoryCtrl = require("./controllers/UserStoryCtrl");
 var FeatureCtrl = require("./controllers/FeatureCtrl");
 var StatusCtrl = require("./controllers/StatusCtrl");
+var TeamMemberCtrl = require("./controllers/TeamMemberCtrl");
 
 var type = upload.single('file');
 app.post('/api/pocketScrum/designpic', type, PicCtrl.upload);   // add one pic, thumb & data
@@ -103,6 +104,11 @@ app.post('/api/pocketScrum/status', StatusCtrl.create);
 app.get("/api/pocketScrum/status", StatusCtrl.read);
 app.put("/api/pocketScrum/status", StatusCtrl.update);
 app.delete("/api/pocketScrum/status", StatusCtrl.delete);
+
+app.post('/api/pocketScrum/members', TeamMemberCtrl.create);
+app.get("/api/pocketScrum/members", TeamMemberCtrl.read);
+app.put("/api/pocketScrum/members", TeamMemberCtrl.update);
+app.delete("/api/pocketScrum/members", TeamMemberCtrl.delete);
 
 
 var mongoose = require('mongoose');

@@ -8,6 +8,7 @@ class ScrumBoardController {
         this.baseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
+        this.menuVisible = false;
 
         this.userStoryStore = userStoryStore;
         this.userStoryActions = userStoryActions;

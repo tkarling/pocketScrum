@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop"]);
+angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop", "contextMenu"]);
 
 angular.module("myApp")
     .service("MY_SERVER", function($location) {

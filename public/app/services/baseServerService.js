@@ -12,16 +12,16 @@ class baseServerService {
         });
     }
 
-    addItem(story) {
-        return this.$http.post(this.baseUrl, story);
+    addItem(item) {
+        return this.$http.post(this.baseUrl, item);
     }
 
-    removeItem(story) {
-        return this.$http.delete(this.baseUrlWId + story._id);
+    removeItem(item) {
+        return this.$http.delete(this.baseUrlWId + item._id);
     }
 
-    saveItem(story) {
-        return this.$http.put(this.baseUrlWId + story._id, story);
+    saveItem(item) {
+        return this.$http.put(this.baseUrlWId + item._id, item);
     }
 }
 
@@ -63,3 +63,13 @@ class featureService extends baseServerService {
     }
 }
 angular.module("myApp").service("featureService", featureService);
+
+class teamMemberService extends baseServerService {
+    constructor($http, MY_SERVER) {
+        super($http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + "/members";
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+}
+angular.module("myApp").service("teamMemberService", teamMemberService);

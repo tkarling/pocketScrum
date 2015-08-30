@@ -25,18 +25,18 @@ var baseServerService = (function () {
         }
     }, {
         key: "addItem",
-        value: function addItem(story) {
-            return this.$http.post(this.baseUrl, story);
+        value: function addItem(item) {
+            return this.$http.post(this.baseUrl, item);
         }
     }, {
         key: "removeItem",
-        value: function removeItem(story) {
-            return this.$http["delete"](this.baseUrlWId + story._id);
+        value: function removeItem(item) {
+            return this.$http["delete"](this.baseUrlWId + item._id);
         }
     }, {
         key: "saveItem",
-        value: function saveItem(story) {
-            return this.$http.put(this.baseUrlWId + story._id, story);
+        value: function saveItem(item) {
+            return this.$http.put(this.baseUrlWId + item._id, item);
         }
     }]);
 
@@ -100,5 +100,21 @@ var featureService = (function (_baseServerService3) {
 })(baseServerService);
 
 angular.module("myApp").service("featureService", featureService);
+
+var teamMemberService = (function (_baseServerService4) {
+    _inherits(teamMemberService, _baseServerService4);
+
+    function teamMemberService($http, MY_SERVER) {
+        _classCallCheck(this, teamMemberService);
+
+        _get(Object.getPrototypeOf(teamMemberService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + "/members";
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+    return teamMemberService;
+})(baseServerService);
+
+angular.module("myApp").service("teamMemberService", teamMemberService);
 
 //# sourceMappingURL=baseServerService-compiled.js.map
