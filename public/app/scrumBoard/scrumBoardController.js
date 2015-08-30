@@ -1,22 +1,33 @@
 "use strict";
 
 class ScrumBoardController {
-    constructor(MY_SERVER, userStoryStore, userStoryActions) {
+    constructor(MY_SERVER, userStoryStore, userStoryActions, statusStore) {
         this.url = MY_SERVER.url;
+
         this.userStoryStore = userStoryStore;
         this.userStoryActions = userStoryActions;
         this.resetStories();
+        var self = this;
+        statusStore.addListener(function () {
+            self.resetStatuses();
+        });
 
-        this.storiesBaseUrl = this.url + "/stories";
-        this.thumbnailUrl = this.url + "/thumbnail?id=";
-        this.newStory = {};
-        this.statuses = ["not started", "in progress", "impeded", "done"];
-
+        this.statusStore = statusStore;
+        this.resetStatuses ();
         var self = this;
         userStoryStore.addListener(function () {
             self.resetStories();
         });
 
+        this.storiesBaseUrl = this.url + "/stories";
+        this.thumbnailUrl = this.url + "/thumbnail?id=";
+        this.newStory = {};
+    }
+
+    resetStatuses () {
+        var NO_OF_GROUPS = 4;
+        this.statuses = this.statusStore.getStatuses();
+        this.statuses.splice(NO_OF_GROUPS, this.statuses.length - NO_OF_GROUPS);
     }
 
     resetStories() {

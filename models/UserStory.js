@@ -9,18 +9,11 @@ var schema = new mongoose.Schema ({
         type: String
     },
     status: {
-        type: String,
-        lowercase: true,
-        enum: [
-            'not started',
-            'in progress',
-            'done',
-            'impeded',
-            'rejected'
-        ],
-        default: "not started"
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Status",
+        default: "55e2326af68548f0fc933afb"
     },
-    order: {
+    priority: {
         type: Number
     },
     reasonForImpeded: {
@@ -29,6 +22,15 @@ var schema = new mongoose.Schema ({
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "TeamMember"
+    },
+    tag: {
+        type: String,
+        lowercase: true,
+        enum: [
+            'requirement',
+            'bug'
+        ],
+        default: "requirement"
     },
     sprint: {
         type: mongoose.Schema.Types.ObjectId,

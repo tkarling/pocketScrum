@@ -2,8 +2,7 @@
 
 var ADD_STORY = "ADD_STORY";
 var REMOVE_STORY = "REMOVE_STORY";
-var SELECT_PIC = "SELECT_PIC";
-var SAVE_PIC = "SAVE_PIC";
+var SAVE_STORY = "SAVE_STORY";
 
 class userStoryActions {
     constructor(dispatcher) {
@@ -26,7 +25,7 @@ class userStoryActions {
 
     saveStory(item) {
         this.dispatcher.emit({
-            actionType: SAVE_PIC,
+            actionType: SAVE_STORY,
             item: item
         });
     }
@@ -103,7 +102,7 @@ angular.module("myApp").service("userStoryStore", function (dispatcher, userStor
                 });
                 break;
 
-            case SAVE_PIC:
+            case SAVE_STORY:
                 userStoryStore.saveStory(action.item).then(function (response) {
                     userStoryStore.emitChange();
                 });

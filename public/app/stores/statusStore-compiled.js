@@ -8,67 +8,67 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ADD_STORY = "ADD_STORY";
-var REMOVE_STORY = "REMOVE_STORY";
-var SAVE_STORY = "SAVE_STORY";
+var ADD_STATUS = "ADD_STATUS";
+var REMOVE_STATUS = "REMOVE_STATUS";
+var SAVE_STATUS = "SAVE_STATUS";
 
-var userStoryActions = (function () {
-    function userStoryActions(dispatcher) {
-        _classCallCheck(this, userStoryActions);
+var statusActions = (function () {
+    function statusActions(dispatcher) {
+        _classCallCheck(this, statusActions);
 
         this.dispatcher = dispatcher;
     }
 
-    _createClass(userStoryActions, [{
-        key: "addStory",
-        value: function addStory(item) {
+    _createClass(statusActions, [{
+        key: "addStatus",
+        value: function addStatus(item) {
             this.dispatcher.emit({
-                actionType: ADD_STORY,
+                actionType: ADD_STATUS,
                 item: item
             });
         }
     }, {
-        key: "removeStory",
-        value: function removeStory(item) {
+        key: "removeStatus",
+        value: function removeStatus(item) {
             this.dispatcher.emit({
-                actionType: REMOVE_STORY,
+                actionType: REMOVE_STATUS,
                 item: item
             });
         }
     }, {
-        key: "saveStory",
-        value: function saveStory(item) {
+        key: "saveStatus",
+        value: function saveStatus(item) {
             this.dispatcher.emit({
-                actionType: SAVE_STORY,
+                actionType: SAVE_STATUS,
                 item: item
             });
         }
     }]);
 
-    return userStoryActions;
+    return statusActions;
 })();
 
-angular.module("myApp").service("userStoryActions", userStoryActions);
+angular.module("myApp").service("statusActions", statusActions);
 
-var UserStoryStore = (function (_EventEmitter) {
-    _inherits(UserStoryStore, _EventEmitter);
+var StatusStore = (function (_EventEmitter) {
+    _inherits(StatusStore, _EventEmitter);
 
-    function UserStoryStore(userStoryService) {
-        _classCallCheck(this, UserStoryStore);
+    function StatusStore(statusService) {
+        _classCallCheck(this, StatusStore);
 
-        _get(Object.getPrototypeOf(UserStoryStore.prototype), "constructor", this).call(this);
-        this.userStoryService = userStoryService;
+        _get(Object.getPrototypeOf(StatusStore.prototype), "constructor", this).call(this);
+        this.statusService = statusService;
 
-        this.stories = [];
+        this.statuses = [];
         this.errorMsg = "";
 
         this.emitChange();
     }
 
-    _createClass(UserStoryStore, [{
-        key: "getStories",
-        value: function getStories() {
-            return this.stories;
+    _createClass(StatusStore, [{
+        key: "getStatuses",
+        value: function getStatuses() {
+            return this.statuses;
         }
     }, {
         key: "getErrorMsg",
@@ -76,63 +76,63 @@ var UserStoryStore = (function (_EventEmitter) {
             return this.errorMsg;
         }
     }, {
-        key: "addStory",
-        value: function addStory(story) {
+        key: "addStatus",
+        value: function addStatus(status) {
             var self = this;
             this.errorMsg = "";
-            return this.userStoryService.addStory(story).then(function (response) {}, function (error) {
+            return this.statusService.addStatus(status).then(function (response) {}, function (error) {
                 if (error.status > 0) {
-                    console.log("addStory error", error);
+                    console.log("addStatus error", error);
                     self.errorMsg = error.status + ': ' + error.statusText;
                 }
             });
         }
     }, {
-        key: "removeStory",
-        value: function removeStory(story) {
+        key: "removeStatus",
+        value: function removeStatus(status) {
             this.errorMsg = "";
-            return this.userStoryService.removeStory(story);
+            return this.statusService.removeStatus(status);
         }
     }, {
-        key: "saveStory",
-        value: function saveStory(story) {
+        key: "saveStatus",
+        value: function saveStatus(status) {
             this.errorMsg = "";
-            return this.userStoryService.saveStory(story);
+            return this.statusService.saveStatus(status);
         }
     }, {
         key: "emitChange",
         value: function emitChange() {
             var self = this;
-            this.userStoryService.getStories().then(function (stories) {
-                self.stories = stories;
+            this.statusService.getStatuses().then(function (statuses) {
+                self.statuses = statuses;
                 self.emit("change");
             });
         }
     }]);
 
-    return UserStoryStore;
+    return StatusStore;
 })(EventEmitter);
 
-angular.module("myApp").service("userStoryStore", function (dispatcher, userStoryService) {
-    var userStoryStore = new UserStoryStore(userStoryService);
+angular.module("myApp").service("statusStore", function (dispatcher, statusService) {
+    var statusStore = new StatusStore(statusService);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {
-            case ADD_STORY:
-                userStoryStore.addStory(action.item).then(function (response) {
-                    userStoryStore.emitChange();
+            case ADD_STATUS:
+                statusStore.addStatus(action.item).then(function (response) {
+                    statusStore.emitChange();
                 });
                 break;
 
-            case REMOVE_STORY:
-                userStoryStore.removeStory(action.item).then(function (response) {
-                    userStoryStore.emitChange();
+            case REMOVE_STATUS:
+                statusStore.removeStatus(action.item).then(function (response) {
+                    statusStore.emitChange();
                 });
                 break;
 
-            case SAVE_STORY:
-                userStoryStore.saveStory(action.item).then(function (response) {
-                    userStoryStore.emitChange();
+            case SAVE_STATUS:
+                statusStore.saveStatus(action.item).then(function (response) {
+                    statusStore.emitChange();
                 });
                 break;
 
@@ -141,16 +141,16 @@ angular.module("myApp").service("userStoryStore", function (dispatcher, userStor
 
     //expose only the public interface
     this.addListener = function (l) {
-        userStoryStore.addListener(l);
+        statusStore.addListener(l);
     };
 
-    this.getStories = function () {
-        return userStoryStore.getStories();
+    this.getStatuses = function () {
+        return statusStore.getStatuses();
     };
 
     this.getErrorMsg = function () {
-        return userStoryStore.getErrorMsg();
+        return statusStore.getErrorMsg();
     };
 });
 
-//# sourceMappingURL=userStoryStore-compiled.js.map
+//# sourceMappingURL=statusStore-compiled.js.map

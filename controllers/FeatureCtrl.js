@@ -1,18 +1,17 @@
-var Story = require('../models/UserStory');
+var Feature = require('../models/Feature');
 
 module.exports = {
 
     create: function (req, res) {
-        var newStory = new Story(req.body);
-        newStory.save(function (err, result) {
+        var newFeature = new Feature(req.body);
+        newFeature.save(function (err, result) {
             if (err) return res.status(500).send(err);
             else res.send(result);
         });
     },
 
     read: function (req, res) {
-        Story.find(req.query)
-            .populate("feature")
+        Feature.find(req.query)
             .populate("status")
             .exec(function (err, result) {
                 if (err) return res.status(500).send(err);
@@ -23,7 +22,7 @@ module.exports = {
     update: function (req, res) {
         var id = req.query.id;
         var updatedObject = req.body;
-        Story.findByIdAndUpdate(id, updatedObject, {
+        Feature.findByIdAndUpdate(id, updatedObject, {
             new: true
         }, function (err, result) {
             if (err) return res.status(500).send(err);
@@ -35,7 +34,7 @@ module.exports = {
 
     delete: function (req, res) {
         var id = req.query.id;
-        Story.findByIdAndRemove(id, function (err, result) {
+        Feature.findByIdAndRemove(id, function (err, result) {
             if (err) return res.status(500).send(derr);
             else res.send(result);
         });
