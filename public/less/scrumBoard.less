@@ -1,22 +1,20 @@
 .scrumBoard {
-  .ps-tool-container {
-    text-align: right;
-    padding: 0px;
+  input {
+    display: inline;
+    width: calc(~'100% - 36px');
   }
 
-  .ps-search-box {
-    float: left;
-    display: inline;
-    //width: calc(100% - 72px);
-    //defined in html as less cannot calculate this
+  .ps-tool-container {
+    width: 100%;
+  }
+
+  .ps-tool-group {
+    margin: 6px;
+    padding: 1%;
   }
 
   .ps-groups {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    flex-wrap: wrap;
   }
 
   .ps-groups h5 {
@@ -26,15 +24,12 @@
   .ps-group {
     padding: 1%;
     border: 3px solid @primary-color;
-    display: inline-block;
-    text-align: left;
     display: flex;
     flex-direction: column;
   }
 
   .ps-group-item {
     border: 2px solid @primary-color;
-    box-sizing: border-box;
     width: 100%;
     display: flex;
     margin: @default-padding 0px;
@@ -48,8 +43,7 @@
 
   .ps-group-item .ps-group-item-content {
     padding: 0px @default-padding;
-    //width:calc(100% - 30px);
-    //defined in html as less cannot calculate this
+    width: calc(~'100% - 30px');
   }
 
   .ps-group-item .ps-first-row {

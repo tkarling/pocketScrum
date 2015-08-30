@@ -1,21 +1,30 @@
 <div class="scrumBoard mdl-grid ps-page-content">
     {{scrumBoard.errorMsg}}
-    <div class="mdl-cell mdl-cell--12-col ps-tool-container">
+    <div class="ps-groups mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-tool-group">
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                    ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
+                <i class="material-icons">delete</i>
+            </button>
+        <input class="mdl-textfield__input"
+               type="text" ng-model="search" placeholder="search"/>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-tool-group" >
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-tool-group">
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop  ps-tool-group">
         <input class="mdl-textfield__input" type="text" ng-model="scrumBoard.newStory.name"
                placeholder="new story name"/>
-        <input style= "width: calc(100% - 72px)" class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search"/>
         <button ng-if="! scrumBoard.deleteVisible"
                 class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                 ng-click="scrumBoard.addStory()">
             <i class="material-icons">add</i>
         </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
-                ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
-            <i class="material-icons">delete</i>
-        </button>
+        </div>
     </div>
 
-    <div class="ps-groups">
+    <div class="ps-groups mdl-grid">
         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
              droppable drop-fn="scrumBoard.setStatus" drop-ctrl="scrumBoard"
              ng-repeat="status in scrumBoard.statuses" drop-value="{{status._id}}">
@@ -23,7 +32,7 @@
             <h5>{{status.name}}</h5>
             <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
                  drag-ctrl="scrumBoard" drag-index="$index"
-                 ng-repeat="story in scrumBoard.stories | filter: status.name as results track by $id(story)"
+                 ng-repeat="story in scrumBoard.stories | filter: status.name | filter: search track by $id(story)"
                  ng-click="scrumBoard.editStory(story)" drag-item="story">
 
                 <button ng-if="scrumBoard.deleteVisible"
@@ -32,7 +41,7 @@
                     <i class="material-icons">delete</i>
                 </button>
                 <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}55dd009fa2909451656e9114"/>
-                <div class="ps-group-item-content" style="width:calc(100% - 30px);">
+                <div class="ps-group-item-content">
                     <div class="ps-first-row">{{story.name}}</div>
                     <div class="ps-second-row">
                         <span class="ps-feature">{{story.feature.name}}</span>

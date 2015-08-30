@@ -35,6 +35,7 @@ header img {
 .pics-list .ps-search-box {
   float: left;
   display: inline;
+  width: calc(100% - 72px);
 }
 .pics-list .ps-thumbnails {
   display: flex;
@@ -63,20 +64,19 @@ header img {
 .pics-list .ps-detailled-img {
   max-width: 100%;
 }
-.scrumBoard .ps-tool-container {
-  text-align: right;
-  padding: 0px;
-}
-.scrumBoard .ps-search-box {
-  float: left;
+.scrumBoard input {
   display: inline;
+  width: calc(100% - 36px);
+}
+.scrumBoard .ps-tool-container {
+  width: 100%;
+}
+.scrumBoard .ps-tool-group {
+  margin: 6px;
+  padding: 1%;
 }
 .scrumBoard .ps-groups {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  flex-wrap: wrap;
 }
 .scrumBoard .ps-groups h5 {
   margin: 2% 0px;
@@ -84,14 +84,11 @@ header img {
 .scrumBoard .ps-group {
   padding: 1%;
   border: 3px solid #3f51b5;
-  display: inline-block;
-  text-align: left;
   display: flex;
   flex-direction: column;
 }
 .scrumBoard .ps-group-item {
   border: 2px solid #3f51b5;
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   margin: 2% 0px;
@@ -103,6 +100,7 @@ header img {
 }
 .scrumBoard .ps-group-item .ps-group-item-content {
   padding: 0px 2%;
+  width: calc(100% - 30px);
 }
 .scrumBoard .ps-group-item .ps-first-row {
   /*border: 1px solid orange;*/

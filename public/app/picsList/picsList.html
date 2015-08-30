@@ -2,7 +2,7 @@
 
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
         <div class="ps-tool-container">
-            <input style="width: calc(100% - 72px);" class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
+            <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
             <button ng-if="! pictures.deleteVisible"
                     class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                     type="file" ngf-select="pictures.addPic($file)"
