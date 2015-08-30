@@ -34,6 +34,10 @@ class ScrumBoardController {
             (this.currentFeature._id !== this.C.ALL_FEATURE_ID);
     }
 
+    get currentFeatureId() {
+        return this.featureSelected() ? this.currentFeature._id : "";
+    }
+
     resetStatuses() {
         var NO_OF_GROUPS = 4;
         this.statuses = this.statusStore.getStatuses();

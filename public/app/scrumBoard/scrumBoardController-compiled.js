@@ -91,6 +91,11 @@ var ScrumBoardController = (function () {
             this.userStoryActions.saveStory(this.draggedStory);
             this.draggedStory = undefined;
         }
+    }, {
+        key: "currentFeatureId",
+        get: function get() {
+            return this.featureSelected() ? this.currentFeature._id : "";
+        }
     }]);
 
     return ScrumBoardController;
