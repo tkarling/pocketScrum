@@ -5,32 +5,42 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ScrumBoardController = (function () {
-    function ScrumBoardController(MY_SERVER, userStoryStore, userStoryActions, statusStore) {
+    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore) {
         _classCallCheck(this, ScrumBoardController);
 
+        this.C = C;
         this.url = MY_SERVER.url;
+        var self = this;
+        this.baseUrl = this.url + "/stories";
+        this.thumbnailUrl = this.url + "/thumbnail?id=";
+        this.newStory = {};
 
         this.userStoryStore = userStoryStore;
         this.userStoryActions = userStoryActions;
         this.resetStories();
-        var self = this;
-        statusStore.addListener(function () {
-            self.resetStatuses();
-        });
-
-        this.statusStore = statusStore;
-        this.resetStatuses();
-        var self = this;
         userStoryStore.addListener(function () {
             self.resetStories();
         });
 
-        this.baseUrl = this.url + "/stories";
-        this.thumbnailUrl = this.url + "/thumbnail?id=";
-        this.newStory = {};
+        this.statusStore = statusStore;
+        this.resetStatuses();
+        statusStore.addListener(function () {
+            self.resetStatuses();
+        });
+
+        this.featureStore = featureStore;
+        this.resetFeatures();
+        featureStore.addListener(function () {
+            self.resetFeatures();
+        });
     }
 
     _createClass(ScrumBoardController, [{
+        key: "featureSelected",
+        value: function featureSelected() {
+            return this.currentFeature && this.currentFeature._id !== this.C.ALL_FEATURE_ID;
+        }
+    }, {
         key: "resetStatuses",
         value: function resetStatuses() {
             var NO_OF_GROUPS = 4;
@@ -38,18 +48,23 @@ var ScrumBoardController = (function () {
             this.statuses.splice(NO_OF_GROUPS, this.statuses.length - NO_OF_GROUPS);
         }
     }, {
+        key: "resetFeatures",
+        value: function resetFeatures() {
+            this.features = this.featureStore.getFeatures();
+        }
+    }, {
         key: "resetStories",
         value: function resetStories() {
             this.stories = this.userStoryStore.getStories();
             this.errorMsg = this.userStoryStore.getErrorMsg();
+            this.newStory = {};
         }
     }, {
         key: "addStory",
         value: function addStory(story) {
             if (this.newStory.name) {
-                this.newStory.status = "not started";
+                this.newStory.feature = this.currentFeature._id;
                 this.userStoryActions.addStory(this.newStory);
-                this.newStory = {};
             }
         }
     }, {

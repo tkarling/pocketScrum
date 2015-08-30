@@ -35,6 +35,7 @@ class userStoryService extends baseServerService {
 }
 angular.module("myApp").service("userStoryService", userStoryService);
 
+
 class statusService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
@@ -44,3 +45,21 @@ class statusService extends baseServerService {
 
 }
 angular.module("myApp").service("statusService", statusService);
+
+
+class featureService extends baseServerService {
+    constructor($http, MY_SERVER) {
+        super($http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + "/features";
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+    get currentFeature() {
+        return this.currentFeature;
+    }
+
+    set currentFeature(value) {
+        this.currentFeature = value;
+    }
+}
+angular.module("myApp").service("featureService", featureService);

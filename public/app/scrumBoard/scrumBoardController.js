@@ -1,45 +1,59 @@
 "use strict";
 
 class ScrumBoardController {
-    constructor(MY_SERVER, userStoryStore, userStoryActions, statusStore) {
+    constructor(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore) {
+        this.C = C;
         this.url = MY_SERVER.url;
+        var self = this;
+        this.baseUrl = this.url + "/stories";
+        this.thumbnailUrl = this.url + "/thumbnail?id=";
+        this.newStory = {};
 
         this.userStoryStore = userStoryStore;
         this.userStoryActions = userStoryActions;
         this.resetStories();
-        var self = this;
-        statusStore.addListener(function () {
-            self.resetStatuses();
-        });
-
-        this.statusStore = statusStore;
-        this.resetStatuses ();
-        var self = this;
         userStoryStore.addListener(function () {
             self.resetStories();
         });
 
-        this.baseUrl = this.url + "/stories";
-        this.thumbnailUrl = this.url + "/thumbnail?id=";
-        this.newStory = {};
+        this.statusStore = statusStore;
+        this.resetStatuses ();
+        statusStore.addListener(function () {
+            self.resetStatuses();
+        });
+
+        this.featureStore = featureStore;
+        this.resetFeatures();
+        featureStore.addListener(function () {
+            self.resetFeatures();
+        });
     }
 
-    resetStatuses () {
+    featureSelected() {
+        return this.currentFeature &&
+            (this.currentFeature._id !== this.C.ALL_FEATURE_ID);
+    }
+
+    resetStatuses() {
         var NO_OF_GROUPS = 4;
         this.statuses = this.statusStore.getStatuses();
         this.statuses.splice(NO_OF_GROUPS, this.statuses.length - NO_OF_GROUPS);
     }
 
+    resetFeatures() {
+        this.features = this.featureStore.getFeatures();
+    }
+
     resetStories() {
         this.stories = this.userStoryStore.getStories();
         this.errorMsg = this.userStoryStore.getErrorMsg();
+        this.newStory = {};
     }
 
     addStory(story) {
         if(this.newStory.name) {
-            this.newStory.status = "not started";
+            this.newStory.feature = this.currentFeature._id;
             this.userStoryActions.addStory(this.newStory);
-            this.newStory = {};
         }
     }
 
@@ -58,8 +72,6 @@ class ScrumBoardController {
     setDraggedStory(story) {
         this.draggedStory = story;
     }
-
-
 
     setStatus(status) {
         this.draggedStory.status = status;

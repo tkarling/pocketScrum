@@ -75,4 +75,30 @@ var statusService = (function (_baseServerService2) {
 
 angular.module("myApp").service("statusService", statusService);
 
+var featureService = (function (_baseServerService3) {
+    _inherits(featureService, _baseServerService3);
+
+    function featureService($http, MY_SERVER) {
+        _classCallCheck(this, featureService);
+
+        _get(Object.getPrototypeOf(featureService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + "/features";
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+    _createClass(featureService, [{
+        key: "currentFeature",
+        get: function get() {
+            return this.currentFeature;
+        },
+        set: function set(value) {
+            this.currentFeature = value;
+        }
+    }]);
+
+    return featureService;
+})(baseServerService);
+
+angular.module("myApp").service("featureService", featureService);
+
 //# sourceMappingURL=baseServerService-compiled.js.map
