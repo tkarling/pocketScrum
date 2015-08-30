@@ -42,7 +42,8 @@ var schema = new mongoose.Schema ({
     },
     feature: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Feature"
+        ref: "Feature",
+        default: "55e287ee586d4b5e460d46e8"
     }
 });
 

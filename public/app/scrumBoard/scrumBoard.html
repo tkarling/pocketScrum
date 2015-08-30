@@ -9,9 +9,13 @@
         <input class="mdl-textfield__input"
                type="text" ng-model="search" placeholder="search"/>
         </div>
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-tool-group" >
+        <div class="mdl-cell mdl-cell--4-col-tablet ps-tool-group mdl-cell--hide-phone mdl-cell--hide-desktop" >
         </div>
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-tool-group">
+        <div class="mdl-cell mdl-cell-4--col mdl-cell--6-col-desktop ps-tool-group">
+            <select class="ps-feature-select" ng-options="status.name for status in scrumBoard.statuses"
+                    ng-model="selected"></select>
+            <select class="ps-feature-select" ng-options="status.name for status in scrumBoard.statuses"
+                    ng-model="selected"></select>
         </div>
         <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop  ps-tool-group">
         <input class="mdl-textfield__input" type="text" ng-model="scrumBoard.newStory.name"
