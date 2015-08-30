@@ -17,11 +17,11 @@
             <select class="ps-feature-select" ng-options="status.name for status in scrumBoard.statuses"
                     ng-model="selected"></select>
         </div>
-        <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop  ps-tool-group">
+        <div ng-if="! scrumBoard.deleteVisible"
+             class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop  ps-tool-group">
         <input class="mdl-textfield__input" type="text" ng-model="scrumBoard.newStory.name"
                placeholder="new story name"/>
-        <button ng-if="! scrumBoard.deleteVisible"
-                class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
                 ng-click="scrumBoard.addStory()">
             <i class="material-icons">add</i>
         </button>

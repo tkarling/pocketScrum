@@ -80,9 +80,9 @@ var UserStoryStore = (function (_EventEmitter) {
         value: function addStory(story) {
             var self = this;
             this.errorMsg = "";
-            return this.userStoryService.addStory(story).then(function (response) {}, function (error) {
+            return this.userStoryService.addItem(story).then(function (response) {}, function (error) {
                 if (error.status > 0) {
-                    console.log("addStory error", error);
+                    console.log("addItem error", error);
                     self.errorMsg = error.status + ': ' + error.statusText;
                 }
             });
@@ -91,19 +91,19 @@ var UserStoryStore = (function (_EventEmitter) {
         key: "removeStory",
         value: function removeStory(story) {
             this.errorMsg = "";
-            return this.userStoryService.removeStory(story);
+            return this.userStoryService.removeItem(story);
         }
     }, {
         key: "saveStory",
         value: function saveStory(story) {
             this.errorMsg = "";
-            return this.userStoryService.saveStory(story);
+            return this.userStoryService.saveItem(story);
         }
     }, {
         key: "emitChange",
         value: function emitChange() {
             var self = this;
-            this.userStoryService.getStories().then(function (stories) {
+            this.userStoryService.getItems().then(function (stories) {
                 self.stories = stories;
                 self.emit("change");
             });

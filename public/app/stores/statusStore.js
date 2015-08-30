@@ -55,7 +55,7 @@ class StatusStore extends EventEmitter {
     addStatus(status) {
         var self = this;
         this.errorMsg = "";
-        return this.statusService.addStatus(status)
+        return this.statusService.addItem(status)
             .then(function (response) {
             }, function (error) {
                 if (error.status > 0) {
@@ -67,17 +67,17 @@ class StatusStore extends EventEmitter {
 
     removeStatus(status) {
         this.errorMsg = "";
-        return this.statusService.removeStatus(status);
+        return this.statusService.removeItem(status);
     }
 
     saveStatus(status) {
         this.errorMsg = "";
-        return this.statusService.saveStatus(status);
+        return this.statusService.saveItem(status);
     }
 
     emitChange() {
         var self = this;
-        this.statusService.getStatuses().then(function (statuses) {
+        this.statusService.getItems().then(function (statuses) {
             self.statuses = statuses;
             self.emit("change");
         });

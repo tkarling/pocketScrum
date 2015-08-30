@@ -80,7 +80,7 @@ var StatusStore = (function (_EventEmitter) {
         value: function addStatus(status) {
             var self = this;
             this.errorMsg = "";
-            return this.statusService.addStatus(status).then(function (response) {}, function (error) {
+            return this.statusService.addItem(status).then(function (response) {}, function (error) {
                 if (error.status > 0) {
                     console.log("addStatus error", error);
                     self.errorMsg = error.status + ': ' + error.statusText;
@@ -91,19 +91,19 @@ var StatusStore = (function (_EventEmitter) {
         key: "removeStatus",
         value: function removeStatus(status) {
             this.errorMsg = "";
-            return this.statusService.removeStatus(status);
+            return this.statusService.removeItem(status);
         }
     }, {
         key: "saveStatus",
         value: function saveStatus(status) {
             this.errorMsg = "";
-            return this.statusService.saveStatus(status);
+            return this.statusService.saveItem(status);
         }
     }, {
         key: "emitChange",
         value: function emitChange() {
             var self = this;
-            this.statusService.getStatuses().then(function (statuses) {
+            this.statusService.getItems().then(function (statuses) {
                 self.statuses = statuses;
                 self.emit("change");
             });

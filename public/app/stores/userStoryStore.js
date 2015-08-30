@@ -55,11 +55,11 @@ class UserStoryStore extends EventEmitter {
     addStory(story) {
         var self = this;
         this.errorMsg = "";
-        return this.userStoryService.addStory(story)
+        return this.userStoryService.addItem(story)
             .then(function (response) {
             }, function (error) {
                 if (error.status > 0) {
-                    console.log("addStory error", error);
+                    console.log("addItem error", error);
                     self.errorMsg = error.status + ': ' + error.statusText;
                 }
             });
@@ -67,17 +67,17 @@ class UserStoryStore extends EventEmitter {
 
     removeStory(story) {
         this.errorMsg = "";
-        return this.userStoryService.removeStory(story);
+        return this.userStoryService.removeItem(story);
     }
 
     saveStory(story) {
         this.errorMsg = "";
-        return this.userStoryService.saveStory(story);
+        return this.userStoryService.saveItem(story);
     }
 
     emitChange() {
         var self = this;
-        this.userStoryService.getStories().then(function (stories) {
+        this.userStoryService.getItems().then(function (stories) {
             self.stories = stories;
             self.emit("change");
         });

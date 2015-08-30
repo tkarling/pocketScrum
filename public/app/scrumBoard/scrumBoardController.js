@@ -19,7 +19,7 @@ class ScrumBoardController {
             self.resetStories();
         });
 
-        this.storiesBaseUrl = this.url + "/stories";
+        this.baseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
     }
