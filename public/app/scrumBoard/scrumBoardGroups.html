@@ -9,7 +9,7 @@
         <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
              drag-ctrl="scrumBoard" drag-index="$index"
              ng-repeat="story in scrumBoard.stories | filter: status.name |
-                 filter: scrumBoard.currentFeatureId | filter: search track by $id(story)"
+                 filter: scrumBoard.currentFeatureId | filter: scrumBoard.currentMemberId | filter: search track by $id(story)"
              ng-click="scrumBoard.editStory(story)" drag-item="story">
 
             <button ng-if="scrumBoard.deleteVisible"
@@ -20,7 +20,7 @@
 
             <div style="position: relative" context-menu visible="story.menuVisible" item="story">
                 <ul class="menu" ng-show="story.menuVisible">
-                    <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers"
+                    <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers | filter: { noShow: false } | orderBy:'name'"
                        ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
                 </ul>
                 <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>

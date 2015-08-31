@@ -25,11 +25,15 @@ var schema = new mongoose.Schema ({
             'other'
         ],
         default: "dev team member"
+    },
+    currentProject: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project"
+    },
+    noShow: {
+        type: Boolean,
+        default: false
     }
-    //, currentProject: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    ref: "Project"
-    //}
 
 });
 

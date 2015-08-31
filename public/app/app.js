@@ -7,7 +7,9 @@ angular.module("myApp")
         this.url = "http://" + $location.host() + ":" + $location.port() + "/api/pocketScrum";
     })
     .service("C", function() {
-        this.ALL_FEATURE_ID = "55e39e8e592f87ef2f78cf35";
+        this.ALL_FEATURES_ID = "55e39e8e592f87ef2f78cf35";
+        this.ALL_MEMBERS_ID = "55e48a940fde1bd55c316cf4";
+        this.NOT_SET_MEMBER_ID = "55e48b010fde1bd55c316cf6";
     })
     .config(function($routeProvider) {
         $routeProvider

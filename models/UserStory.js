@@ -21,7 +21,8 @@ var schema = new mongoose.Schema ({
     },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "TeamMember"
+        ref: "TeamMember",
+        default: "55e48b010fde1bd55c316cf6"
     },
     tag: {
         type: String,

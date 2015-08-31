@@ -37,13 +37,21 @@ class ScrumBoardController {
         });
     }
 
-    featureSelected() {
-        return this.currentFeature &&
-            (this.currentFeature._id !== this.C.ALL_FEATURE_ID);
+    get currentFeatureId() {
+        var featureSelected = function(self) {
+            return self.currentFeature &&
+                (self.currentFeature._id !== self.C.ALL_FEATURES_ID);
+        }
+        return featureSelected(this) ? this.currentFeature._id : "";
     }
 
-    get currentFeatureId() {
-        return this.featureSelected() ? this.currentFeature._id : "";
+    get currentMemberId() {
+        var memberSelected = function(self) {
+            return self.currentMember &&
+                (self.currentMember._id !== self.C.ALL_MEMBERS_ID);
+        }
+
+        return memberSelected(this) ? this.currentMember._id : "";
     }
 
     resetStatuses() {
@@ -91,9 +99,6 @@ class ScrumBoardController {
         this.userStoryActions.saveStory(story);
     }
 
-    editStory(story) {
-
-    }
 
     setDraggedStory(story) {
         this.draggedStory = story;

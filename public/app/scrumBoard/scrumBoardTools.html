@@ -18,6 +18,10 @@
                 ng-options="feature.name for feature in scrumBoard.features | orderBy:'name'"
                 ng-model="scrumBoard.currentFeature">
         </select>
+        <select class="ps-feature-select"
+                ng-options="member.name for member in scrumBoard.teamMembers | orderBy:'name'"
+                ng-model="scrumBoard.currentMember">
+        </select>
     </div>
 
     <div ng-if="! scrumBoard.deleteVisible && scrumBoard.featureSelected()"
