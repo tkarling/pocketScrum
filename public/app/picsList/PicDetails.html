@@ -1,0 +1,25 @@
+<div>
+    <div ng-if="pictures.errorMsg || pictures.f.$error">
+        {{pictures.errorMsg}} fetching
+        <span style="font:smaller">{{pictures.f.name}} {{pictures.f.$error}} {{pictures.f.$errorParam}}
+        </span>
+    </div>
+
+    <div ng-if="pictures.currentPic.picId">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ps-notes-container">
+                <textarea class="mdl-textfield__input" type="text" rows="1" id="note"
+                          placeholder="notes" ng-model="pictures.currentPic.note"></textarea>
+            <label class="mdl-textfield__label" for="note"></label>
+        </div>
+        <div>
+            {{pictures.currentPic.name}}
+              <span class="progress" ng-show="pictures.currentPic.progress >= 0">
+                  <span style="width:{{pictures.currentPic.progress}}%"
+                        ng-bind="pictures.currentPic.progress + '%'"></span>
+              </span>
+        </div>
+        <img ng-if="pictures.currentPic.picId" class="ps-detailled-img"
+             ng-src="{{pictures.fullPicUrl}}{{pictures.currentPic.picId}}"
+             ng-click="pictures.selectPic({})"/>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="ps-thumbnails">
+    <div class="ps-thumbnail-container"
+         ng-repeat="pic in pictures.pics | filter: search as results track by $id(pic)"
+         ng-click="pictures.selectPic(pic)">
+        <img class="ps-thumbnail-img" ng-src="{{pictures.thumbnailUrl}}{{pic.picId}}"/>
+        <button ng-if="pictures.deleteVisible"
+                class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                ng-click="pictures.removePic(pic, $event)">
+            <i class="material-icons">delete</i>
+        </button>
+    </div>
+</div>

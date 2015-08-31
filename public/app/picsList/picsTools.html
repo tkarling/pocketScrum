@@ -1,0 +1,14 @@
+<div class="ps-tool-container">
+    <input class="mdl-textfield__input ps-search-box" type="text" ng-model="search" placeholder="search pics"/>
+    <button ng-if="! pictures.deleteVisible"
+            class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+            type="file" ngf-select="pictures.addPic($file)"
+            accept="image/*" ngf-max-size="4MB">
+        <!--ngf-max-height="1000"-->
+        <i class="material-icons">add</i>
+    </button>
+    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+            ng-click="pictures.deleteVisible = ! pictures.deleteVisible">
+        <i class="material-icons">delete</i>
+    </button>
+</div>
