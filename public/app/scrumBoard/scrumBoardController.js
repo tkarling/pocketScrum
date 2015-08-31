@@ -37,12 +37,13 @@ class ScrumBoardController {
         });
     }
 
+    featureSelected() {
+        return this.currentFeature &&
+            (this.currentFeature._id !== this.C.ALL_FEATURES_ID);
+    }
+
     get currentFeatureId() {
-        var featureSelected = function(self) {
-            return self.currentFeature &&
-                (self.currentFeature._id !== self.C.ALL_FEATURES_ID);
-        }
-        return featureSelected(this) ? this.currentFeature._id : "";
+        return this.featureSelected(this) ? this.currentFeature._id : "";
     }
 
     get currentMemberId() {
@@ -89,6 +90,10 @@ class ScrumBoardController {
         }
     }
 
+    saveStory(story) {
+        this.userStoryActions.saveStory(story);
+    }
+
     setStoryFeature(story, feature) {
         story.feature = feature._id;
         this.userStoryActions.saveStory(story);
@@ -98,7 +103,6 @@ class ScrumBoardController {
         story.assignedTo = member._id;
         this.userStoryActions.saveStory(story);
     }
-
 
     setDraggedStory(story) {
         this.draggedStory = story;

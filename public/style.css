@@ -68,6 +68,9 @@ header img {
 .scrumBoard scrum-board-groups {
   width: 100%;
 }
+.scrumBoard textarea {
+  width: 98%;
+}
 .scrumBoard input {
   display: inline;
   width: calc(100% - 36px);
@@ -110,6 +113,7 @@ header img {
   width: 30px;
   height: 30px;
   margin: 2%;
+  padding: 2%;
 }
 .scrumBoard .ps-group-item .ps-group-item-content {
   padding: 0px 2%;

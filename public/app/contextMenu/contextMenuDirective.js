@@ -8,22 +8,30 @@ app.directive( "contextMenu", function(){
         restrict: "AE",
         scope: {
             visible: "=",
-            item: "="
+            item: "=",
+            ctrl: "="
         },
         link: function( $scope, lElem, lAttr ){
             lElem.on("click", function(e){
                 if(previous) {
                     previous.menuVisible = false;
                     previous.featureMenuVisible = false;
+
+                    if(previous.editName) {
+                        $scope.ctrl.saveStory(previous);
+                        previous.editName = false;
+                    }
                 }
 
                 //console.log("Element right clicked.");
+
                 $scope.$apply(function () {
                     $scope.visible = !$scope.visible;
                     previous = $scope.item;
-                })
+                });
 
             });
         }
     }
 });
+

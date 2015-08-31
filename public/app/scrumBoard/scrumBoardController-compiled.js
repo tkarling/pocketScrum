@@ -43,6 +43,11 @@ var ScrumBoardController = (function () {
     }
 
     _createClass(ScrumBoardController, [{
+        key: "featureSelected",
+        value: function featureSelected() {
+            return this.currentFeature && this.currentFeature._id !== this.C.ALL_FEATURES_ID;
+        }
+    }, {
         key: "resetStatuses",
         value: function resetStatuses() {
             var NO_OF_GROUPS = 4;
@@ -84,6 +89,11 @@ var ScrumBoardController = (function () {
             }
         }
     }, {
+        key: "saveStory",
+        value: function saveStory(story) {
+            this.userStoryActions.saveStory(story);
+        }
+    }, {
         key: "setStoryFeature",
         value: function setStoryFeature(story, feature) {
             story.feature = feature._id;
@@ -110,10 +120,7 @@ var ScrumBoardController = (function () {
     }, {
         key: "currentFeatureId",
         get: function get() {
-            var featureSelected = function featureSelected(self) {
-                return self.currentFeature && self.currentFeature._id !== self.C.ALL_FEATURES_ID;
-            };
-            return featureSelected(this) ? this.currentFeature._id : "";
+            return this.featureSelected(this) ? this.currentFeature._id : "";
         }
     }, {
         key: "currentMemberId",
