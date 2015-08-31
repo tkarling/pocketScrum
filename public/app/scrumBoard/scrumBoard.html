@@ -54,9 +54,10 @@
 
                 <div style="position: relative" context-menu visible="story.menuVisible" item="story">
                     <ul class="menu" ng-show="story.menuVisible">
-                        <p class="menu-item" ng-repeat="status in scrumBoard.statuses">{{status.name}}</p>
+                        <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers"
+                           ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
                     </ul>
-                    <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}55dd009fa2909451656e9114"/>
+                    <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
                 </div>
 
                 <div class="ps-group-item-content">

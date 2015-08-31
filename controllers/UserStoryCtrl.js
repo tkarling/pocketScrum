@@ -14,6 +14,7 @@ module.exports = {
         Story.find(req.query)
             .populate("feature")
             .populate("status")
+            .populate("assignedTo")
             .exec(function (err, result) {
                 if (err) return res.status(500).send(err);
                 else res.send(result);

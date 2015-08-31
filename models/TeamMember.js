@@ -12,7 +12,7 @@ var schema = new mongoose.Schema ({
         unique: true
     },
     picId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, 
         ref: "Pic"
     },
     role: {

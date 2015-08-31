@@ -1,7 +1,8 @@
 "use strict";
 
 class ScrumBoardController {
-    constructor(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore) {
+    constructor(C, MY_SERVER, userStoryStore, userStoryActions, statusStore,
+                featureStore, teamMemberStore) {
         this.C = C;
         this.url = MY_SERVER.url;
         var self = this;
@@ -28,6 +29,12 @@ class ScrumBoardController {
         featureStore.addListener(function () {
             self.resetFeatures();
         });
+
+        this.teamMemberStore = teamMemberStore;
+        this.resetTeamMembers();
+        teamMemberStore.addListener(function () {
+            self.resetTeamMembers();
+        });
     }
 
     featureSelected() {
@@ -47,6 +54,10 @@ class ScrumBoardController {
 
     resetFeatures() {
         this.features = this.featureStore.getFeatures();
+    }
+
+    resetTeamMembers() {
+        this.teamMembers = this.teamMemberStore.getTeamMembers();
     }
 
     resetStories() {
@@ -71,8 +82,12 @@ class ScrumBoardController {
     }
 
     setStoryFeature(story, feature) {
-        //console.log("setStoryFeature", story, feature);
         story.feature = feature._id;
+        this.userStoryActions.saveStory(story);
+    }
+
+    setStoryAssignedTo(story, member) {
+        story.assignedTo = member._id;
         this.userStoryActions.saveStory(story);
     }
 

@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ScrumBoardController = (function () {
-    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore) {
+    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore, teamMemberStore) {
         _classCallCheck(this, ScrumBoardController);
 
         this.C = C;
@@ -34,6 +34,12 @@ var ScrumBoardController = (function () {
         featureStore.addListener(function () {
             self.resetFeatures();
         });
+
+        this.teamMemberStore = teamMemberStore;
+        this.resetTeamMembers();
+        teamMemberStore.addListener(function () {
+            self.resetTeamMembers();
+        });
     }
 
     _createClass(ScrumBoardController, [{
@@ -52,6 +58,11 @@ var ScrumBoardController = (function () {
         key: "resetFeatures",
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
+        }
+    }, {
+        key: "resetTeamMembers",
+        value: function resetTeamMembers() {
+            this.teamMembers = this.teamMemberStore.getTeamMembers();
         }
     }, {
         key: "resetStories",
@@ -80,8 +91,13 @@ var ScrumBoardController = (function () {
     }, {
         key: "setStoryFeature",
         value: function setStoryFeature(story, feature) {
-            //console.log("setStoryFeature", story, feature);
             story.feature = feature._id;
+            this.userStoryActions.saveStory(story);
+        }
+    }, {
+        key: "setStoryAssignedTo",
+        value: function setStoryAssignedTo(story, member) {
+            story.assignedTo = member._id;
             this.userStoryActions.saveStory(story);
         }
     }, {
