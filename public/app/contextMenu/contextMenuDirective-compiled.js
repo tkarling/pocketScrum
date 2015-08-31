@@ -3,13 +3,13 @@
 "use strict";
 
 var previous;
-var app = angular.module('contextMenu', []);
-app.directive("contextMenu", function () {
+var app = angular.module('visibilityClicker', []);
+app.directive("visibilityClicker", function () {
     return {
         replace: false,
         restrict: "AE",
         scope: {
-            visible: "=",
+            visiblity: "=",
             item: "=",
             ctrl: "="
         },
@@ -26,9 +26,8 @@ app.directive("contextMenu", function () {
                 }
 
                 //console.log("Element right clicked.");
-
                 $scope.$apply(function () {
-                    $scope.visible = !$scope.visible;
+                    $scope.visiblity = !$scope.visiblity;
                     previous = $scope.item;
                 });
             });

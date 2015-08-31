@@ -18,7 +18,7 @@
                 <i class="material-icons">delete</i>
             </button>
 
-            <div style="position: relative" context-menu visible="story.menuVisible" item="story" ctrl="scrumBoard">
+            <div style="position: relative" visibility-clicker visiblity="story.menuVisible" item="story" ctrl="scrumBoard">
                 <ul class="menu" ng-show="story.menuVisible">
                     <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers | filter: { noShow: false } | orderBy:'name'"
                        ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
@@ -29,13 +29,13 @@
             <div class="ps-group-item-content">
 
                 <div class="ps-first-row">
-                    <span ng-if="!story.editName" context-menu visible="story.editName" item="story" ctrl="scrumBoard">{{story.name}}</span>
-                    <textarea ng-if="story.editName" ng-dblclick="story.editName = false" type="text" ng-model="story.name"/>
+                    <span ng-if="!story.editName" visibility-clicker visiblity="story.editName" item="story" ctrl="scrumBoard">{{story.name}}</span>
+                    <textarea ng-if="story.editName" type="text" ng-model="story.name"/>
                 </div>
 
                 <div class="ps-second-row">
 
-                        <span style="position: relative" context-menu visible="story.featureMenuVisible" item="story" ctrl="scrumBoard">
+                        <span style="position: relative" visibility-clicker visiblity="story.featureMenuVisible" item="story" ctrl="scrumBoard">
                             <ul class="menu" ng-show="story.featureMenuVisible">
                                 <p class="menu-item"
                                    ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
