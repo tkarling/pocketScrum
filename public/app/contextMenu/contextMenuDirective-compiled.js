@@ -15,17 +15,18 @@ app.directive("visibilityClicker", function () {
         },
         link: function link($scope, lElem, lAttr) {
             lElem.on("click", function (e) {
+                //console.log("Element clicked.");
                 if (previous) {
                     previous.menuVisible = false;
                     previous.featureMenuVisible = false;
 
                     if (previous.editName) {
-                        $scope.ctrl.saveStory(previous);
                         previous.editName = false;
+                        $scope.ctrl.saveStory(previous);
+                        return;
                     }
                 }
 
-                //console.log("Element right clicked.");
                 $scope.$apply(function () {
                     $scope.visiblity = !$scope.visiblity;
                     previous = $scope.item;
