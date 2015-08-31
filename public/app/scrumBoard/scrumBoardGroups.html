@@ -1,0 +1,48 @@
+<!--{{sbGroups.test}}-->
+<div class="ps-groups mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop ps-group"
+         droppable drop-fn="scrumBoard.setStatus" drop-ctrl="scrumBoard"
+         ng-repeat="status in scrumBoard.statuses" drop-value="{{status._id}}">
+
+        <h5>{{status.name}}</h5>
+
+        <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
+             drag-ctrl="scrumBoard" drag-index="$index"
+             ng-repeat="story in scrumBoard.stories | filter: status.name |
+                 filter: scrumBoard.currentFeatureId | filter: search track by $id(story)"
+             ng-click="scrumBoard.editStory(story)" drag-item="story">
+
+            <button ng-if="scrumBoard.deleteVisible"
+                    class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                    ng-click="scrumBoard.removeStory(story, $event)">
+                <i class="material-icons">delete</i>
+            </button>
+
+            <div style="position: relative" context-menu visible="story.menuVisible" item="story">
+                <ul class="menu" ng-show="story.menuVisible">
+                    <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers"
+                       ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
+                </ul>
+                <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
+            </div>
+
+            <div class="ps-group-item-content">
+                <div class="ps-first-row">{{story.name}}</div>
+                <div class="ps-second-row">
+
+                        <span style="position: relative" context-menu visible="story.featureMenuVisible" item="story">
+                            <ul class="menu" ng-show="story.featureMenuVisible">
+                                <p class="menu-item"
+                                   ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
+                                   ng-click="scrumBoard.setStoryFeature(story, feature)">{{feature.name}}</p>
+                            </ul>
+                            <span class="ps-feature">{{story.feature.name}}</span>
+                        </span>
+
+                    <span class="ps-sprint-release">sprint-1</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -64,6 +64,10 @@ header img {
 .pics-list .ps-detailled-img {
   max-width: 100%;
 }
+.scrumBoard scrum-board-tools,
+.scrumBoard scrum-board-groups {
+  width: 100%;
+}
 .scrumBoard input {
   display: inline;
   width: calc(100% - 36px);
