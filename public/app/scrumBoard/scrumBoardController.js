@@ -70,6 +70,12 @@ class ScrumBoardController {
         }
     }
 
+    setFeature(story, feature) {
+        //console.log("setFeature", story, feature);
+        story.feature = feature._id;
+        this.userStoryActions.saveStory(story);
+    }
+
     editStory(story) {
 
     }

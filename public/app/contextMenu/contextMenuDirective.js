@@ -14,10 +14,10 @@ app.directive( "contextMenu", function(){
             lElem.on("click", function(e){
                 if(previous) {
                     previous.menuVisible = false;
+                    previous.featureMenuVisible = false;
                 }
 
-                console.log("Leaved the div");
-                console.log("Element right clicked.");
+                //console.log("Element right clicked.");
                 $scope.$apply(function () {
                     $scope.visible = !$scope.visible;
                     previous = $scope.item;

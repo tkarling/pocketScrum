@@ -52,7 +52,7 @@
                 </button>
 
                 <div style="position: relative" context-menu visible="story.menuVisible" item="story">
-                    <ul id="contextmenu-node" ng-show="story.menuVisible">
+                    <ul class="menu" ng-show="story.menuVisible">
                         <p class="menu-item" ng-repeat="status in scrumBoard.statuses">{{status.name}}</p>
                     </ul>
                     <img class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}55dd009fa2909451656e9114"/>
@@ -61,7 +61,13 @@
                 <div class="ps-group-item-content">
                     <div class="ps-first-row">{{story.name}}</div>
                     <div class="ps-second-row">
-                        <span class="ps-feature">{{story.feature.name}}</span>
+                        <span style="position: relative" context-menu visible="story.featureMenuVisible" item="story">
+                            <ul class="menu" ng-show="story.featureMenuVisible">
+                                <p class="menu-item" ng-repeat="feature in scrumBoard.features"
+                                        ng-click="scrumBoard.setFeature(story, feature)">{{feature.name}}</p>
+                            </ul>
+                            <span class="ps-feature">{{story.feature.name}}</span>
+                        </span>
                         <span class="ps-sprint-release">sprint-1</span>
                     </div>
                 </div>
