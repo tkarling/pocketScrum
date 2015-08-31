@@ -78,9 +78,9 @@ var ScrumBoardController = (function () {
             }
         }
     }, {
-        key: "setFeature",
-        value: function setFeature(story, feature) {
-            //console.log("setFeature", story, feature);
+        key: "setStoryFeature",
+        value: function setStoryFeature(story, feature) {
+            //console.log("setStoryFeature", story, feature);
             story.feature = feature._id;
             this.userStoryActions.saveStory(story);
         }

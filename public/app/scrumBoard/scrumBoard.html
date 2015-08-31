@@ -15,7 +15,8 @@
         <div class="mdl-cell mdl-cell-4--col mdl-cell--6-col-desktop ps-tool-group">
             <!--<select class="ps-feature-select" ng-options="status.name for status in scrumBoard.statuses"-->
             <!--ng-model="selected"></select>-->
-            <select class="ps-feature-select" ng-options="feature.name for feature in scrumBoard.features"
+            <select class="ps-feature-select"
+                    ng-options="feature.name for feature in scrumBoard.features | orderBy:'name'"
                     ng-model="scrumBoard.currentFeature">
             </select>
         </div>
@@ -63,8 +64,9 @@
                     <div class="ps-second-row">
                         <span style="position: relative" context-menu visible="story.featureMenuVisible" item="story">
                             <ul class="menu" ng-show="story.featureMenuVisible">
-                                <p class="menu-item" ng-repeat="feature in scrumBoard.features"
-                                        ng-click="scrumBoard.setFeature(story, feature)">{{feature.name}}</p>
+                                <p class="menu-item"
+                                   ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
+                                   ng-click="scrumBoard.setStoryFeature(story, feature)">{{feature.name}}</p>
                             </ul>
                             <span class="ps-feature">{{story.feature.name}}</span>
                         </span>

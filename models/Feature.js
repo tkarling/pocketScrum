@@ -14,6 +14,10 @@ var schema = new mongoose.Schema ({
         ref: "Status",
         default: "55e2326af68548f0fc933afb"
     },
+    noShow: {
+        type: Boolean,
+        default: false
+    },
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Project"

@@ -14,6 +14,17 @@ var schema = new mongoose.Schema ({
     picId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Pic"
+    },
+    role: {
+        type: String,
+        lowercase: true,
+        enum: [
+            'scrum master',
+            'product owner',
+            'dev team member',
+            'other'
+        ],
+        default: "dev team member"
     }
     //, currentProject: {
     //    type: mongoose.Schema.Types.ObjectId,
