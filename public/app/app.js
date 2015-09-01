@@ -5,6 +5,13 @@ angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop", "visibilityClick
 angular.module("myApp")
     .service("MY_SERVER", function($location) {
         this.url = "http://" + $location.host() + ":" + $location.port() + "/api/pocketScrum";
+        this.idSelector = "?id=";
+        this.picturesUri = "/designpic";
+        this.statusUri = "/status";
+        this.membersUri = "/members";
+        this.storiesUri = "/stories";
+        this.featuresUri = "/features";
+        this.projectsUri = "/projects";
     })
     .service("C", function() {
         this.ALL_FEATURES_ID = "55e39e8e592f87ef2f78cf35";

@@ -62,7 +62,7 @@ var userStoryService = (function (_baseServerService) {
         _classCallCheck(this, userStoryService);
 
         _get(Object.getPrototypeOf(userStoryService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/stories";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.storiesUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -78,7 +78,7 @@ var statusService = (function (_baseServerService2) {
         _classCallCheck(this, statusService);
 
         _get(Object.getPrototypeOf(statusService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/status";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.statusUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -94,7 +94,7 @@ var featureService = (function (_baseServerService3) {
         _classCallCheck(this, featureService);
 
         _get(Object.getPrototypeOf(featureService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/features";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.featuresUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -120,11 +120,27 @@ var teamMemberService = (function (_baseServerService4) {
         _classCallCheck(this, teamMemberService);
 
         _get(Object.getPrototypeOf(teamMemberService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/members";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.membersUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
     return teamMemberService;
+})(baseServerService);
+
+angular.module("myApp").service("teamMemberService", teamMemberService);
+
+var projectsService = (function (_baseServerService5) {
+    _inherits(projectsService, _baseServerService5);
+
+    function projectsService($http, MY_SERVER) {
+        _classCallCheck(this, projectsService);
+
+        _get(Object.getPrototypeOf(projectsService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+    return projectsService;
 })(baseServerService);
 
 angular.module("myApp").service("teamMemberService", teamMemberService);

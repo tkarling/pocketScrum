@@ -12,3 +12,5 @@ keys.js
 keys-compiled.js
 
 keys-compiled.js.map
+
+s3keys*.js*

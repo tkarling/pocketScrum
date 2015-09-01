@@ -40,7 +40,7 @@ class baseServerService {
 class userStoryService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/stories";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.storiesUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -51,7 +51,7 @@ angular.module("myApp").service("userStoryService", userStoryService);
 class statusService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/status";
+        this.baseUrl = MY_SERVER.url +  MY_SERVER.statusUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -62,7 +62,7 @@ angular.module("myApp").service("statusService", statusService);
 class featureService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/features";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.featuresUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
@@ -79,7 +79,18 @@ angular.module("myApp").service("featureService", featureService);
 class teamMemberService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + "/members";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.membersUri;
+        this.baseUrlWId = this.baseUrl + "?id=";
+    }
+
+}
+angular.module("myApp").service("teamMemberService", teamMemberService);
+
+
+class projectsService extends baseServerService {
+    constructor($http, MY_SERVER) {
+        super($http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 

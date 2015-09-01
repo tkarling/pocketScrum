@@ -10,7 +10,7 @@ class PicsListController {
         this.resetPics();
         this.resetCurrentPic();
 
-        this.picsBaseUrl = this.url + "/designpic";
+        this.baseUrl = this.url + "/designpic";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.fullPicUrl = this.url + "/fullpic?id=";
 

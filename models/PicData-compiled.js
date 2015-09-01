@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose');
 
@@ -16,6 +16,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Pic",
         required: true
+    },
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project"
     }
 });
 

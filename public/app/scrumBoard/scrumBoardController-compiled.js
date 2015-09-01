@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ScrumBoardController = (function () {
-    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore, teamMemberStore) {
+    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore, teamMemberStore, defaultsService) {
         _classCallCheck(this, ScrumBoardController);
 
         this.C = C;

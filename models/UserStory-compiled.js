@@ -43,6 +43,10 @@ var schema = new mongoose.Schema({
     feature: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Feature"
+    },
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project"
     }
 });
 

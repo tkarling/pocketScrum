@@ -10,8 +10,8 @@ var picsService = (function () {
 
         //console.log("init picsService");
         this.url = MY_SERVER.url;
-        this.picsBaseUrl = MY_SERVER.url + "/designpic";
-        this.picsBaseUrlWId = this.picsBaseUrl + "?id=";
+        this.baseUrl = MY_SERVER.url + MY_SERVER.picturesUri;
+        this.baseUrlWId = this.baseUrl + MY_SERVER.idSelector;
         this.$http = $http;
         this.Upload = Upload;
     }
@@ -19,7 +19,7 @@ var picsService = (function () {
     _createClass(picsService, [{
         key: "getPicDatas",
         value: function getPicDatas() {
-            return this.$http.get(this.picsBaseUrl).then(function (response) {
+            return this.$http.get(this.baseUrl).then(function (response) {
                 return response.data;
             });
         }
@@ -27,20 +27,20 @@ var picsService = (function () {
         key: "addPic",
         value: function addPic(pic) {
             return this.Upload.upload({
-                url: this.picsBaseUrl,
+                url: this.baseUrl,
                 file: pic
             });
         }
     }, {
         key: "removePic",
         value: function removePic(pic) {
-            return this.$http["delete"](this.picsBaseUrlWId + pic._id);
+            return this.$http["delete"](this.baseUrlWId + pic._id);
         }
     }, {
         key: "savePic",
         value: function savePic(pic) {
             //console.log("savePic", pic);
-            return this.$http.put(this.picsBaseUrlWId + pic._id, pic);
+            return this.$http.put(this.baseUrlWId + pic._id, pic);
         }
     }]);
 

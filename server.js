@@ -100,7 +100,7 @@ app.delete("/api/pocketScrum/status", aStatusCtrl.delete.bind(aStatusCtrl));
 
 app.post('/api/pocketScrum/members', aTeamMemberCtrl.create.bind(aTeamMemberCtrl));
 app.get("/api/pocketScrum/members", aTeamMemberCtrl.read.bind(aTeamMemberCtrl));
-app.put("/api/pocketScrum/members", aTeamMemberCtrl.update).bind(aTeamMemberCtrl);
+app.put("/api/pocketScrum/members", aTeamMemberCtrl.update.bind(aTeamMemberCtrl));
 app.delete("/api/pocketScrum/members", aTeamMemberCtrl.delete.bind(aTeamMemberCtrl));
 
 app.post('/api/pocketScrum/stories', aUserStoryCtrl.create.bind(aUserStoryCtrl));
