@@ -15,7 +15,7 @@ var FACEBOOK_APP_SECRET = keys.FACEBOOK_APP_SECRET;
 //
 
 var app = express();
-var port = 3039;
+var config = require('./config.js');
 
 app.use(function(req, res, next){
     console.log('%s %s', req.method, req.url);
@@ -41,7 +41,7 @@ app.use(cors());
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: 'http://localhost:' + port + '/auth/facebook/callback'
+    callbackURL: 'http://localhost:' + config.portNum + '/auth/facebook/callback'
 }, function(token, refreshToken, profile, done) {
     console.log("profile: ", profile);
     return done(null, profile);
@@ -126,6 +126,6 @@ mongoose.connection.once('open', function() {
     console.log('connected to mongoDB at: ', mongoUri);
 });
 
-var server = app.listen(port, function() {
+var server = app.listen(config.portNum, function() {
     console.log("Listening at address", server.address());
 });
