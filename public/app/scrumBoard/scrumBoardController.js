@@ -63,10 +63,12 @@ class ScrumBoardController {
 
     resetFeatures() {
         this.features = this.featureStore.getFeatures();
+        this.currentFeature = this.features.currentItem;
     }
 
     resetTeamMembers() {
         this.teamMembers = this.teamMemberStore.getTeamMembers();
+        this.currentMember = this.teamMembers.currentItem;
     }
 
     resetStories() {

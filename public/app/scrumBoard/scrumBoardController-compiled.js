@@ -58,11 +58,13 @@ var ScrumBoardController = (function () {
         key: "resetFeatures",
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
+            this.currentFeature = this.features.currentItem;
         }
     }, {
         key: "resetTeamMembers",
         value: function resetTeamMembers() {
             this.teamMembers = this.teamMemberStore.getTeamMembers();
+            this.currentMember = this.teamMembers.currentItem;
         }
     }, {
         key: "resetStories",

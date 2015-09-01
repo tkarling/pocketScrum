@@ -19,8 +19,20 @@ var baseServerService = (function () {
     _createClass(baseServerService, [{
         key: "getItems",
         value: function getItems() {
+            var getAllItemsItem = function getAllItemsItem(items) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].name.indexOf("All ") !== -1) {
+                        return items[i];
+                    }
+                }
+                return undefined;
+            };
+
             return this.$http.get(this.baseUrl).then(function (response) {
-                return response.data;
+                var items = response.data;
+                items.currentItem = getAllItemsItem(items);
+                console.log("response.data.currentItem", response.data.currentItem);
+                return items;
             });
         }
     }, {
