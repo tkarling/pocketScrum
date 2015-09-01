@@ -105,3 +105,14 @@ export class FeatureCtrl extends BaseCtrl {
     }
 }
 
+let Project = require('../models/Project');
+export class ProjectCtrl extends BaseCtrl {
+    constructor() {
+        super();
+        this.model = Project;
+    }
+
+    create(req, res) {
+        super.create(req, res, new Project(req.body));
+    }
+}

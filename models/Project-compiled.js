@@ -8,6 +8,11 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TeamMember",
+        required: true
+    },
     releaseDate: {
         type: Number
     }

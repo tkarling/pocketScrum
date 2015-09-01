@@ -183,4 +183,28 @@ var FeatureCtrl = (function (_BaseCtrl4) {
 
 exports.FeatureCtrl = FeatureCtrl;
 
-//# sourceMappingURL=FeatureCtrl-compiled.js.map
+var Project = require('../models/Project');
+
+var ProjectCtrl = (function (_BaseCtrl5) {
+    _inherits(ProjectCtrl, _BaseCtrl5);
+
+    function ProjectCtrl() {
+        _classCallCheck(this, ProjectCtrl);
+
+        _get(Object.getPrototypeOf(ProjectCtrl.prototype), 'constructor', this).call(this);
+        this.model = Project;
+    }
+
+    _createClass(ProjectCtrl, [{
+        key: 'create',
+        value: function create(req, res) {
+            _get(Object.getPrototypeOf(ProjectCtrl.prototype), 'create', this).call(this, req, res, new Project(req.body));
+        }
+    }]);
+
+    return ProjectCtrl;
+})(BaseCtrl);
+
+exports.ProjectCtrl = ProjectCtrl;
+
+//# sourceMappingURL=BaseCtrl-compiled.js.map
