@@ -19,7 +19,7 @@ class baseServerService {
         return this.$http.get(this.baseUrl).then(function(response) {
             var items = response.data;
             items.currentItem = getAllItemsItem(items);
-            console.log("response.data.currentItem", response.data.currentItem);
+            //console.log("response.data.currentItem", response.data.currentItem);
             return items;
         });
     }

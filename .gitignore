@@ -10,7 +10,7 @@ server-compiled.js.map
 */*.map
 
 
-public/bower_components/*
+public/node_modules/*
 upload/*
 
 keys.js
