@@ -74,17 +74,16 @@ app.get('/api/pocketScrum/me', function(req, res) {
 
 // API
 var PicCtrl = require("./controllers/PicCtrl");
-var StoryCtrl = require("./controllers/UserStoryCtrl");
+//var StoryCtrl = require("./controllers/UserStoryCtrl");
 //var StatusCtrl = require("./controllers/StatusCtrl");
-var TeamMemberCtrl = require("./controllers/TeamMemberCtrl");
-
+//var TeamMemberCtrl = require("./controllers/TeamMemberCtrl");
 //var FeatureCtrl = require("./controllers/FeatureCtrl-compiled");
 
-import { FeatureCtrl, StatusCtrl }  from './controllers/FeatureCtrl-compiled.js';
+import { FeatureCtrl, StatusCtrl, TeamMemberCtrl, UserStoryCtrl }  from './controllers/FeatureCtrl-compiled.js';
 let aFeatureCtrl = new FeatureCtrl();
-
-//import { StatusCtrl }  from './controllers/StatusCtrl-compiled.js';
 let aStatusCtrl = new StatusCtrl();
+let aTeamMemberCtrl = new TeamMemberCtrl();
+let aUserStoryCtrl = new UserStoryCtrl();
 
 
 var type = upload.single('file');
@@ -98,10 +97,10 @@ app.put("/api/pocketScrum/designpic", PicCtrl.update);          // update pic da
 app.delete("/api/pocketScrum/designpic", PicCtrl.delete);       // delete one pic, thumb & data
 
 
-app.post('/api/pocketScrum/stories', StoryCtrl.create);
-app.get("/api/pocketScrum/stories", StoryCtrl.read);
-app.put("/api/pocketScrum/stories", StoryCtrl.update);
-app.delete("/api/pocketScrum/stories", StoryCtrl.delete);
+app.post('/api/pocketScrum/stories', aUserStoryCtrl.create.bind(aUserStoryCtrl));
+app.get("/api/pocketScrum/stories", aUserStoryCtrl.read.bind(aUserStoryCtrl));
+app.put("/api/pocketScrum/stories", aUserStoryCtrl.update.bind(aUserStoryCtrl));
+app.delete("/api/pocketScrum/stories", aUserStoryCtrl.delete.bind(aUserStoryCtrl));
 
 app.post('/api/pocketScrum/features', aFeatureCtrl.create.bind(aFeatureCtrl));
 app.get("/api/pocketScrum/features", aFeatureCtrl.read.bind(aFeatureCtrl));
@@ -113,10 +112,10 @@ app.get("/api/pocketScrum/status", aStatusCtrl.read.bind(aStatusCtrl));
 app.put("/api/pocketScrum/status", aStatusCtrl.update.bind(aStatusCtrl));
 app.delete("/api/pocketScrum/status", aStatusCtrl.delete.bind(aStatusCtrl));
 
-app.post('/api/pocketScrum/members', TeamMemberCtrl.create);
-app.get("/api/pocketScrum/members", TeamMemberCtrl.read);
-app.put("/api/pocketScrum/members", TeamMemberCtrl.update);
-app.delete("/api/pocketScrum/members", TeamMemberCtrl.delete);
+app.post('/api/pocketScrum/members', aTeamMemberCtrl.create.bind(aTeamMemberCtrl));
+app.get("/api/pocketScrum/members", aTeamMemberCtrl.read.bind(aTeamMemberCtrl));
+app.put("/api/pocketScrum/members", aTeamMemberCtrl.update).bind(aTeamMemberCtrl);
+app.delete("/api/pocketScrum/members", aTeamMemberCtrl.delete.bind(aTeamMemberCtrl));
 
 
 var mongoose = require('mongoose');

@@ -18,39 +18,49 @@ var BaseCtrl = (function () {
     }
 
     _createClass(BaseCtrl, [{
+        key: 'basicResponse',
+        value: function basicResponse(err, result, res) {
+            if (err) return res.status(500).send(err);else res.send(result);
+        }
+    }, {
         key: 'create',
-        value: function create(req, res) {
-            var newFeature = new Feature(req.body);
-            newFeature.save(function (err, result) {
-                if (err) return res.status(500).send(err);else res.send(result);
+        value: function create(req, res, newItem) {
+            var _this = this;
+
+            newItem.save(function (err, result) {
+                _this.basicResponse(err, result, res);
             });
         }
     }, {
         key: 'read',
         value: function read(req, res) {
+            var _this2 = this;
+
             this.model.find(req.query).exec(function (err, result) {
-                if (err) return res.status(500).send(err);else res.send(result);
+                _this2.basicResponse(err, result, res);
             });
         }
     }, {
         key: 'update',
         value: function update(req, res) {
+            var _this3 = this;
+
             var id = req.query.id;
             var updatedObject = req.body;
             this.model.findByIdAndUpdate(id, updatedObject, {
                 'new': true
             }, function (err, result) {
-                if (err) return res.status(500).send(err);else {
-                    res.send(result);
-                }
+                _this3.basicResponse(err, result, res);
             });
         }
     }, {
         key: 'delete',
         value: function _delete(req, res) {
+            var _this4 = this;
+
             var id = req.query.id;
             this.model.findByIdAndRemove(id, function (err, result) {
-                if (err) return res.status(500).send(err);else res.send(result);
+                _this4.basicResponse(err, result, res);
             });
         }
     }]);
@@ -70,16 +80,80 @@ var StatusCtrl = (function (_BaseCtrl) {
         this.model = Status;
     }
 
+    _createClass(StatusCtrl, [{
+        key: 'create',
+        value: function create(req, res) {
+            _get(Object.getPrototypeOf(StatusCtrl.prototype), 'create', this).call(this, req, res, new Status(req.body));
+        }
+    }]);
+
     return StatusCtrl;
 })(BaseCtrl);
 
 exports.StatusCtrl = StatusCtrl;
 
+var TeamMember = require('../models/TeamMember');
+
+var TeamMemberCtrl = (function (_BaseCtrl2) {
+    _inherits(TeamMemberCtrl, _BaseCtrl2);
+
+    function TeamMemberCtrl() {
+        _classCallCheck(this, TeamMemberCtrl);
+
+        _get(Object.getPrototypeOf(TeamMemberCtrl.prototype), 'constructor', this).call(this);
+        this.model = TeamMember;
+    }
+
+    _createClass(TeamMemberCtrl, [{
+        key: 'create',
+        value: function create(req, res) {
+            _get(Object.getPrototypeOf(TeamMemberCtrl.prototype), 'create', this).call(this, req, res, new TeamMember(req.body));
+        }
+    }]);
+
+    return TeamMemberCtrl;
+})(BaseCtrl);
+
+exports.TeamMemberCtrl = TeamMemberCtrl;
+
+var UserStory = require('../models/UserStory');
+
+var UserStoryCtrl = (function (_BaseCtrl3) {
+    _inherits(UserStoryCtrl, _BaseCtrl3);
+
+    function UserStoryCtrl() {
+        _classCallCheck(this, UserStoryCtrl);
+
+        _get(Object.getPrototypeOf(UserStoryCtrl.prototype), 'constructor', this).call(this);
+        this.model = UserStory;
+    }
+
+    _createClass(UserStoryCtrl, [{
+        key: 'create',
+        value: function create(req, res) {
+            _get(Object.getPrototypeOf(UserStoryCtrl.prototype), 'create', this).call(this, req, res, new UserStory(req.body));
+        }
+    }, {
+        key: 'read',
+        value: function read(req, res) {
+            var _this5 = this;
+
+            this.model.find(req.query).populate("feature").populate("status").populate("assignedTo").exec(function (err, result) {
+                _this5.basicResponse(err, result, res);
+            });
+        }
+    }]);
+
+    return UserStoryCtrl;
+})(BaseCtrl);
+
+exports.UserStoryCtrl = UserStoryCtrl;
+
 var Feature = require('../models/Feature');
 //import { Feature } from '../models/Feature';
 
-var FeatureCtrl = (function (_BaseCtrl2) {
-    _inherits(FeatureCtrl, _BaseCtrl2);
+var FeatureCtrl = (function (_BaseCtrl4) {
+    _inherits(FeatureCtrl, _BaseCtrl4);
 
     function FeatureCtrl() {
         _classCallCheck(this, FeatureCtrl);
@@ -88,54 +162,18 @@ var FeatureCtrl = (function (_BaseCtrl2) {
         this.model = Feature;
     }
 
-    //export var featureCtrl = new FeatureCtrl();
-
-    //module.exports = {
-    //
-    //    create: function (req, res) {
-    //        var newFeature = new Feature(req.body);
-    //        newFeature.save(function (err, result) {
-    //            if (err) return res.status(500).send(err);
-    //            else res.send(result);
-    //        });
-    //    },
-    //
-    //    read: function (req, res) {
-    //        Feature.find(req.query)
-    //            .populate("status")
-    //            .exec(function (err, result) {
-    //                if (err) return res.status(500).send(err);
-    //                else res.send(result);
-    //            });
-    //    },
-    //
-    //    update: function (req, res) {
-    //        var id = req.query.id;
-    //        var updatedObject = req.body;
-    //        Feature.findByIdAndUpdate(id, updatedObject, {
-    //            new: true
-    //        }, function (err, result) {
-    //            if (err) return res.status(500).send(err);
-    //            else {
-    //                res.send(result);
-    //            }
-    //        });
-    //    },
-    //
-    //    delete: function (req, res) {
-    //        var id = req.query.id;
-    //        Feature.findByIdAndRemove(id, function (err, result) {
-    //            if (err) return res.status(500).send(derr);
-    //            else res.send(result);
-    //        });
-    //    }
-    //};
-
     _createClass(FeatureCtrl, [{
+        key: 'create',
+        value: function create(req, res) {
+            _get(Object.getPrototypeOf(FeatureCtrl.prototype), 'create', this).call(this, req, res, new Feature(req.body));
+        }
+    }, {
         key: 'read',
         value: function read(req, res) {
+            var _this6 = this;
+
             this.model.find(req.query).populate("status").exec(function (err, result) {
-                if (err) return res.status(500).send(err);else res.send(result);
+                _this6.basicResponse(err, result, res);
             });
         }
     }]);

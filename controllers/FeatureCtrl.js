@@ -3,19 +3,20 @@ class BaseCtrl {
     constructor (){
     }
 
-    create(req, res) {
-        var newFeature = new Feature(req.body);
-        newFeature.save(function (err, result) {
-            if (err) return res.status(500).send(err);
-            else res.send(result);
-        });
+    basicResponse (err, result, res) {
+        if (err) return res.status(500).send(err);
+        else res.send(result);
     }
 
+    create(req, res, newItem) {
+        newItem.save((err, result)=> {
+            this.basicResponse(err, result, res);
+        });
+    }
     read(req, res) {
         this.model.find(req.query)
-            .exec(function (err, result) {
-                if (err) return res.status(500).send(err);
-                else res.send(result);
+            .exec((err, result)=> {
+                this.basicResponse(err, result, res);
             });
     }
 
@@ -24,19 +25,15 @@ class BaseCtrl {
         var updatedObject = req.body;
         this.model.findByIdAndUpdate(id, updatedObject, {
             new: true
-        }, function (err, result) {
-            if (err) return res.status(500).send(err);
-            else {
-                res.send(result);
-            }
+        }, (err, result)=> {
+            this.basicResponse(err, result, res);
         });
     }
 
     delete(req, res) {
         var id = req.query.id;
-        this.model.findByIdAndRemove(id, function (err, result) {
-            if (err) return res.status(500).send(err);
-            else res.send(result);
+        this.model.findByIdAndRemove(id, (err, result)=> {
+            this.basicResponse(err, result, res);
         });
     }
 }
@@ -46,6 +43,44 @@ export class StatusCtrl extends BaseCtrl {
     constructor() {
         super();
         this.model = Status;
+    }
+
+    create(req, res) {
+        super.create(req, res, new Status(req.body));
+    }
+}
+
+let TeamMember = require('../models/TeamMember');
+export class TeamMemberCtrl extends BaseCtrl {
+    constructor() {
+        super();
+        this.model = TeamMember;
+    }
+
+    create(req, res) {
+        super.create(req, res, new TeamMember(req.body));
+    }
+}
+
+let UserStory = require('../models/UserStory');
+export class UserStoryCtrl extends BaseCtrl {
+    constructor() {
+        super();
+        this.model = UserStory;
+    }
+
+    create(req, res) {
+        super.create(req, res, new UserStory(req.body));
+    }
+
+    read(req, res) {
+        this.model.find(req.query)
+            .populate("feature")
+            .populate("status")
+            .populate("assignedTo")
+            .exec((err, result)=> {
+                this.basicResponse(err, result, res);
+            });
     }
 }
 
@@ -57,58 +92,16 @@ export class FeatureCtrl extends BaseCtrl {
         this.model = Feature;
     }
 
+    create(req, res) {
+        super.create(req, res, new Feature(req.body));
+    }
+
     read(req, res) {
         this.model.find(req.query)
             .populate("status")
-            .exec(function (err, result) {
-                if (err) return res.status(500).send(err);
-                else res.send(result);
+            .exec((err, result)=> {
+                this.basicResponse(err, result, res);
             });
     }
 }
 
-
-
-//export var featureCtrl = new FeatureCtrl();
-
-
-//module.exports = {
-//
-//    create: function (req, res) {
-//        var newFeature = new Feature(req.body);
-//        newFeature.save(function (err, result) {
-//            if (err) return res.status(500).send(err);
-//            else res.send(result);
-//        });
-//    },
-//
-//    read: function (req, res) {
-//        Feature.find(req.query)
-//            .populate("status")
-//            .exec(function (err, result) {
-//                if (err) return res.status(500).send(err);
-//                else res.send(result);
-//            });
-//    },
-//
-//    update: function (req, res) {
-//        var id = req.query.id;
-//        var updatedObject = req.body;
-//        Feature.findByIdAndUpdate(id, updatedObject, {
-//            new: true
-//        }, function (err, result) {
-//            if (err) return res.status(500).send(err);
-//            else {
-//                res.send(result);
-//            }
-//        });
-//    },
-//
-//    delete: function (req, res) {
-//        var id = req.query.id;
-//        Feature.findByIdAndRemove(id, function (err, result) {
-//            if (err) return res.status(500).send(derr);
-//            else res.send(result);
-//        });
-//    }
-//};
