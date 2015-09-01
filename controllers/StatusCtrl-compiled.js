@@ -1,3 +1,5 @@
+"use strict";
+
 //var Status = require('../models/Status');
 //
 //module.exports = {
@@ -39,3 +41,5 @@
 //        });
 //    }
 //};
+
+//# sourceMappingURL=StatusCtrl-compiled.js.map

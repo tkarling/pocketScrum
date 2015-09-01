@@ -4,12 +4,6 @@
 node_modules/*
 bower_components/*
 
-server-compiled.js
-server-compiled.js.map
-*/*-compiled.js
-*/*.map
-
-
 public/node_modules/*
 upload/*
 
