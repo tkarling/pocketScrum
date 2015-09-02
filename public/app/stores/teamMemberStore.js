@@ -47,7 +47,7 @@ class TeamMemberStore extends EventEmitter {
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
-        this.authUser = undefined;
+        this.authUserInfo = undefined;
         this.errorMsg = "";
 
         this.emitChange();
@@ -97,8 +97,17 @@ class TeamMemberStore extends EventEmitter {
                 };
                 this.teamMemberService.addItem(newMember).then((addedMember) => {
                     console.log("addedMember", addedMember);
+                    this.authUserInfo = addedMember;
+                }, (err) => {
+                    console.log("error adding member", err);
+                    this.authUserInfo = undefined;
                 });
+            } else {
+                this.authUserInfo = member;
             }
+        }, (err) => {
+            console.log("error getting auth user info", err);
+            this.authUserInfo = undefined;
         });
     }
 
@@ -160,7 +169,7 @@ angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMem
     };
 
     this.getAuthUserInfo = function() {
-        return teamMemberStore.authUser;
+        return teamMemberStore.authUserInfo;
     }
 });
 

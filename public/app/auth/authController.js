@@ -4,12 +4,10 @@ class AuthController {
     constructor(authService) {
         this.test = "AuthController test";
         this.authService = authService;
-        //this.authService.getUserInfo();
     }
 
-    getUserInfo() {
-        console.log('AuthController getUserInfo');
-        this.authService.getUserInfo();
+    getAuthInfo() {
+        this.authService.getAuthInfo();
     }
 }
 
@@ -18,21 +16,27 @@ angular.module("myApp").controller("AuthController", AuthController);
 
 
 class MainController {
-    constructor($location, authService) {
-        this.test = "MainController test";
+    constructor(MY_SERVER, $location, teamMemberStore) {
+        this.MY_SERVER = MY_SERVER;
         this.$location = $location;
-        this.authService = authService;
-        this.myInfo = authService.getMyInfo();
+
+        this.teamMemberStore = teamMemberStore;
+        teamMemberStore.addListener(() => {
+            this.resetAuthUser();
+        });
     }
 
-    updateThumbnail() {
-        console.log("updateThumbnail");
-        var thumbnailUrlBase = this.authService.getMyInfo().thumbnailUrl;
-        this.thumbnailUrl = thumbnailUrlBase ? thumbnailUrlBase + "55dd009fa2909451656e9114": "";
+    resetAuthUser() {
+        this.myInfo = this.teamMemberStore.getAuthUserInfo();
+        if(this.myInfo) {
+            this.thumbnailUrl  = this.MY_SERVER.url + this.MY_SERVER.thumbnailWIdUri +
+                this.myInfo.picId;
+        }
+        //console.log("MainController resetAuthUser", this.thumbnailUrl, this.myInfo);
     }
 
     gotoPage(path) {
-        console.log("goto", path);
+        //console.log("goto", path);
         this.$location.path(path);
     }
 

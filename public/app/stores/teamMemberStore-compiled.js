@@ -69,7 +69,7 @@ var TeamMemberStore = (function (_EventEmitter) {
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
-        this.authUser = undefined;
+        this.authUserInfo = undefined;
         this.errorMsg = "";
 
         this.emitChange();
@@ -126,8 +126,17 @@ var TeamMemberStore = (function (_EventEmitter) {
                     };
                     _this.teamMemberService.addItem(newMember).then(function (addedMember) {
                         console.log("addedMember", addedMember);
+                        _this.authUserInfo = addedMember;
+                    }, function (err) {
+                        console.log("error adding member", err);
+                        _this.authUserInfo = undefined;
                     });
+                } else {
+                    _this.authUserInfo = member;
                 }
+            }, function (err) {
+                console.log("error getting auth user info", err);
+                _this.authUserInfo = undefined;
             });
         }
     }, {
@@ -190,7 +199,7 @@ angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMem
     };
 
     this.getAuthUserInfo = function () {
-        return teamMemberStore.authUser;
+        return teamMemberStore.authUserInfo;
     };
 });
 

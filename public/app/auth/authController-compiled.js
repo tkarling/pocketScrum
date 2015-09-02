@@ -10,14 +10,12 @@ var AuthController = (function () {
 
         this.test = "AuthController test";
         this.authService = authService;
-        //this.authService.getUserInfo();
     }
 
     _createClass(AuthController, [{
-        key: "getUserInfo",
-        value: function getUserInfo() {
-            console.log('AuthController getUserInfo');
-            this.authService.getUserInfo();
+        key: "getAuthInfo",
+        value: function getAuthInfo() {
+            this.authService.getAuthInfo();
         }
     }]);
 
@@ -27,26 +25,33 @@ var AuthController = (function () {
 angular.module("myApp").controller("AuthController", AuthController);
 
 var MainController = (function () {
-    function MainController($location, authService) {
+    function MainController(MY_SERVER, $location, teamMemberStore) {
+        var _this = this;
+
         _classCallCheck(this, MainController);
 
-        this.test = "MainController test";
+        this.MY_SERVER = MY_SERVER;
         this.$location = $location;
-        this.authService = authService;
-        this.myInfo = authService.getMyInfo();
+
+        this.teamMemberStore = teamMemberStore;
+        teamMemberStore.addListener(function () {
+            _this.resetAuthUser();
+        });
     }
 
     _createClass(MainController, [{
-        key: "updateThumbnail",
-        value: function updateThumbnail() {
-            console.log("updateThumbnail");
-            var thumbnailUrlBase = this.authService.getMyInfo().thumbnailUrl;
-            this.thumbnailUrl = thumbnailUrlBase ? thumbnailUrlBase + "55dd009fa2909451656e9114" : "";
+        key: "resetAuthUser",
+        value: function resetAuthUser() {
+            this.myInfo = this.teamMemberStore.getAuthUserInfo();
+            if (this.myInfo) {
+                this.thumbnailUrl = this.MY_SERVER.url + this.MY_SERVER.thumbnailWIdUri + this.myInfo.picId;
+            }
+            //console.log("MainController resetAuthUser", this.thumbnailUrl, this.myInfo);
         }
     }, {
         key: "gotoPage",
         value: function gotoPage(path) {
-            console.log("goto", path);
+            //console.log("goto", path);
             this.$location.path(path);
         }
     }]);

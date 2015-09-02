@@ -1,49 +1,44 @@
 "use strict";
 
 class authService {
-    constructor(MY_SERVER, $timeout, $http, $location, teamMemberStore, teamMemberActions) {
+    constructor(MY_SERVER,  $http, $location, teamMemberStore, teamMemberActions) {
         this.MY_SERVER = MY_SERVER;
-        this.$timeout = $timeout;
         this.$http = $http;
         this.$location = $location;
-        this.teamMemberStore = teamMemberStore;
         this.teamMemberActions = teamMemberActions;
-        this.myInfo = {thumbnailUrl: ""};
+
+        //this.teamMemberStore = teamMemberStore;
+        //teamMemberStore.addListener(() => {
+        //    this.resetAuthUser();
+        //});
     }
 
-    resetAuthUser() {
-        this.myInfo = this.teamMemberStore.getAuthUserInfo();
-        console.log("resetAuthUser", this.myInfo);
-    }
+    //resetAuthUser() {
+    //    this.myInfo = this.teamMemberStore.getAuthUserInfo();
+    //    console.log("resetAuthUser", this.myInfo);
+    //}
 
-    getUserInfo() {
-        console.log('authService getUserInfo');
+    getAuthInfo() {
+        console.log('authService getAuthInfo');
         var self = this;
-        //this.$timeout(function() {
-        console.log('authService timeout getUserInfo');
+        //console.log('authService timeout getAuthInfo');
         self.$http.get(this.MY_SERVER.url + this.MY_SERVER.meUri).then(function (result) {
             console.log("result", result);
             if (result.data) {
-                self.myInfo.id = result.data.id;
-                self.myInfo.provider = result.data.provider;
-                self.myInfo.displayName = result.data.displayName;
-                self.myInfo.thumbnailUrl = self.MY_SERVER.url + self.MY_SERVER.thumbnailWIdUri;
-                console.log("this.myInfo", self.myInfo);
-                self.teamMemberActions.setAuthUser(self.myInfo);
+                var authInfo = {
+                    id: result.data.id,
+                    provider: result.data.provider,
+                    displayName: result.data.displayName
+                }
+                //console.log("authInfo", authInfo);
+                self.teamMemberActions.setAuthUser(authInfo);
                 self.$location.path(self.MY_SERVER.scrumBoardViewUri);
             }
         }, function (err) {
-            self.myInfo.id = undefined;
-            self.myInfo.displayName = undefined;
-            self.myInfo.thumbnailUrl = undefined;
-            console.log("getUserInfo failed", err);
+            console.log("getAuthInfo failed", err);
         });
-        //}, 500);
     }
 
-    getMyInfo() {
-        return this.myInfo;
-    }
 }
 
 angular.module("myApp").service("authService", authService);

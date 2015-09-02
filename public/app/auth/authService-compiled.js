@@ -5,54 +5,46 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var authService = (function () {
-    function authService(MY_SERVER, $timeout, $http, $location, teamMemberStore, teamMemberActions) {
+    function authService(MY_SERVER, $http, $location, teamMemberStore, teamMemberActions) {
         _classCallCheck(this, authService);
 
         this.MY_SERVER = MY_SERVER;
-        this.$timeout = $timeout;
         this.$http = $http;
         this.$location = $location;
-        this.teamMemberStore = teamMemberStore;
         this.teamMemberActions = teamMemberActions;
-        this.myInfo = { thumbnailUrl: "" };
+
+        //this.teamMemberStore = teamMemberStore;
+        //teamMemberStore.addListener(() => {
+        //    this.resetAuthUser();
+        //});
     }
 
+    //resetAuthUser() {
+    //    this.myInfo = this.teamMemberStore.getAuthUserInfo();
+    //    console.log("resetAuthUser", this.myInfo);
+    //}
+
     _createClass(authService, [{
-        key: "resetAuthUser",
-        value: function resetAuthUser() {
-            this.myInfo = this.teamMemberStore.getAuthUserInfo();
-            console.log("resetAuthUser", this.myInfo);
-        }
-    }, {
-        key: "getUserInfo",
-        value: function getUserInfo() {
-            console.log('authService getUserInfo');
+        key: "getAuthInfo",
+        value: function getAuthInfo() {
+            console.log('authService getAuthInfo');
             var self = this;
-            //this.$timeout(function() {
-            console.log('authService timeout getUserInfo');
+            //console.log('authService timeout getAuthInfo');
             self.$http.get(this.MY_SERVER.url + this.MY_SERVER.meUri).then(function (result) {
                 console.log("result", result);
                 if (result.data) {
-                    self.myInfo.id = result.data.id;
-                    self.myInfo.provider = result.data.provider;
-                    self.myInfo.displayName = result.data.displayName;
-                    self.myInfo.thumbnailUrl = self.MY_SERVER.url + self.MY_SERVER.thumbnailWIdUri;
-                    console.log("this.myInfo", self.myInfo);
-                    self.teamMemberActions.setAuthUser(self.myInfo);
+                    var authInfo = {
+                        id: result.data.id,
+                        provider: result.data.provider,
+                        displayName: result.data.displayName
+                    };
+                    //console.log("authInfo", authInfo);
+                    self.teamMemberActions.setAuthUser(authInfo);
                     self.$location.path(self.MY_SERVER.scrumBoardViewUri);
                 }
             }, function (err) {
-                self.myInfo.id = undefined;
-                self.myInfo.displayName = undefined;
-                self.myInfo.thumbnailUrl = undefined;
-                console.log("getUserInfo failed", err);
+                console.log("getAuthInfo failed", err);
             });
-            //}, 500);
-        }
-    }, {
-        key: "getMyInfo",
-        value: function getMyInfo() {
-            return this.myInfo;
         }
     }]);
 
