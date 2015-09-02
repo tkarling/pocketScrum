@@ -11,6 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ADD_TEAM_MEMBER = "ADD_TEAM_MEMBER";
 var REMOVE_TEAM_MEMBER = "REMOVE_TEAM_MEMBER";
 var SAVE_TEAM_MEMBER = "SAVE_TEAM_MEMBER";
+var SET_AUTH_USER = "SET_AUTH_USER";
 
 var teamMemberActions = (function () {
     function teamMemberActions(dispatcher) {
@@ -43,6 +44,14 @@ var teamMemberActions = (function () {
                 item: item
             });
         }
+    }, {
+        key: "setAuthUser",
+        value: function setAuthUser(item) {
+            this.dispatcher.emit({
+                actionType: SET_AUTH_USER,
+                item: item
+            });
+        }
     }]);
 
     return teamMemberActions;
@@ -60,6 +69,7 @@ var TeamMemberStore = (function (_EventEmitter) {
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
+        this.authUser = undefined;
         this.errorMsg = "";
 
         this.emitChange();
@@ -100,6 +110,27 @@ var TeamMemberStore = (function (_EventEmitter) {
             return this.teamMemberService.saveItem(teamMember);
         }
     }, {
+        key: "setAuthUser",
+        value: function setAuthUser(authInfo) {
+            var _this = this;
+
+            return this.teamMemberService.getItem("authId", authInfo.id).then(function (member) {
+                console.log("setAuthUser", member);
+                if (member === null) {
+                    var newMember = {
+                        authId: authInfo.id,
+                        authProvider: authInfo.provider,
+                        name: authInfo.displayName,
+                        picId: "55e375699341d15a0390a422",
+                        currentProject: "55e61a9eb63286404af60c61"
+                    };
+                    _this.teamMemberService.addItem(newMember).then(function (addedMember) {
+                        console.log("addedMember", addedMember);
+                    });
+                }
+            });
+        }
+    }, {
         key: "emitChange",
         value: function emitChange() {
             var self = this;
@@ -136,6 +167,12 @@ angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMem
                 });
                 break;
 
+            case SET_AUTH_USER:
+                //teamMemberStore.setAuthUser(action.item);
+                teamMemberStore.setAuthUser(action.item).then(function (response) {
+                    teamMemberStore.emitChange();
+                });
+                break;
         }
     });
 
@@ -150,6 +187,10 @@ angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMem
 
     this.getErrorMsg = function () {
         return teamMemberStore.getErrorMsg();
+    };
+
+    this.getAuthUserInfo = function () {
+        return teamMemberStore.authUser;
     };
 });
 

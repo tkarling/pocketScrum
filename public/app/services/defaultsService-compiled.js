@@ -26,6 +26,9 @@ var defaultsService = (function () {
     }
 
     _createClass(defaultsService, [{
+        key: "setupDB",
+        value: function setupDB() {}
+    }, {
         key: "readAll",
         value: function readAll() {
             var _this = this;

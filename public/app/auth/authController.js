@@ -4,7 +4,7 @@ class AuthController {
     constructor(authService) {
         this.test = "AuthController test";
         this.authService = authService;
-        this.authService.getUserInfo();
+        //this.authService.getUserInfo();
     }
 
     getUserInfo() {

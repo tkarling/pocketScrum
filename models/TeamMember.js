@@ -3,13 +3,20 @@ var mongoose = require('mongoose');
 var schema = new mongoose.Schema ({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
+        unique: true
+    },
+    authId: {
+        type: String,
         required: true,
         unique: true
+    },
+    authProvider: {
+        type: String,
+        required: true
     },
     picId: {
         type: mongoose.Schema.Types.ObjectId, 

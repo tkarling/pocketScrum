@@ -11,6 +11,10 @@ angular.module("myApp").service("MY_SERVER", function ($location) {
     this.storiesUri = "/stories";
     this.featuresUri = "/features";
     this.projectsUri = "/projects";
+    this.meUri = "/me";
+    this.scrumBoardViewUri = "/scrumBoard";
+    this.picturesViewUri = "/pictures";
+    this.thumbnailWIdUri = "/thumbnail?id=";
 }).service("C", function () {
     this.ALL_FEATURES_ID = "55e39e8e592f87ef2f78cf35";
     this.ALL_MEMBERS_ID = "55e48a940fde1bd55c316cf4";

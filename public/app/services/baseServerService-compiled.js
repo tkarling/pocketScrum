@@ -36,6 +36,18 @@ var baseServerService = (function () {
             });
         }
     }, {
+        key: "getItem",
+        value: function getItem(fieldname, expectedValue) {
+            var criteria = "?" + fieldname + "=" + expectedValue;
+            return this.$http.get(this.baseUrl + criteria).then(function (response) {
+                var items = response.data;
+                if (items.length > 0) {
+                    return items[0];
+                }
+                return null;
+            });
+        }
+    }, {
         key: "addItem",
         value: function addItem(item) {
             return this.$http.post(this.baseUrl, item);

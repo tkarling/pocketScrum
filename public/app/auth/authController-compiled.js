@@ -10,7 +10,7 @@ var AuthController = (function () {
 
         this.test = "AuthController test";
         this.authService = authService;
-        this.authService.getUserInfo();
+        //this.authService.getUserInfo();
     }
 
     _createClass(AuthController, [{
