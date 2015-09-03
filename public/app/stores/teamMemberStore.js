@@ -42,8 +42,9 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 
 
 class TeamMemberStore extends EventEmitter {
-    constructor(teamMemberService) {
+    constructor(teamMemberService, C) {
         super();
+        this.C = C;
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
@@ -92,8 +93,8 @@ class TeamMemberStore extends EventEmitter {
                     authId: authInfo.id,
                     authProvider: authInfo.provider,
                     name: authInfo.displayName,
-                    picId: "55e375699341d15a0390a422",
-                    currentProject : "55e61a9eb63286404af60c61"
+                    picId: this.C.DEFAULT_MEMBER_PIC_ID,
+                    currentProject : this.C.DEFAULT_PROJECT
                 };
                 this.teamMemberService.addItem(newMember).then((addedMember) => {
                     console.log("addedMember", addedMember);

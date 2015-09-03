@@ -8,8 +8,7 @@ var schema = new mongoose.Schema ({
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "TeamMember",
-        required: true,
+        ref: "TeamMember"
     },
     releaseDate: {
         type: Number

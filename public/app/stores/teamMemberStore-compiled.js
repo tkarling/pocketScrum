@@ -62,10 +62,11 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 var TeamMemberStore = (function (_EventEmitter) {
     _inherits(TeamMemberStore, _EventEmitter);
 
-    function TeamMemberStore(teamMemberService) {
+    function TeamMemberStore(teamMemberService, C) {
         _classCallCheck(this, TeamMemberStore);
 
         _get(Object.getPrototypeOf(TeamMemberStore.prototype), "constructor", this).call(this);
+        this.C = C;
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
@@ -121,8 +122,8 @@ var TeamMemberStore = (function (_EventEmitter) {
                         authId: authInfo.id,
                         authProvider: authInfo.provider,
                         name: authInfo.displayName,
-                        picId: "55e375699341d15a0390a422",
-                        currentProject: "55e61a9eb63286404af60c61"
+                        picId: _this.C.DEFAULT_MEMBER_PIC_ID,
+                        currentProject: _this.C.DEFAULT_PROJECT
                     };
                     _this.teamMemberService.addItem(newMember).then(function (addedMember) {
                         console.log("addedMember", addedMember);

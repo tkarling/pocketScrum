@@ -2,7 +2,7 @@
 
 class ScrumBoardController {
     constructor(C, MY_SERVER, userStoryStore, userStoryActions, statusStore,
-                featureStore, teamMemberStore, defaultsService) {
+                featureStore, teamMemberStore) {
         this.C = C;
         this.url = MY_SERVER.url;
         var self = this;

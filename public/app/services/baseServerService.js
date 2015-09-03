@@ -99,7 +99,7 @@ class teamMemberService extends baseServerService {
 angular.module("myApp").service("teamMemberService", teamMemberService);
 
 
-class projectsService extends baseServerService {
+class projectService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
         this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
@@ -107,4 +107,4 @@ class projectsService extends baseServerService {
     }
 
 }
-angular.module("myApp").service("teamMemberService", teamMemberService);
+angular.module("myApp").service("projectService", projectService);

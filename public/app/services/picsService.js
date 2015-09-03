@@ -16,6 +16,17 @@ class picsService {
         });
     }
 
+    getPicData(fieldname, expectedValue) {
+        var criteria = "?" + fieldname + "=" + expectedValue;
+        return this.$http.get(this.baseUrl + criteria).then(function(response) {
+            var items = response.data;
+            if(items.length > 0) {
+                return items[0];
+            }
+            return null;
+        });
+    }
+
     addPic(pic) {
         return this.Upload.upload({
             url: this.baseUrl,

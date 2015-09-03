@@ -141,20 +141,20 @@ var teamMemberService = (function (_baseServerService4) {
 
 angular.module("myApp").service("teamMemberService", teamMemberService);
 
-var projectsService = (function (_baseServerService5) {
-    _inherits(projectsService, _baseServerService5);
+var projectService = (function (_baseServerService5) {
+    _inherits(projectService, _baseServerService5);
 
-    function projectsService($http, MY_SERVER) {
-        _classCallCheck(this, projectsService);
+    function projectService($http, MY_SERVER) {
+        _classCallCheck(this, projectService);
 
-        _get(Object.getPrototypeOf(projectsService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        _get(Object.getPrototypeOf(projectService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
         this.baseUrlWId = this.baseUrl + "?id=";
     }
 
-    return projectsService;
+    return projectService;
 })(baseServerService);
 
-angular.module("myApp").service("teamMemberService", teamMemberService);
+angular.module("myApp").service("projectService", projectService);
 
 //# sourceMappingURL=baseServerService-compiled.js.map
