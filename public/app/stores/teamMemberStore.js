@@ -93,9 +93,11 @@ class TeamMemberStore extends EventEmitter {
                     authId: authInfo.id,
                     authProvider: authInfo.provider,
                     name: authInfo.displayName,
-                    picId: this.C.DEFAULT_MEMBER_PIC_ID,
                     currentProject : this.C.DEFAULT_PROJECT_ID
                 };
+                if(this.C.DEFAULT_MEMBER_PIC_ID) {
+                    newMember.picId = this.C.DEFAULT_MEMBER_PIC_ID;
+                }
                 return this.teamMemberService.addItem(newMember).then((addedMember) => {
                     this.authUserInfo = addedMember;
                 }, (err) => {

@@ -126,7 +126,7 @@ class C {
             email: project,
             project: project});
     }
-    
+
 
     readAll() {
         this.teamMemberService.getItems().then((items) => {

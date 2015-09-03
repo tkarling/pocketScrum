@@ -28,9 +28,9 @@ class MainController {
 
     resetAuthUser() {
         this.myInfo = this.teamMemberStore.getAuthUserInfo();
-        if(this.myInfo && this.myInfo.picId) {
-            this.thumbnailUrl  = this.MY_SERVER.url + this.MY_SERVER.thumbnailWIdUri +
-                this.myInfo.picId;
+        if(this.myInfo) {
+            this.thumbnailUrl  = this.myInfo.picId ? this.MY_SERVER.url + this.MY_SERVER.thumbnailWIdUri +
+                this.myInfo.picId : "./images/defaultTeamMember.jpg";
         }
         //console.log("MainController resetAuthUser", this.thumbnailUrl, this.myInfo,
         //    this.myInfo? this.myInfo.picId: "no picId");

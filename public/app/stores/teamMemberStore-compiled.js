@@ -122,9 +122,11 @@ var TeamMemberStore = (function (_EventEmitter) {
                         authId: authInfo.id,
                         authProvider: authInfo.provider,
                         name: authInfo.displayName,
-                        picId: _this.C.DEFAULT_MEMBER_PIC_ID,
                         currentProject: _this.C.DEFAULT_PROJECT_ID
                     };
+                    if (_this.C.DEFAULT_MEMBER_PIC_ID) {
+                        newMember.picId = _this.C.DEFAULT_MEMBER_PIC_ID;
+                    }
                     return _this.teamMemberService.addItem(newMember).then(function (addedMember) {
                         _this.authUserInfo = addedMember;
                     }, function (err) {
