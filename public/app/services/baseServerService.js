@@ -37,15 +37,21 @@ class baseServerService {
     }
 
     addItem(item) {
-        return this.$http.post(this.baseUrl, item);
+        return this.$http.post(this.baseUrl, item).then((response) => {
+            return response.data;
+        });
     }
 
     removeItem(item) {
-        return this.$http.delete(this.baseUrlWId + item._id);
+        return this.$http.delete(this.baseUrlWId + item._id).then((response) => {
+            return response.data;
+        });
     }
 
     saveItem(item) {
-        return this.$http.put(this.baseUrlWId + item._id, item);
+        return this.$http.put(this.baseUrlWId + item._id, item).then((response) => {
+            return response.data;
+        });
     }
 }
 

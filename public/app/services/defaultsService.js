@@ -1,8 +1,10 @@
 "use strict";
 
-class defaultsService {
-    constructor($http, MY_SERVER, statusService, teamMemberService, userStoryService, featureService, picsService) {
+//defaults service
+class C {
+    constructor($http, $log, MY_SERVER, statusService, teamMemberService, userStoryService, featureService, projectService, picsService) {
         this.$http = $http;
+        this.$log = $log;
         this.MY_SERVER = MY_SERVER;
         this.url = MY_SERVER.url;
 
@@ -10,13 +12,100 @@ class defaultsService {
         this.teamMemberService = teamMemberService;
         this.featureService = featureService;
         this.userStoryService = userStoryService;
+        this.projectService = projectService;
         this.picsService = picsService;
 
+        this.getDefaultValues();
+
+        // FOR TESTING
         //this.readAll();
         //this.setProjectForMembers();
         //this.setProjectForFeatures();
         //this.setProjectForUserStories();
         //this.setProjectForPictures();
+    }
+
+    getDefaultValues () {
+        this.featureService.getItem("name", "All Features").then((item)=>{
+            this.ALL_FEATURES_ID = item._id;
+        });
+        this.teamMemberService.getItem("name", "All Members").then((item)=>{
+            this.ALL_MEMBERS_ID = item._id;
+        });
+        this.teamMemberService.getItem("name", "Not Assigned").then((item)=>{
+            this.NOT_SET_MEMBER_ID = item._id;
+        });
+        this.picsService.getPicData("keywords[0]", "default member pic").then((item)=>{
+            console.log("item", item);
+            if(item) {
+                this.DEFAULT_MEMBER_PIC_ID = item.picId;
+                console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
+            } else {
+                this.$log.error("no MEMBER PIC");
+            }
+        });
+        this.projectService.getItems().then((items)=>{
+            if(items.length > 0) {
+                this.DEFAULT_PROJECT_ID = items[0]._id;
+                console.log("this.DEFAULT_PROJECT_ID", this.DEFAULT_PROJECT_ID);
+            } else {
+                this.$log.error("no default project");
+            }
+        });
+    }
+
+    setupOneProject() {
+
+    }
+
+    setupDefaults() {
+        this.default = {
+            project: "",
+            memberPicId: ""
+        }
+    }
+
+    setupProject() {
+        this.projectService.getItems().then((items) => {
+            if(items.length === 0) {
+                this.projectService.addItem({name: "myProject"});
+            }
+        });
+
+    }
+
+    setupFeatures() {
+        this.featureService.getItems().then((items) => {
+            if(items.length === 0) {
+                this.featureService.addItem({name: "All Features", noShow:true, });
+                this.featureService.addItem({name: "Feature1", project: this.default.project});
+                this.featureService.addItem({name: "Feature2", project: this.default.project});
+            }
+        });
+
+    }
+
+    setupMembers() {
+        this.teamMemberService.getItems().then((items) => {
+            if(items.length === 0) {
+                this.teamMemberService.addItem({name: "All Members", noShow:true, });
+                this.teamMemberService.addItem({name: "Not Assigned", project: this.default.project});
+                this.teamMemberService.addItem({name: "Test Member", project: this.default.project});
+            }
+        });
+
+    }
+
+    setupStatuses() {
+        this.statusService.getItems().then((items) => {
+            if(items.length === 0) {
+                this.statusService.addItem({name: "not started"});
+                this.statusService.addItem({name: "in progress"});
+                this.statusService.addItem({name: "impeded"});
+                this.statusService.addItem({name: "done"});
+                this.statusService.addItem({name: "rejected"});
+            }
+        });
     }
 
     readAll() {
@@ -83,4 +172,4 @@ class defaultsService {
 
 }
 
-angular.module("myApp").service("defaultsService", defaultsService);
+angular.module("myApp").service("C", C);

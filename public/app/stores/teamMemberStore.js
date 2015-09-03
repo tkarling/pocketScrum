@@ -42,8 +42,9 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 
 
 class TeamMemberStore extends EventEmitter {
-    constructor(teamMemberService, C) {
+    constructor(teamMemberService, C, $log) {
         super();
+        this.$log = $log;
         this.C = C;
         this.teamMemberService = teamMemberService;
 
@@ -69,7 +70,7 @@ class TeamMemberStore extends EventEmitter {
             .then(function (response) {
             }, function (error) {
                 if (error.teamMember > 0) {
-                    console.log("addTeamMember error", error);
+                    this.$log.error("addTeamMember error", error);
                     self.errorMsg = error.teamMember + ': ' + error.teamMemberText;
                 }
             });
@@ -87,27 +88,26 @@ class TeamMemberStore extends EventEmitter {
 
     setAuthUser(authInfo) {
         return this.teamMemberService.getItem("authId", authInfo.id).then((member) => {
-            console.log("setAuthUser", member);
             if(member === null) {
                 var newMember = {
                     authId: authInfo.id,
                     authProvider: authInfo.provider,
                     name: authInfo.displayName,
                     picId: this.C.DEFAULT_MEMBER_PIC_ID,
-                    currentProject : this.C.DEFAULT_PROJECT
+                    currentProject : this.C.DEFAULT_PROJECT_ID
                 };
-                this.teamMemberService.addItem(newMember).then((addedMember) => {
-                    console.log("addedMember", addedMember);
+                return this.teamMemberService.addItem(newMember).then((addedMember) => {
                     this.authUserInfo = addedMember;
                 }, (err) => {
-                    console.log("error adding member", err);
+                    this.$log.error("error adding member", err);
                     this.authUserInfo = undefined;
+                    //deferred.reject(err);
                 });
             } else {
                 this.authUserInfo = member;
             }
         }, (err) => {
-            console.log("error getting auth user info", err);
+            this.$log.error("error getting auth user info", err);
             this.authUserInfo = undefined;
         });
     }
@@ -122,8 +122,8 @@ class TeamMemberStore extends EventEmitter {
 
 }
 
-angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMemberService) {
-    var teamMemberStore = new TeamMemberStore(teamMemberService);
+angular.module("myApp").service("teamMemberStore", function ($log, C, dispatcher, teamMemberService) {
+    var teamMemberStore = new TeamMemberStore(teamMemberService, C, $log);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

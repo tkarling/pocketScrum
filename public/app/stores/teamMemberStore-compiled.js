@@ -62,10 +62,11 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 var TeamMemberStore = (function (_EventEmitter) {
     _inherits(TeamMemberStore, _EventEmitter);
 
-    function TeamMemberStore(teamMemberService, C) {
+    function TeamMemberStore(teamMemberService, C, $log) {
         _classCallCheck(this, TeamMemberStore);
 
         _get(Object.getPrototypeOf(TeamMemberStore.prototype), "constructor", this).call(this);
+        this.$log = $log;
         this.C = C;
         this.teamMemberService = teamMemberService;
 
@@ -93,7 +94,7 @@ var TeamMemberStore = (function (_EventEmitter) {
             this.errorMsg = "";
             return this.teamMemberService.addItem(teamMember).then(function (response) {}, function (error) {
                 if (error.teamMember > 0) {
-                    console.log("addTeamMember error", error);
+                    this.$log.error("addTeamMember error", error);
                     self.errorMsg = error.teamMember + ': ' + error.teamMemberText;
                 }
             });
@@ -116,27 +117,26 @@ var TeamMemberStore = (function (_EventEmitter) {
             var _this = this;
 
             return this.teamMemberService.getItem("authId", authInfo.id).then(function (member) {
-                console.log("setAuthUser", member);
                 if (member === null) {
                     var newMember = {
                         authId: authInfo.id,
                         authProvider: authInfo.provider,
                         name: authInfo.displayName,
                         picId: _this.C.DEFAULT_MEMBER_PIC_ID,
-                        currentProject: _this.C.DEFAULT_PROJECT
+                        currentProject: _this.C.DEFAULT_PROJECT_ID
                     };
-                    _this.teamMemberService.addItem(newMember).then(function (addedMember) {
-                        console.log("addedMember", addedMember);
+                    return _this.teamMemberService.addItem(newMember).then(function (addedMember) {
                         _this.authUserInfo = addedMember;
                     }, function (err) {
-                        console.log("error adding member", err);
+                        _this.$log.error("error adding member", err);
                         _this.authUserInfo = undefined;
+                        //deferred.reject(err);
                     });
                 } else {
-                    _this.authUserInfo = member;
-                }
+                        _this.authUserInfo = member;
+                    }
             }, function (err) {
-                console.log("error getting auth user info", err);
+                _this.$log.error("error getting auth user info", err);
                 _this.authUserInfo = undefined;
             });
         }
@@ -154,8 +154,8 @@ var TeamMemberStore = (function (_EventEmitter) {
     return TeamMemberStore;
 })(EventEmitter);
 
-angular.module("myApp").service("teamMemberStore", function (dispatcher, teamMemberService) {
-    var teamMemberStore = new TeamMemberStore(teamMemberService);
+angular.module("myApp").service("teamMemberStore", function ($log, C, dispatcher, teamMemberService) {
+    var teamMemberStore = new TeamMemberStore(teamMemberService, C, $log);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

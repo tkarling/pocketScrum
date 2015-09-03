@@ -49,19 +49,19 @@ var C = (function () {
             this.picsService.getPicData("keywords[0]", "default member pic").then(function (item) {
                 console.log("item", item);
                 if (item) {
-                    _this.DEFAULT_MEMBER_PIC_ID = item;
-                    //console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
+                    _this.DEFAULT_MEMBER_PIC_ID = item.picId;
+                    console.log("this.DEFAULT_MEMBER_PIC_ID", _this.DEFAULT_MEMBER_PIC_ID);
                 } else {
-                        _this.$log.error("no MEMBER PIC");
-                    }
+                    _this.$log.error("no MEMBER PIC");
+                }
             });
             this.projectService.getItems().then(function (items) {
                 if (items.length > 0) {
-                    _this.DEFAULT_PROJECT = items[0]._id;
-                    //console.log("this.DEFAULT_PROJECT", this.DEFAULT_PROJECT);
+                    _this.DEFAULT_PROJECT_ID = items[0]._id;
+                    console.log("this.DEFAULT_PROJECT_ID", _this.DEFAULT_PROJECT_ID);
                 } else {
-                        _this.$log.error("no default project");
-                    }
+                    _this.$log.error("no default project");
+                }
             });
         }
     }, {

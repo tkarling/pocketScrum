@@ -43,10 +43,11 @@ var MainController = (function () {
         key: "resetAuthUser",
         value: function resetAuthUser() {
             this.myInfo = this.teamMemberStore.getAuthUserInfo();
-            if (this.myInfo) {
+            if (this.myInfo && this.myInfo.picId) {
                 this.thumbnailUrl = this.MY_SERVER.url + this.MY_SERVER.thumbnailWIdUri + this.myInfo.picId;
             }
-            //console.log("MainController resetAuthUser", this.thumbnailUrl, this.myInfo);
+            //console.log("MainController resetAuthUser", this.thumbnailUrl, this.myInfo,
+            //    this.myInfo? this.myInfo.picId: "no picId");
         }
     }, {
         key: "gotoPage",

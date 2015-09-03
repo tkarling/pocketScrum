@@ -50,17 +50,23 @@ var baseServerService = (function () {
     }, {
         key: "addItem",
         value: function addItem(item) {
-            return this.$http.post(this.baseUrl, item);
+            return this.$http.post(this.baseUrl, item).then(function (response) {
+                return response.data;
+            });
         }
     }, {
         key: "removeItem",
         value: function removeItem(item) {
-            return this.$http["delete"](this.baseUrlWId + item._id);
+            return this.$http["delete"](this.baseUrlWId + item._id).then(function (response) {
+                return response.data;
+            });
         }
     }, {
         key: "saveItem",
         value: function saveItem(item) {
-            return this.$http.put(this.baseUrlWId + item._id, item);
+            return this.$http.put(this.baseUrlWId + item._id, item).then(function (response) {
+                return response.data;
+            });
         }
     }]);
 
