@@ -12,8 +12,7 @@ var schema = new mongoose.Schema({
     },
     status: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Status",
-        "default": "55e2326af68548f0fc933afb"
+        ref: "Status"
     },
     priority: {
         type: Number
@@ -23,8 +22,7 @@ var schema = new mongoose.Schema({
     },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "TeamMember",
-        "default": "55e48b010fde1bd55c316cf6"
+        ref: "TeamMember"
     },
     tag: {
         type: String,

@@ -21,13 +21,15 @@ var C = (function () {
         this.projectService = projectService;
         this.picsService = picsService;
 
-        this.getDefaultValues();
+        this.setupDefaultsAndDBIfNeeded();
 
-        // FOR TESTING
+        //this.setupOneProject("My 5th Project");
+
+        // FOR TESTING & DB FIXING
         //this.readAll();
         //this.setProjectForMembers();
         //this.setProjectForFeatures();
-        //this.setProjectForUserStories();
+        //this.setStatusForUserStories();
         //this.setProjectForPictures();
     }
 
@@ -44,6 +46,9 @@ var C = (function () {
             });
             this.teamMemberService.getItem("name", "Not Assigned").then(function (item) {
                 _this.NOT_SET_MEMBER_ID = item._id;
+            });
+            this.statusService.getItem("name", "not started").then(function (item) {
+                _this.NOT_STARTED_STATUS_ID = item._id;
             });
             this.picsService.getPicData("keywords[0]", "default member pic").then(function (item) {
                 //console.log("item", item);
@@ -64,94 +69,98 @@ var C = (function () {
             });
         }
     }, {
-        key: "setupDB",
-        value: function setupDB() {
+        key: "setupDefaultsAndDBIfNeeded",
+        value: function setupDefaultsAndDBIfNeeded() {
             var _this2 = this;
 
-            this.setupStatuses();
-            this.setupOneProject().then(function () {
-                _this2.getDefaultValues();
+            this.projectService.getItems().then(function (items) {
+                if (items.length === 0) {
+                    // setup DB, set default values & setup sample project
+                    _this2.$q.all([_this2.setupDefaultFeatures(), _this2.setupDefaultMembers()]).then(function () {
+                        _this2.getDefaultValues();
+                        _this2.setupSampleProject("My 1st project");
+                    });
+                } else {
+                    // just set default values
+                    _this2.getDefaultValues();
+                }
             });
         }
     }, {
-        key: "setupOneProject",
-        value: function setupOneProject() {
+        key: "setupSampleProject",
+        value: function setupSampleProject(projectName) {
             var _this3 = this;
 
-            return this.setupProject().then(function (addedProject) {
-                return _this3.$q.all([_this3.setupFeatures(addedProject._id), _this3.setupMembers(addedProject._id)]);
+            this.addProject(projectName).then(function (addedProject) {
+                _this3.setupSampleFeatures(addedProject._id);
+                _this3.setupSampleMembers(addedProject._id);
             });
         }
     }, {
-        key: "setupProject",
-        value: function setupProject() {
+        key: "addProject",
+        value: function addProject(name) {
+            return this.projectService.addItem({ name: name }).then(function (addedItem) {
+                return addedItem;
+            });
+        }
+    }, {
+        key: "setupDefaultFeatures",
+        value: function setupDefaultFeatures() {
             var _this4 = this;
 
-            return this.projectService.getItems().then(function (items) {
+            return this.featureService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    return _this4.projectService.addItem({ name: "myProject" }).then(function (addedItem) {
-                        return addedItem;
-                    });
+                    return _this4.featureService.addItem({ name: "All Features", noShow: true });
                 }
             });
         }
     }, {
-        key: "setupFeatures",
-        value: function setupFeatures(project) {
+        key: "setupSampleFeatures",
+        value: function setupSampleFeatures(project) {
+            this.featureService.addItem({ name: "Feature1", project: project });
+            this.featureService.addItem({ name: "Feature2", project: project });
+        }
+    }, {
+        key: "setupDefaultMembers",
+        value: function setupDefaultMembers() {
             var _this5 = this;
 
-            this.featureService.getItems().then(function (items) {
+            return this.teamMemberService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this5.featureService.addItem({ name: "All Features", noShow: true });
+                    return _this5.$q.all([_this5.teamMemberService.addItem({
+                        name: "All Members", noShow: true,
+                        authId: "All Members", authProvider: "All Members",
+                        email: "All Members"
+                    }), _this5.teamMemberService.addItem({
+                        name: "Not Assigned",
+                        authId: "Not Assigned", authProvider: "Not Assigned",
+                        email: "Not Assigned"
+                    })]);
                 }
-                _this5.featureService.addItem({ name: "Feature1", project: project });
-                _this5.featureService.addItem({ name: "Feature2", project: project });
             });
         }
     }, {
-        key: "setupMembers",
-        value: function setupMembers(project) {
-            var _this6 = this;
-
-            this.teamMemberService.getItems().then(function (items) {
-                if (items.length === 0) {
-                    _this6.teamMemberService.addItem({ name: "All Members", noShow: true });
-                    _this6.teamMemberService.addItem({ name: "Not Assigned" });
-                }
-                _this6.teamMemberService.addItem({ name: "Test Member",
-                    authId: "Test Member", authProvider: "Test Member",
-                    project: project });
-            });
-        }
-    }, {
-        key: "setupStatuses",
-        value: function setupStatuses() {
-            var _this7 = this;
-
-            this.statusService.getItems().then(function (items) {
-                if (items.length === 0) {
-                    _this7.statusService.addItem({ name: "not started" });
-                    _this7.statusService.addItem({ name: "in progress" });
-                    _this7.statusService.addItem({ name: "impeded" });
-                    _this7.statusService.addItem({ name: "done" });
-                    _this7.statusService.addItem({ name: "rejected" });
-                }
-            });
+        key: "setupSampleMembers",
+        value: function setupSampleMembers(project) {
+            this.teamMemberService.addItem({ name: "Test Member",
+                authId: project, authProvider: "facebook",
+                email: project,
+                project: project });
         }
     }, {
         key: "readAll",
         value: function readAll() {
-            var _this8 = this;
+            var _this6 = this;
 
             this.teamMemberService.getItems().then(function (items) {
                 console.log("teamMemberService", items);
-                _this8.featureService.getItems().then(function (items) {
+                _this6.featureService.getItems().then(function (items) {
                     console.log("featureService", items);
-                    _this8.userStoryService.getItems().then(function (items) {
+                    _this6.userStoryService.getItems().then(function (items) {
                         console.log("userStoryService", items);
-                        _this8.picsService.getPicDatas().then(function (items) {
+                        _this6.picsService.getPicDatas().then(function (items) {
                             console.log("picsService", items);
-                            _this8.statusService.getItems().then(function (items) {
+                            _this6.statusService.getItems().then(function (items) {
                                 console.log("statusService", items);
                             });
                         });
@@ -162,56 +171,56 @@ var C = (function () {
     }, {
         key: "setProjectForMembers",
         value: function setProjectForMembers() {
-            var _this9 = this;
+            var _this7 = this;
 
             this.teamMemberService.getItems().then(function (items) {
                 console.log("teamMemberService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].currentProject = "55e61a9eb63286404af60c61";
-                    _this9.teamMemberService.saveItem(items[i]);
+                    _this7.teamMemberService.saveItem(items[i]);
                 }
             });
         }
     }, {
         key: "setProjectForFeatures",
         value: function setProjectForFeatures() {
-            var _this10 = this;
+            var _this8 = this;
 
             this.featureService.getItems().then(function (items) {
                 console.log("featureService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e61a9eb63286404af60c61";
-                    _this10.featureService.saveItem(items[i]);
+                    _this8.featureService.saveItem(items[i]);
                 }
             });
         }
     }, {
-        key: "setProjectForUserStories",
-        value: function setProjectForUserStories() {
-            var _this11 = this;
+        key: "setStatusForUserStories",
+        value: function setStatusForUserStories() {
+            var _this9 = this;
 
             this.userStoryService.getItems().then(function (items) {
                 console.log("userStoryService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
-                    items[i].project = "55e61a9eb63286404af60c61";
-                    _this11.userStoryService.saveItem(items[i]);
+                    items[i].status = _this9.NOT_STARTED_STATUS_ID;
+                    _this9.userStoryService.saveItem(items[i]);
                 }
             });
         }
     }, {
         key: "setProjectForPictures",
         value: function setProjectForPictures() {
-            var _this12 = this;
+            var _this10 = this;
 
             this.picsService.getPicDatas().then(function (items) {
                 console.log("picsService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e61a9eb63286404af60c61";
-                    _this12.picsService.savePic(items[i]);
+                    _this10.picsService.savePic(items[i]);
                 }
             });
         }

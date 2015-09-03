@@ -98,7 +98,26 @@ var statusService = (function (_baseServerService2) {
         _get(Object.getPrototypeOf(statusService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.baseUrl = MY_SERVER.url + MY_SERVER.statusUri;
         this.baseUrlWId = this.baseUrl + "?id=";
+
+        this.setupStatusesIfNeeded();
     }
+
+    _createClass(statusService, [{
+        key: "setupStatusesIfNeeded",
+        value: function setupStatusesIfNeeded() {
+            var _this = this;
+
+            this.getItems().then(function (items) {
+                if (items.length === 0) {
+                    _this.addItem({ name: "not started" });
+                    _this.addItem({ name: "in progress" });
+                    _this.addItem({ name: "impeded" });
+                    _this.addItem({ name: "done" });
+                    _this.addItem({ name: "rejected" });
+                }
+            });
+        }
+    }]);
 
     return statusService;
 })(baseServerService);

@@ -71,6 +71,20 @@ class statusService extends baseServerService {
         super($http, MY_SERVER);
         this.baseUrl = MY_SERVER.url +  MY_SERVER.statusUri;
         this.baseUrlWId = this.baseUrl + "?id=";
+
+        this.setupStatusesIfNeeded();
+    }
+
+    setupStatusesIfNeeded() {
+        this.getItems().then((items) => {
+            if(items.length === 0) {
+                this.addItem({name: "not started"});
+                this.addItem({name: "in progress"});
+                this.addItem({name: "impeded"});
+                this.addItem({name: "done"});
+                this.addItem({name: "rejected"});
+            }
+        });
     }
 
 }
