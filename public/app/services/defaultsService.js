@@ -2,11 +2,11 @@
 
 //defaults service
 class C {
-    constructor($http, $log, MY_SERVER, statusService, teamMemberService, userStoryService, featureService, projectService, picsService) {
+    constructor($http, $log, $q, statusService, teamMemberService, userStoryService,
+                featureService, projectService, picsService) {
         this.$http = $http;
         this.$log = $log;
-        this.MY_SERVER = MY_SERVER;
-        this.url = MY_SERVER.url;
+        this.$q = $q;
 
         this.statusService = statusService;
         this.teamMemberService = teamMemberService;
@@ -36,10 +36,10 @@ class C {
             this.NOT_SET_MEMBER_ID = item._id;
         });
         this.picsService.getPicData("keywords[0]", "default member pic").then((item)=>{
-            console.log("item", item);
+            //console.log("item", item);
             if(item) {
                 this.DEFAULT_MEMBER_PIC_ID = item.picId;
-                console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
+                //console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
             } else {
                 this.$log.error("no MEMBER PIC");
             }
@@ -47,53 +47,60 @@ class C {
         this.projectService.getItems().then((items)=>{
             if(items.length > 0) {
                 this.DEFAULT_PROJECT_ID = items[0]._id;
-                console.log("this.DEFAULT_PROJECT_ID", this.DEFAULT_PROJECT_ID);
+                //console.log("this.DEFAULT_PROJECT_ID", this.DEFAULT_PROJECT_ID);
             } else {
                 this.$log.error("no default project");
             }
         });
     }
 
-    setupOneProject() {
-
+    setupDB() {
+        this.setupStatuses();
+        this.setupOneProject().then(() => {
+            this.getDefaultValues();
+        });
     }
 
-    setupDefaults() {
-        this.default = {
-            project: "",
-            memberPicId: ""
-        }
+    setupOneProject() {
+        return this.setupProject().then((addedProject) => {
+            return this.$q.all([this.setupFeatures(addedProject._id),
+                this.setupMembers(addedProject._id)]);
+        });
+
     }
 
     setupProject() {
-        this.projectService.getItems().then((items) => {
+        return this.projectService.getItems().then((items) => {
             if(items.length === 0) {
-                this.projectService.addItem({name: "myProject"});
+                return this.projectService.addItem({name: "myProject"}).then((addedItem) => {
+                    return addedItem;
+                });
             }
         });
 
     }
 
-    setupFeatures() {
+    setupFeatures(project) {
         this.featureService.getItems().then((items) => {
             if(items.length === 0) {
-                this.featureService.addItem({name: "All Features", noShow:true, });
-                this.featureService.addItem({name: "Feature1", project: this.default.project});
-                this.featureService.addItem({name: "Feature2", project: this.default.project});
+                this.featureService.addItem({name: "All Features", noShow: true,});
             }
+            this.featureService.addItem({name: "Feature1", project: project});
+            this.featureService.addItem({name: "Feature2", project: project});
         });
-
     }
 
-    setupMembers() {
+    setupMembers(project) {
         this.teamMemberService.getItems().then((items) => {
             if(items.length === 0) {
-                this.teamMemberService.addItem({name: "All Members", noShow:true, });
-                this.teamMemberService.addItem({name: "Not Assigned", project: this.default.project});
-                this.teamMemberService.addItem({name: "Test Member", project: this.default.project});
+                this.teamMemberService.addItem({name: "All Members", noShow: true,});
+                this.teamMemberService.addItem({name: "Not Assigned"});
             }
-        });
+            this.teamMemberService.addItem({name: "Test Member",
+                authId: "Test Member", authProvider: "Test Member",
+                project: project});
 
+        });
     }
 
     setupStatuses() {

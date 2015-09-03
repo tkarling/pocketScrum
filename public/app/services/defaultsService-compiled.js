@@ -7,13 +7,12 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var C = (function () {
-    function C($http, $log, MY_SERVER, statusService, teamMemberService, userStoryService, featureService, projectService, picsService) {
+    function C($http, $log, $q, statusService, teamMemberService, userStoryService, featureService, projectService, picsService) {
         _classCallCheck(this, C);
 
         this.$http = $http;
         this.$log = $log;
-        this.MY_SERVER = MY_SERVER;
-        this.url = MY_SERVER.url;
+        this.$q = $q;
 
         this.statusService = statusService;
         this.teamMemberService = teamMemberService;
@@ -47,100 +46,112 @@ var C = (function () {
                 _this.NOT_SET_MEMBER_ID = item._id;
             });
             this.picsService.getPicData("keywords[0]", "default member pic").then(function (item) {
-                console.log("item", item);
+                //console.log("item", item);
                 if (item) {
                     _this.DEFAULT_MEMBER_PIC_ID = item.picId;
-                    console.log("this.DEFAULT_MEMBER_PIC_ID", _this.DEFAULT_MEMBER_PIC_ID);
+                    //console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
                 } else {
-                    _this.$log.error("no MEMBER PIC");
-                }
+                        _this.$log.error("no MEMBER PIC");
+                    }
             });
             this.projectService.getItems().then(function (items) {
                 if (items.length > 0) {
                     _this.DEFAULT_PROJECT_ID = items[0]._id;
-                    console.log("this.DEFAULT_PROJECT_ID", _this.DEFAULT_PROJECT_ID);
+                    //console.log("this.DEFAULT_PROJECT_ID", this.DEFAULT_PROJECT_ID);
                 } else {
-                    _this.$log.error("no default project");
-                }
+                        _this.$log.error("no default project");
+                    }
+            });
+        }
+    }, {
+        key: "setupDB",
+        value: function setupDB() {
+            var _this2 = this;
+
+            this.setupStatuses();
+            this.setupOneProject().then(function () {
+                _this2.getDefaultValues();
             });
         }
     }, {
         key: "setupOneProject",
-        value: function setupOneProject() {}
-    }, {
-        key: "setupDefaults",
-        value: function setupDefaults() {
-            this["default"] = {
-                project: "",
-                memberPicId: ""
-            };
+        value: function setupOneProject() {
+            var _this3 = this;
+
+            return this.setupProject().then(function (addedProject) {
+                return _this3.$q.all([_this3.setupFeatures(addedProject._id), _this3.setupMembers(addedProject._id)]);
+            });
         }
     }, {
         key: "setupProject",
         value: function setupProject() {
-            var _this2 = this;
+            var _this4 = this;
 
-            this.projectService.getItems().then(function (items) {
+            return this.projectService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this2.projectService.addItem({ name: "myProject" });
+                    return _this4.projectService.addItem({ name: "myProject" }).then(function (addedItem) {
+                        return addedItem;
+                    });
                 }
             });
         }
     }, {
         key: "setupFeatures",
-        value: function setupFeatures() {
-            var _this3 = this;
+        value: function setupFeatures(project) {
+            var _this5 = this;
 
             this.featureService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this3.featureService.addItem({ name: "All Features", noShow: true });
-                    _this3.featureService.addItem({ name: "Feature1", project: _this3["default"].project });
-                    _this3.featureService.addItem({ name: "Feature2", project: _this3["default"].project });
+                    _this5.featureService.addItem({ name: "All Features", noShow: true });
                 }
+                _this5.featureService.addItem({ name: "Feature1", project: project });
+                _this5.featureService.addItem({ name: "Feature2", project: project });
             });
         }
     }, {
         key: "setupMembers",
-        value: function setupMembers() {
-            var _this4 = this;
+        value: function setupMembers(project) {
+            var _this6 = this;
 
             this.teamMemberService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this4.teamMemberService.addItem({ name: "All Members", noShow: true });
-                    _this4.teamMemberService.addItem({ name: "Not Assigned", project: _this4["default"].project });
-                    _this4.teamMemberService.addItem({ name: "Test Member", project: _this4["default"].project });
+                    _this6.teamMemberService.addItem({ name: "All Members", noShow: true });
+                    _this6.teamMemberService.addItem({ name: "Not Assigned" });
                 }
+                _this6.teamMemberService.addItem({ name: "Test Member",
+                    authId: "Test Member", authProvider: "Test Member",
+                    project: project });
             });
         }
     }, {
         key: "setupStatuses",
         value: function setupStatuses() {
-            var _this5 = this;
+            var _this7 = this;
 
             this.statusService.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this5.statusService.addItem({ name: "not started" });
-                    _this5.statusService.addItem({ name: "in progress" });
-                    _this5.statusService.addItem({ name: "impeded" });
-                    _this5.statusService.addItem({ name: "done" });
-                    _this5.statusService.addItem({ name: "rejected" });
+                    _this7.statusService.addItem({ name: "not started" });
+                    _this7.statusService.addItem({ name: "in progress" });
+                    _this7.statusService.addItem({ name: "impeded" });
+                    _this7.statusService.addItem({ name: "done" });
+                    _this7.statusService.addItem({ name: "rejected" });
                 }
             });
         }
     }, {
         key: "readAll",
         value: function readAll() {
-            var _this6 = this;
+            var _this8 = this;
 
             this.teamMemberService.getItems().then(function (items) {
                 console.log("teamMemberService", items);
-                _this6.featureService.getItems().then(function (items) {
+                _this8.featureService.getItems().then(function (items) {
                     console.log("featureService", items);
-                    _this6.userStoryService.getItems().then(function (items) {
+                    _this8.userStoryService.getItems().then(function (items) {
                         console.log("userStoryService", items);
-                        _this6.picsService.getPicDatas().then(function (items) {
+                        _this8.picsService.getPicDatas().then(function (items) {
                             console.log("picsService", items);
-                            _this6.statusService.getItems().then(function (items) {
+                            _this8.statusService.getItems().then(function (items) {
                                 console.log("statusService", items);
                             });
                         });
@@ -151,56 +162,56 @@ var C = (function () {
     }, {
         key: "setProjectForMembers",
         value: function setProjectForMembers() {
-            var _this7 = this;
+            var _this9 = this;
 
             this.teamMemberService.getItems().then(function (items) {
                 console.log("teamMemberService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].currentProject = "55e61a9eb63286404af60c61";
-                    _this7.teamMemberService.saveItem(items[i]);
+                    _this9.teamMemberService.saveItem(items[i]);
                 }
             });
         }
     }, {
         key: "setProjectForFeatures",
         value: function setProjectForFeatures() {
-            var _this8 = this;
+            var _this10 = this;
 
             this.featureService.getItems().then(function (items) {
                 console.log("featureService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e61a9eb63286404af60c61";
-                    _this8.featureService.saveItem(items[i]);
+                    _this10.featureService.saveItem(items[i]);
                 }
             });
         }
     }, {
         key: "setProjectForUserStories",
         value: function setProjectForUserStories() {
-            var _this9 = this;
+            var _this11 = this;
 
             this.userStoryService.getItems().then(function (items) {
                 console.log("userStoryService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e61a9eb63286404af60c61";
-                    _this9.userStoryService.saveItem(items[i]);
+                    _this11.userStoryService.saveItem(items[i]);
                 }
             });
         }
     }, {
         key: "setProjectForPictures",
         value: function setProjectForPictures() {
-            var _this10 = this;
+            var _this12 = this;
 
             this.picsService.getPicDatas().then(function (items) {
                 console.log("picsService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e61a9eb63286404af60c61";
-                    _this10.picsService.savePic(items[i]);
+                    _this12.picsService.savePic(items[i]);
                 }
             });
         }
