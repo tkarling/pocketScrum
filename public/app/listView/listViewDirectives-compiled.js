@@ -17,8 +17,7 @@ angular.module("myApp").directive("listViewTools", function (featureActions) {
     return {
         restrict: "E",
         scope: {
-            visible: "=",
-            item: "="
+            getThese: "="
         },
         controller: function controller($scope) {
             $scope.newItem = {};
@@ -27,6 +26,7 @@ angular.module("myApp").directive("listViewTools", function (featureActions) {
                 if ($scope.newItem.name) {
                     featureActions.addFeature($scope.newItem);
                 }
+                $scope.newItem = "";
             };
         },
         //controller: listViewToolsController,

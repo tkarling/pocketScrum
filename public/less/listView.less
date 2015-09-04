@@ -1,9 +1,9 @@
 .list-view {
+  max-width: 600px;
+  margin: auto;
 
   list-view-tools {
-    p {
-      color: red;
-    }
+    width: 100%;
 
     input {
       display: inline;
@@ -15,13 +15,30 @@
     }
 
     .ps-tool-group {
-      margin: 1%;
+      margin: 1% auto;
       //padding: 1%;
     }
   }
 
   h4 {
-    margin: 2%;
+    width: 100%;
+    margin: 1%;
+    text-align: center;
+  }
+
+  .ps-group {
+    width: 100%;
+    padding: 1%;
+    border: 3px solid @primary-color;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ps-group-item {
+    border: 1px solid @primary-color;
+    width: calc(~'100% - 2*@default-padding');
+    display: flex;
+    margin: @default-padding;
   }
 
 

@@ -15,7 +15,7 @@ var BaseListController = function BaseListController() {
 var FeatureListController = (function (_BaseListController) {
     _inherits(FeatureListController, _BaseListController);
 
-    function FeatureListController(C, featureStore) {
+    function FeatureListController(C, featureStore, featureActions) {
         var _this = this;
 
         _classCallCheck(this, FeatureListController);
@@ -23,6 +23,7 @@ var FeatureListController = (function (_BaseListController) {
         _get(Object.getPrototypeOf(FeatureListController.prototype), "constructor", this).call(this);
         this.test = "Hello from FeatureListController";
 
+        this.featureActions = featureActions;
         this.featureStore = featureStore;
         this.resetFeatures();
         featureStore.addListener(function () {
@@ -34,6 +35,15 @@ var FeatureListController = (function (_BaseListController) {
         key: "resetFeatures",
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
+        }
+    }, {
+        key: "removeFeature",
+        value: function removeFeature(feature, $event) {
+            this.featureActions.removeFeature(feature);
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
         }
     }]);
 

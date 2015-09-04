@@ -1,9 +1,25 @@
 <!--{{features.test}}-->
-<div class="list-view ps-page-content">
+<div class="list-view ">
     <h4>Features</h4>
-    <list-view-tools></list-view-tools>
-    <div ng-repeat="feature in features.features">
-        {{feature.name}} {{feature.status}} {{feature.description}}
+
+    <list-view-tools get-these="features.data"></list-view-tools>
+
+    <div class="ps-group">
+        <div class="ps-group-item"
+             ng-repeat="feature in features.features | filter: features.data.search">
+            <!--ng-if="scrumBoard.deleteVisible"-->
+            <button ng-if="features.data.deleteVisible"
+                    class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                    ng-click="features.removeFeature(feature, $event)">
+                <i class="material-icons">delete</i>
+            </button>
+            <button ng-if="! features.data.deleteVisible"
+                    class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                    ng-click="features.editing = ! features.editing">
+                <i class="material-icons">edit</i>
+            </button>
+            {{feature.name}} {{feature.description}}
+        </div>
     </div>
 
 </div>

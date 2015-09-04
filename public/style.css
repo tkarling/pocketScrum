@@ -147,8 +147,12 @@ header img {
 .scrum-board .menu-item {
   width: 100px;
 }
-.list-view list-view-tools p {
-  color: red;
+.list-view {
+  max-width: 600px;
+  margin: auto;
+}
+.list-view list-view-tools {
+  width: 100%;
 }
 .list-view list-view-tools input {
   display: inline;
@@ -158,8 +162,23 @@ header img {
   width: 100%;
 }
 .list-view list-view-tools .ps-tool-group {
-  margin: 1%;
+  margin: 1% auto;
 }
 .list-view h4 {
+  width: 100%;
+  margin: 1%;
+  text-align: center;
+}
+.list-view .ps-group {
+  width: 100%;
+  padding: 1%;
+  border: 3px solid #3f51b5;
+  display: flex;
+  flex-direction: column;
+}
+.list-view .ps-group-item {
+  border: 1px solid #3f51b5;
+  width: calc(100% - 2*@default-padding);
+  display: flex;
   margin: 2%;
 }

@@ -1,15 +1,19 @@
 <!--<p>{{lvTools.test}}</p>-->
 <div class="mdl-grid ps-tool-container">
-    <div class="mdl-cell mdl--4-col  ps-tool-group">
-        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
-                ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
+    <div class="mdl-cell mdl-cell--6-col  ps-tool-group">
+        <button ng-show="! getThese.deleteVisible" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                ng-click="getThese.deleteVisible = true">
             <i class="material-icons">delete</i>
         </button>
+        <button ng-show="getThese.deleteVisible" class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                ng-click="getThese.deleteVisible = false">
+            <i class="material-icons">edit</i>
+        </button>
         <input class="mdl-textfield__input"
-               type="text" ng-model="search" placeholder="search"/>
+               type="text" ng-model="getThese.search" placeholder="search"/>
     </div>
 
-    <div class="mdl-cell mdl--4-col ps-tool-group">
+    <div class="mdl-cell mdl-cell--6-col ps-tool-group">
         <form ng-submit="addItem()">
             <input class="mdl-textfield__input" type="text" ng-model="newItem.name"
                    placeholder="new feature name"/>

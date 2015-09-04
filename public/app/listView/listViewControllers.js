@@ -6,10 +6,11 @@ class BaseListController {
 }
 
 class FeatureListController extends BaseListController {
-    constructor(C, featureStore) {
+    constructor(C, featureStore, featureActions) {
         super();
         this.test = "Hello from FeatureListController";
 
+        this.featureActions = featureActions;
         this.featureStore = featureStore;
         this.resetFeatures();
         featureStore.addListener(() => {
@@ -19,6 +20,15 @@ class FeatureListController extends BaseListController {
 
     resetFeatures() {
         this.features = this.featureStore.getFeatures();
+    }
+
+    removeFeature(feature, $event) {
+        this.featureActions.removeFeature(feature);
+        if(event){
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
     }
 }
 
