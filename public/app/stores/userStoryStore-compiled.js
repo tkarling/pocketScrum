@@ -91,7 +91,6 @@ var UserStoryStore = (function (_EventEmitter) {
         value: function addStory(story) {
             var self = this;
             story.status = this.C.NOT_STARTED_STATUS_ID;
-            story.assignedTo = this.C.NOT_SET_MEMBER_ID;
             this.errorMsg = "";
             return this.userStoryService.addItem(story).then(function (response) {}, function (error) {
                 if (error.status > 0) {

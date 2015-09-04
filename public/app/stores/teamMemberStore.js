@@ -50,10 +50,9 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 
 
 class TeamMemberStore extends EventEmitter {
-    constructor(teamMemberService, C, $log) {
+    constructor(teamMemberService, $log) {
         super();
         this.$log = $log;
-        this.C = C;
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
@@ -101,18 +100,13 @@ class TeamMemberStore extends EventEmitter {
                 var newMember = {
                     authId: authInfo.id,
                     authProvider: authInfo.provider,
-                    name: authInfo.displayName,
-                    currentProject : this.C.DEFAULT_PROJECT_ID
+                    name: authInfo.displayName
                 };
-                if(this.C.DEFAULT_MEMBER_PIC_ID) {
-                    newMember.picId = this.C.DEFAULT_MEMBER_PIC_ID;
-                }
                 return this.teamMemberService.addItem(newMember).then((addedMember) => {
                     this.authUserInfo = addedMember;
                 }, (err) => {
                     this.$log.error("error adding member", err);
                     this.authUserInfo = undefined;
-                    //deferred.reject(err);
                 });
             } else {
                 this.authUserInfo = member;
@@ -133,8 +127,8 @@ class TeamMemberStore extends EventEmitter {
 
 }
 
-angular.module("myApp").service("teamMemberStore", function ($log, C, dispatcher, teamMemberService) {
-    var teamMemberStore = new TeamMemberStore(teamMemberService, C, $log);
+angular.module("myApp").service("teamMemberStore", function ($log, dispatcher, teamMemberService) {
+    var teamMemberStore = new TeamMemberStore(teamMemberService, $log);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

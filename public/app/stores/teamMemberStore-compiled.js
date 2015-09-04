@@ -71,12 +71,11 @@ angular.module("myApp").service("teamMemberActions", teamMemberActions);
 var TeamMemberStore = (function (_EventEmitter) {
     _inherits(TeamMemberStore, _EventEmitter);
 
-    function TeamMemberStore(teamMemberService, C, $log) {
+    function TeamMemberStore(teamMemberService, $log) {
         _classCallCheck(this, TeamMemberStore);
 
         _get(Object.getPrototypeOf(TeamMemberStore.prototype), "constructor", this).call(this);
         this.$log = $log;
-        this.C = C;
         this.teamMemberService = teamMemberService;
 
         this.teamMembers = [];
@@ -130,22 +129,17 @@ var TeamMemberStore = (function (_EventEmitter) {
                     var newMember = {
                         authId: authInfo.id,
                         authProvider: authInfo.provider,
-                        name: authInfo.displayName,
-                        currentProject: _this.C.DEFAULT_PROJECT_ID
+                        name: authInfo.displayName
                     };
-                    if (_this.C.DEFAULT_MEMBER_PIC_ID) {
-                        newMember.picId = _this.C.DEFAULT_MEMBER_PIC_ID;
-                    }
                     return _this.teamMemberService.addItem(newMember).then(function (addedMember) {
                         _this.authUserInfo = addedMember;
                     }, function (err) {
                         _this.$log.error("error adding member", err);
                         _this.authUserInfo = undefined;
-                        //deferred.reject(err);
                     });
                 } else {
-                        _this.authUserInfo = member;
-                    }
+                    _this.authUserInfo = member;
+                }
             }, function (err) {
                 _this.$log.error("error getting auth user info", err);
                 _this.authUserInfo = undefined;
@@ -165,8 +159,8 @@ var TeamMemberStore = (function (_EventEmitter) {
     return TeamMemberStore;
 })(EventEmitter);
 
-angular.module("myApp").service("teamMemberStore", function ($log, C, dispatcher, teamMemberService) {
-    var teamMemberStore = new TeamMemberStore(teamMemberService, C, $log);
+angular.module("myApp").service("teamMemberStore", function ($log, dispatcher, teamMemberService) {
+    var teamMemberStore = new TeamMemberStore(teamMemberService, $log);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {
