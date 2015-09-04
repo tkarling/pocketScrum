@@ -23,6 +23,10 @@ class baseServerService {
         this.addItemsIfNeeded();
     }
 
+    saveData(items) {
+
+    }
+
     getItems() {
         var getAllItemsItem = function(items) {
             for(var i= 0; i < items.length; i++) {
@@ -35,6 +39,7 @@ class baseServerService {
 
         return this.$http.get(this.getUrl).then((response) => {
             var items = response.data;
+            this.saveData(items);
             items.currentItem = this.currentItem;
             //console.log("response.data.currentItem", response.data.currentItem);
             return items;
@@ -98,6 +103,21 @@ class statusService extends baseServerService {
                 this.addItem({name: "rejected"});
             }
         });
+    }
+
+    not_started_status_id () {
+        return this.NOT_STARTED_STATUS_ID;
+    }
+
+    saveData(items) {
+        if(! this.NOT_STARTED_STATUS_ID) {
+            for(var i = 0; i < items.length; i++) {
+                if(items[i].name === "not started") {
+                    this.NOT_STARTED_STATUS_ID = items[i]._id;
+                    return;
+                }
+            }
+        }
     }
 
 }
@@ -170,10 +190,16 @@ class teamMemberService extends baseServerService {
 angular.module("myApp").service("teamMemberService", teamMemberService);
 
 class userStoryService extends baseServerService {
-    constructor($http, MY_SERVER) {
+    constructor($http, MY_SERVER, statusService) {
         super($http, MY_SERVER);
+        this.statusService = statusService;
         this.typeUri = MY_SERVER.storiesUri;
         console.log("init userStoryService", this);
+    }
+
+    addItem(item) {
+        item.status = this.statusService.not_started_status_id();
+        return super.addItem(item);
     }
 
 }

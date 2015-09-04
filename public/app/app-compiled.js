@@ -22,6 +22,9 @@ angular.module("myApp").service("MY_SERVER", function ($location) {
     }).when("/pictures", {
         templateUrl: "./app/picsList/picsList.html",
         controller: "PicsListController as pictures"
+    }).when("/features", {
+        templateUrl: "./app/listView/featureList.html",
+        controller: "FeatureListController as features"
     }).when("/scrumBoard", {
         templateUrl: "./app/scrumBoard/scrumBoard.html",
         controller: "ScrumBoardController as scrumBoard"

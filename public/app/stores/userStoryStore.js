@@ -42,9 +42,8 @@ angular.module("myApp").service("userStoryActions", userStoryActions);
 
 
 class UserStoryStore extends EventEmitter {
-    constructor(userStoryService, C) {
+    constructor(userStoryService) {
         super();
-        this.C = C;
         this.userStoryService = userStoryService;
 
         this.stories = [];
@@ -64,7 +63,6 @@ class UserStoryStore extends EventEmitter {
 
     addStory(story) {
         var self = this;
-        story.status = this.C.NOT_STARTED_STATUS_ID;
         this.errorMsg = "";
         return this.userStoryService.addItem(story)
             .then(function (response) {
@@ -96,8 +94,8 @@ class UserStoryStore extends EventEmitter {
 
 }
 
-angular.module("myApp").service("userStoryStore", function (C, dispatcher, userStoryService) {
-    var userStoryStore = new UserStoryStore(userStoryService, C);
+angular.module("myApp").service("userStoryStore", function (dispatcher, userStoryService) {
+    var userStoryStore = new UserStoryStore(userStoryService);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

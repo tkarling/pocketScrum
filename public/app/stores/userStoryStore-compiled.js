@@ -62,11 +62,10 @@ angular.module("myApp").service("userStoryActions", userStoryActions);
 var UserStoryStore = (function (_EventEmitter) {
     _inherits(UserStoryStore, _EventEmitter);
 
-    function UserStoryStore(userStoryService, C) {
+    function UserStoryStore(userStoryService) {
         _classCallCheck(this, UserStoryStore);
 
         _get(Object.getPrototypeOf(UserStoryStore.prototype), "constructor", this).call(this);
-        this.C = C;
         this.userStoryService = userStoryService;
 
         this.stories = [];
@@ -90,7 +89,6 @@ var UserStoryStore = (function (_EventEmitter) {
         key: "addStory",
         value: function addStory(story) {
             var self = this;
-            story.status = this.C.NOT_STARTED_STATUS_ID;
             this.errorMsg = "";
             return this.userStoryService.addItem(story).then(function (response) {}, function (error) {
                 if (error.status > 0) {
@@ -125,8 +123,8 @@ var UserStoryStore = (function (_EventEmitter) {
     return UserStoryStore;
 })(EventEmitter);
 
-angular.module("myApp").service("userStoryStore", function (C, dispatcher, userStoryService) {
-    var userStoryStore = new UserStoryStore(userStoryService, C);
+angular.module("myApp").service("userStoryStore", function (dispatcher, userStoryService) {
+    var userStoryStore = new UserStoryStore(userStoryService);
 
     dispatcher.addListener(function (action) {
         switch (action.actionType) {

@@ -1,0 +1,22 @@
+<!--<p>{{lvTools.test}}</p>-->
+<div class="mdl-grid ps-tool-container">
+    <div class="mdl-cell mdl--4-col  ps-tool-group">
+        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
+            <i class="material-icons">delete</i>
+        </button>
+        <input class="mdl-textfield__input"
+               type="text" ng-model="search" placeholder="search"/>
+    </div>
+
+    <div class="mdl-cell mdl--4-col ps-tool-group">
+        <form ng-submit="addItem()">
+            <input class="mdl-textfield__input" type="text" ng-model="newItem.name"
+                   placeholder="new feature name"/>
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+                    >
+                <i class="material-icons">add</i>
+            </button>
+        </form>
+    </div>
+</div>

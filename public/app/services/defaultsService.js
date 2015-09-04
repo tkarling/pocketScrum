@@ -4,6 +4,7 @@
 class C {
     constructor($http, $log, $q, projectService, statusService, userStoryService,
                 featureService, teamMemberService, picsService,
+                statusStore, userStoryStore, featureStore, teamMemberStore,
                 userStoryActions, featureActions, teamMemberActions) {
         this.$http = $http;
         this.$log = $log;

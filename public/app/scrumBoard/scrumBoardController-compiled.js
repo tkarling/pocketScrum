@@ -5,23 +5,16 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ScrumBoardController = (function () {
-    function ScrumBoardController(C, MY_SERVER, statusStore, userStoryStore, userStoryActions, featureStore, teamMemberStore) {
+    function ScrumBoardController(MY_SERVER, statusStore, userStoryStore, featureStore, teamMemberStore, userStoryActions) {
         _classCallCheck(this, ScrumBoardController);
 
-        this.C = C;
+        //this.C = C;
         this.url = MY_SERVER.url;
         var self = this;
         this.baseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
         this.menuVisible = false;
-
-        this.userStoryStore = userStoryStore;
-        this.userStoryActions = userStoryActions;
-        this.resetStories();
-        userStoryStore.addListener(function () {
-            self.resetStories();
-        });
 
         this.statusStore = statusStore;
         this.resetStatuses();
@@ -39,6 +32,13 @@ var ScrumBoardController = (function () {
         this.resetTeamMembers();
         teamMemberStore.addListener(function () {
             self.resetTeamMembers();
+        });
+
+        this.userStoryStore = userStoryStore;
+        this.userStoryActions = userStoryActions;
+        this.resetStories();
+        userStoryStore.addListener(function () {
+            self.resetStories();
         });
     }
 
@@ -58,15 +58,19 @@ var ScrumBoardController = (function () {
         key: "resetFeatures",
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
-            this.features.unshift({ name: "All Features", noShow: true });
+            if (this.features.length > 0 && this.features[0].name !== "All Features") {
+                this.features.unshift({ name: "All Features", noShow: true });
+            }
             this.currentFeature = this.features[0];
         }
     }, {
         key: "resetTeamMembers",
         value: function resetTeamMembers() {
             this.teamMembers = this.teamMemberStore.getTeamMembers();
-            this.teamMembers.unshift({ name: "not assigned", noShow: false });
-            this.teamMembers.unshift({ name: "All Team Members", noShow: true });
+            if (this.teamMembers.length > 0 && this.teamMembers[0].name !== "All Team Members") {
+                this.teamMembers.unshift({ name: "not assigned", noShow: false });
+                this.teamMembers.unshift({ name: "All Team Members", noShow: true });
+            }
             this.currentMember = this.teamMembers[0];
         }
     }, {
@@ -78,7 +82,7 @@ var ScrumBoardController = (function () {
         }
     }, {
         key: "addStory",
-        value: function addStory(story) {
+        value: function addStory() {
             if (this.newStory.name) {
                 this.newStory.feature = this.currentFeature._id;
                 this.userStoryActions.addStory(this.newStory);
@@ -135,7 +139,7 @@ var ScrumBoardController = (function () {
             };
 
             var notAssigned = function notAssigned(self) {
-                return self.currentMember.name === "not assigned";
+                return self.currentMember && self.currentMember.name === "not assigned";
             };
 
             return memberSelected(this) ? this.currentMember._id : notAssigned(this) ? null : "";

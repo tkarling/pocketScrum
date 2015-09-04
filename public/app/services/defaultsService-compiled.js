@@ -7,7 +7,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var C = (function () {
-    function C($http, $log, $q, projectService, statusService, userStoryService, featureService, teamMemberService, picsService, userStoryActions, featureActions, teamMemberActions) {
+    function C($http, $log, $q, projectService, statusService, userStoryService, featureService, teamMemberService, picsService, statusStore, userStoryStore, featureStore, teamMemberStore, userStoryActions, featureActions, teamMemberActions) {
         var _this = this;
 
         _classCallCheck(this, C);

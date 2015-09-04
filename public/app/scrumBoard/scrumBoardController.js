@@ -1,22 +1,15 @@
 "use strict";
 
 class ScrumBoardController {
-    constructor(C, MY_SERVER, statusStore, userStoryStore, userStoryActions,
-                featureStore, teamMemberStore) {
-        this.C = C;
+    constructor(MY_SERVER, statusStore, userStoryStore,
+                featureStore, teamMemberStore, userStoryActions) {
+        //this.C = C;
         this.url = MY_SERVER.url;
         var self = this;
         this.baseUrl = this.url + "/stories";
         this.thumbnailUrl = this.url + "/thumbnail?id=";
         this.newStory = {};
         this.menuVisible = false;
-
-        this.userStoryStore = userStoryStore;
-        this.userStoryActions = userStoryActions;
-        this.resetStories();
-        userStoryStore.addListener(function () {
-            self.resetStories();
-        });
 
         this.statusStore = statusStore;
         this.resetStatuses ();
@@ -35,6 +28,13 @@ class ScrumBoardController {
         teamMemberStore.addListener(function () {
             self.resetTeamMembers();
         });
+
+        this.userStoryStore = userStoryStore;
+        this.userStoryActions = userStoryActions;
+        this.resetStories();
+        userStoryStore.addListener(function () {
+            self.resetStories();
+        });
     }
 
     featureSelected() {
@@ -51,7 +51,7 @@ class ScrumBoardController {
         }
 
         var notAssigned = function(self) {
-            return self.currentMember.name === "not assigned";
+            return self.currentMember && self.currentMember.name === "not assigned";
         }
 
         return memberSelected(this) ? this.currentMember._id :
@@ -66,14 +66,18 @@ class ScrumBoardController {
 
     resetFeatures() {
         this.features = this.featureStore.getFeatures();
-        this.features.unshift({name:"All Features", noShow:true});
+        if(this.features.length > 0 && this.features[0].name !== "All Features") {
+            this.features.unshift({name:"All Features", noShow:true});
+        }
         this.currentFeature = this.features[0];
     }
 
     resetTeamMembers() {
         this.teamMembers = this.teamMemberStore.getTeamMembers();
-        this.teamMembers.unshift({name:"not assigned", noShow:false });
-        this.teamMembers.unshift({name:"All Team Members", noShow:true});
+        if(this.teamMembers.length > 0 && this.teamMembers[0].name !== "All Team Members") {
+            this.teamMembers.unshift({name: "not assigned", noShow: false});
+            this.teamMembers.unshift({name: "All Team Members", noShow: true});
+        }
         this.currentMember= this.teamMembers[0]
     }
 
@@ -83,7 +87,7 @@ class ScrumBoardController {
         this.newStory = {};
     }
 
-    addStory(story) {
+    addStory() {
         if(this.newStory.name) {
             this.newStory.feature = this.currentFeature._id;
             this.userStoryActions.addStory(this.newStory);

@@ -64,77 +64,77 @@ header img {
 .pics-list .ps-detailled-img {
   max-width: 100%;
 }
-.scrumBoard scrum-board-tools,
-.scrumBoard scrum-board-groups {
+.scrum-board scrum-board-tools,
+.scrum-board scrum-board-groups {
   width: 100%;
 }
-.scrumBoard textarea {
+.scrum-board textarea {
   width: 98%;
 }
-.scrumBoard input {
+.scrum-board input {
   display: inline;
   width: calc(100% - 36px);
 }
-.scrumBoard .mdl-grid {
+.scrum-board .mdl-grid {
   padding: 0px;
 }
-.scrumBoard .ps-tool-container {
+.scrum-board .ps-tool-container {
   width: 100%;
 }
-.scrumBoard .ps-tool-group {
+.scrum-board .ps-tool-group {
   margin: 6px;
   padding: 1%;
 }
-.scrumBoard .ps-feature-select {
+.scrum-board .ps-feature-select {
   float: right;
   width: 46%;
   height: 32px;
   margin: 2%;
 }
-.scrumBoard .ps-groups {
+.scrum-board .ps-groups {
   width: 100%;
 }
-.scrumBoard .ps-groups h5 {
+.scrum-board .ps-groups h5 {
   margin: 2% 0px;
 }
-.scrumBoard .ps-group {
+.scrum-board .ps-group {
   padding: 1%;
   border: 3px solid #3f51b5;
   display: flex;
   flex-direction: column;
 }
-.scrumBoard .ps-group-item {
+.scrum-board .ps-group-item {
   border: 2px solid #3f51b5;
   width: 100%;
   display: flex;
   margin: 2% 0px;
 }
-.scrumBoard .ps-group-item .ps-avatar {
+.scrum-board .ps-group-item .ps-avatar {
   width: 30px;
   height: 30px;
   margin: 2%;
   padding: 2%;
 }
-.scrumBoard .ps-group-item .ps-group-item-content {
+.scrum-board .ps-group-item .ps-group-item-content {
   padding: 0px 2%;
   width: calc(100% - 30px);
 }
-.scrumBoard .ps-group-item .ps-first-row {
+.scrum-board .ps-group-item .ps-first-row {
   /*border: 1px solid orange;*/
 }
-.scrumBoard .ps-group-item .ps-second-row {
+.scrum-board .ps-group-item .ps-second-row {
   /*border: 1px solid purple;*/
 }
-.scrumBoard .ps-group-item .ps-feature {
+.scrum-board .ps-group-item .ps-feature {
   /*border: 1px solid blue;*/
   float: left;
   color: #3f51b5;
 }
-.scrumBoard .ps-group-item .ps-sprint-release {
+.scrum-board .ps-group-item .ps-sprint-release {
   /*border: 1px solid green;*/
   float: right;
 }
-.scrumBoard .menu {
+.scrum-board .menu {
   position: absolute;
   top: 0px;
   left: 8px;
@@ -144,6 +144,22 @@ header img {
   z-index: 2;
   border: 1px solid #3f51b5;
 }
-.scrumBoard .menu-item {
+.scrum-board .menu-item {
   width: 100px;
+}
+.list-view list-view-tools p {
+  color: red;
+}
+.list-view list-view-tools input {
+  display: inline;
+  width: calc(100% - 36px);
+}
+.list-view list-view-tools .ps-tool-container {
+  width: 100%;
+}
+.list-view list-view-tools .ps-tool-group {
+  margin: 1%;
+}
+.list-view h4 {
+  margin: 2%;
 }
