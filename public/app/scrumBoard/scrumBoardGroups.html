@@ -8,8 +8,11 @@
 
         <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
              drag-ctrl="scrumBoard" drag-index="$index"
-             ng-repeat="story in scrumBoard.stories | filter: status.name |
-                 filter: scrumBoard.currentFeatureId | filter: scrumBoard.currentMemberId | filter: search |
+             ng-repeat="story in scrumBoard.stories |
+                 filter: status.name |
+                 filter: scrumBoard.currentFeatureId |
+                 filter: scrumBoard.currentMemberId |
+                 filter: search |
                  orderBy: 'feature.name' track by $id(story)"
              ng-click="scrumBoard.editStory(story)" drag-item="story">
 

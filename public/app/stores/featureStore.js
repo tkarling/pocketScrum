@@ -3,6 +3,7 @@
 var ADD_FEATURE = "ADD_FEATURE";
 var REMOVE_FEATURE = "REMOVE_FEATURE";
 var SAVE_FEATURE = "SAVE_FEATURE";
+var PROJECT_SET = "PROJECT_SET";
 
 class featureActions {
     constructor(dispatcher) {
@@ -29,6 +30,13 @@ class featureActions {
             item: item
         });
     }
+
+    projectSet(item) {
+        this.dispatcher.emit({
+            actionType: PROJECT_SET,
+            item: item
+        });
+    }
 }
 angular.module("myApp").service("featureActions", featureActions);
 
@@ -41,7 +49,8 @@ class FeatureStore extends EventEmitter {
         this.featurees = [];
         this.errorMsg = "";
 
-        this.emitChange();
+        //this.emitChange();
+        console.log("init FeatureStore");
     }
 
     getFeatures() {
@@ -106,6 +115,10 @@ angular.module("myApp").service("featureStore", function (dispatcher, featureSer
                 featureStore.saveFeature(action.item).then(function (response) {
                     featureStore.emitChange();
                 });
+                break;
+
+            case PROJECT_SET:
+                featureStore.emitChange();
                 break;
 
         }

@@ -2,8 +2,10 @@
 
 //defaults service
 class C {
-    constructor($http, $log, $q, statusService, teamMemberService, userStoryService,
-                featureService, projectService, picsService) {
+    constructor($http, $log, $q, projectService, statusService, userStoryService,
+                featureService, teamMemberService, picsService,
+                userStoryActions, featureActions, teamMemberActions) {
+        console.log("init C");
         this.$http = $http;
         this.$log = $log;
         this.$q = $q;
@@ -15,117 +17,87 @@ class C {
         this.projectService = projectService;
         this.picsService = picsService;
 
-        this.setupDefaultsAndDBIfNeeded();
+        this.teamMemberActions = teamMemberActions;
+        this.featureActions = featureActions;
+        this.userStoryActions = userStoryActions;
 
-        //this.setupOneProject("My 5th Project");
+        this.setDefaultProject().then(()=> {
+            this.setCurrentProjectForUrls();
+            this.getDefaultValues();
+            this.emitProjectSet();
+        });
 
         // FOR TESTING & DB FIXING
         //this.readAll();
         //this.setProjectForMembers();
         //this.setProjectForFeatures();
-        //this.setStatusForUserStories();
+        //this.setProjectForUserStories();
         //this.setProjectForPictures();
     }
 
-    getDefaultValues () {
-        this.featureService.getItem("name", "All Features").then((item)=>{
-            this.ALL_FEATURES_ID = item._id;
-        });
-        this.teamMemberService.getItem("name", "All Members").then((item)=>{
-            this.ALL_MEMBERS_ID = item._id;
-        });
-        this.teamMemberService.getItem("name", "Not Assigned").then((item)=>{
-            this.NOT_SET_MEMBER_ID = item._id;
-        });
-        this.statusService.getItem("name", "not started").then((item)=>{
-            this.NOT_STARTED_STATUS_ID = item._id;
-        });
-        this.picsService.getPicData("keywords[0]", "default member pic").then((item)=>{
-            //console.log("item", item);
-            if(item) {
-                this.DEFAULT_MEMBER_PIC_ID = item.picId;
-                //console.log("this.DEFAULT_MEMBER_PIC_ID", this.DEFAULT_MEMBER_PIC_ID);
-            } else {
-                this.$log.error("no MEMBER PIC");
-            }
-        });
-        this.projectService.getItems().then((items)=>{
+
+    setDefaultProject() {
+        return this.projectService.getItems().then((items)=>{
             if(items.length > 0) {
                 this.DEFAULT_PROJECT_ID = items[0]._id;
                 //console.log("this.DEFAULT_PROJECT_ID", this.DEFAULT_PROJECT_ID);
             } else {
-                this.$log.error("no default project");
-            }
-        });
-    }
-
-    setupDefaultsAndDBIfNeeded() {
-        this.projectService.getItems().then((items) => {
-            if (items.length === 0) {
-                // setup DB, set default values & setup sample project
-                this.$q.all([this.setupDefaultFeatures(),
-                    this.setupDefaultMembers()]).then(() => {
-                    this.getDefaultValues();
-                    this.setupSampleProject("My 1st project");
+                return this.projectService.addItem({name: "My 1st Project"}).then((newProject) => {
+                    this.DEFAULT_PROJECT_ID = newProject._id;
                 });
-            } else {
-                // just set default values
-                this.getDefaultValues();
             }
         });
     }
 
-
-    setupSampleProject(projectName) {
-       this.addProject(projectName).then((addedProject) => {
-           this.setupSampleFeatures(addedProject._id);
-           this.setupSampleMembers(addedProject._id);
-       });
+    emitProjectSet () {
+        this.teamMemberActions.projectSet();
+        this.featureActions.projectSet();
+        this.userStoryActions.projectSet();
     }
 
-    addProject(name) {
-        return this.projectService.addItem({name: name}).then((addedItem) => {
-            return addedItem;
+
+    setCurrentProjectForUrls() {
+        //this.statusService.setCurrentProjectId(this.DEFAULT_PROJECT_ID);
+        this.teamMemberService.setCurrentProjectId(this.DEFAULT_PROJECT_ID);
+        this.userStoryService.setCurrentProjectId(this.DEFAULT_PROJECT_ID);
+        this.featureService.setCurrentProjectId(this.DEFAULT_PROJECT_ID);
+        //this.picsService.setCurrentProjectId(this.DEFAULT_PROJECT_ID);
+    }
+
+    getDefaultValues () {
+        this.ALL_FEATURES_NAME = "All Features";
+        this.ALL_MEMBERS_NAME = "All Members";
+        this.NOT_ASSIGNED_MEMBERS_NAME = "Not Assigned";
+        this.statusService.getItem("name", "not started").then((item)=> {
+            this.NOT_STARTED_STATUS_ID = item._id;
         });
     }
 
-    setupDefaultFeatures() {
-        return this.featureService.getItems().then((items) => {
-            if (items.length === 0) {
-                return this.featureService.addItem({name: "All Features", noShow: true,});
-            }
-        });
-    }
 
-    setupSampleFeatures(project) {
-        this.featureService.addItem({name: "Feature1", project: project});
-        this.featureService.addItem({name: "Feature2", project: project});
-    }
 
-    setupDefaultMembers() {
-        return this.teamMemberService.getItems().then((items) => {
-            if (items.length === 0) {
-                return this.$q.all([
-                    this.teamMemberService.addItem({
-                        name: "All Members", noShow: true,
-                        authId: "All Members", authProvider: "All Members",
-                        email: "All Members"
-                    }),
-                    this.teamMemberService.addItem({
-                        name: "Not Assigned",
-                        authId: "Not Assigned", authProvider: "Not Assigned",
-                        email: "Not Assigned"
-                    })]);
-            }
-        });
-    }
+    //setupSampleProject(projectName) {
+    //   return this.addProject(projectName).then((addedProject) => {
+    //       this.setupSampleFeatures(addedProject._id);
+    //       this.setupSampleMembers(addedProject._id);
+    //   });
+    //}
+    //
+    //addProject(name) {
+    //    return this.projectService.addItem({name: name}).then((addedItem) => {
+    //        return addedItem;
+    //    });
+    //}
 
-    setupSampleMembers(project) {
-        this.teamMemberService.addItem({name: "Test Member",
-            authId: project, authProvider: "facebook",
-            email: project,
-            project: project});
-    }
+    //setupSampleFeatures(project) {
+    //    this.featureService.addItem({name: "Feature1", project: project});
+    //    this.featureService.addItem({name: "Feature2", project: project});
+    //}
+    //setupSampleMembers(project) {
+    //    this.teamMemberService.addItem({name: "Test Member",
+    //        authId: project, authProvider: "facebook",
+    //        email: project,
+    //        currentProject: project});
+    //}
 
 
     readAll() {
@@ -168,12 +140,12 @@ class C {
         });
     }
 
-    setStatusForUserStories() {
+    setProjectForUserStories() {
         this.userStoryService.getItems().then((items) => {
             console.log("userStoryService items", items);
             for (var i = 0; i < items.length; i++) {
                 //console.log(items[i]);
-                items[i].status = this.NOT_STARTED_STATUS_ID;
+                items[i].project = "55e87e9bb793347fd0da84ff";
                 this.userStoryService.saveItem(items[i]);
             }
         });
@@ -192,4 +164,5 @@ class C {
 
 }
 
-angular.module("myApp").service("C", C);
+angular.module("defaults", []);
+angular.module("defaults").service("C", C);

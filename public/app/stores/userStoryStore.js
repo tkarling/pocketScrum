@@ -3,6 +3,7 @@
 var ADD_STORY = "ADD_STORY";
 var REMOVE_STORY = "REMOVE_STORY";
 var SAVE_STORY = "SAVE_STORY";
+var PROJECT_SET = "PROJECT_SET";
 
 class userStoryActions {
     constructor(dispatcher) {
@@ -29,6 +30,13 @@ class userStoryActions {
             item: item
         });
     }
+
+    projectSet(item) {
+        this.dispatcher.emit({
+            actionType: PROJECT_SET,
+            item: item
+        });
+    }
 }
 angular.module("myApp").service("userStoryActions", userStoryActions);
 
@@ -42,7 +50,8 @@ class UserStoryStore extends EventEmitter {
         this.stories = [];
         this.errorMsg = "";
 
-        this.emitChange();
+        //this.emitChange();
+        console.log("init UserStoryStore");
     }
 
     getStories() {
@@ -109,6 +118,10 @@ angular.module("myApp").service("userStoryStore", function (C, dispatcher, userS
                 userStoryStore.saveStory(action.item).then(function (response) {
                     userStoryStore.emitChange();
                 });
+                break;
+
+            case PROJECT_SET:
+                userStoryStore.emitChange();
                 break;
 
         }

@@ -20,7 +20,8 @@ var schema = new mongoose.Schema ({
     },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "TeamMember"
+        ref: "TeamMember",
+        default: null
     },
     tag: {
         type: String,

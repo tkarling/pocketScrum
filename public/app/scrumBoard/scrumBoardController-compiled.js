@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ScrumBoardController = (function () {
-    function ScrumBoardController(C, MY_SERVER, userStoryStore, userStoryActions, statusStore, featureStore, teamMemberStore) {
+    function ScrumBoardController(C, MY_SERVER, statusStore, userStoryStore, userStoryActions, featureStore, teamMemberStore) {
         _classCallCheck(this, ScrumBoardController);
 
         this.C = C;
@@ -45,7 +45,7 @@ var ScrumBoardController = (function () {
     _createClass(ScrumBoardController, [{
         key: "featureSelected",
         value: function featureSelected() {
-            return this.currentFeature && this.currentFeature._id !== this.C.ALL_FEATURES_ID;
+            return this.currentFeature && this.currentFeature._id;
         }
     }, {
         key: "resetStatuses",
@@ -58,12 +58,15 @@ var ScrumBoardController = (function () {
         key: "resetFeatures",
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
+            this.features.unshift({ name: "All Features", noShow: true });
             this.currentFeature = this.features.currentItem;
         }
     }, {
         key: "resetTeamMembers",
         value: function resetTeamMembers() {
             this.teamMembers = this.teamMemberStore.getTeamMembers();
+            this.teamMembers.unshift({ name: "not assigned" });
+            this.teamMembers.unshift({ name: "All Team Members", noShow: true });
             this.currentMember = this.teamMembers.currentItem;
         }
     }, {
@@ -128,10 +131,14 @@ var ScrumBoardController = (function () {
         key: "currentMemberId",
         get: function get() {
             var memberSelected = function memberSelected(self) {
-                return self.currentMember && self.currentMember._id !== self.C.ALL_MEMBERS_ID;
+                return self.currentMember && self.currentMember._id;
             };
 
-            return memberSelected(this) ? this.currentMember._id : "";
+            var notAssigned = function notAssigned(self) {
+                return self.currentMember.name === "not assigned";
+            };
+
+            return memberSelected(this) ? this.currentMember._id : notAssigned(this) ? null : "";
         }
     }]);
 

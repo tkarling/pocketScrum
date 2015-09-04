@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop", "visibilityClicker"]);
+angular.module("myApp", ["ngRoute", "ngFileUpload", "dragDrop", "visibilityClicker", "defaults"]);
 
 angular.module("myApp")
     .service("MY_SERVER", function($location) {

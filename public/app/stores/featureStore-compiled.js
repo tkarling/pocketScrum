@@ -11,6 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ADD_FEATURE = "ADD_FEATURE";
 var REMOVE_FEATURE = "REMOVE_FEATURE";
 var SAVE_FEATURE = "SAVE_FEATURE";
+var PROJECT_SET = "PROJECT_SET";
 
 var featureActions = (function () {
     function featureActions(dispatcher) {
@@ -43,6 +44,14 @@ var featureActions = (function () {
                 item: item
             });
         }
+    }, {
+        key: "projectSet",
+        value: function projectSet(item) {
+            this.dispatcher.emit({
+                actionType: PROJECT_SET,
+                item: item
+            });
+        }
     }]);
 
     return featureActions;
@@ -62,7 +71,8 @@ var FeatureStore = (function (_EventEmitter) {
         this.featurees = [];
         this.errorMsg = "";
 
-        this.emitChange();
+        //this.emitChange();
+        console.log("init FeatureStore");
     }
 
     _createClass(FeatureStore, [{
@@ -134,6 +144,10 @@ angular.module("myApp").service("featureStore", function (dispatcher, featureSer
                 featureStore.saveFeature(action.item).then(function (response) {
                     featureStore.emitChange();
                 });
+                break;
+
+            case PROJECT_SET:
+                featureStore.emitChange();
                 break;
 
         }

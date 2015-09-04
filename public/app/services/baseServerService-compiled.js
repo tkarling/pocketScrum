@@ -12,13 +12,32 @@ var baseServerService = (function () {
     function baseServerService($http, MY_SERVER) {
         _classCallCheck(this, baseServerService);
 
-        this.url = MY_SERVER.url;
+        this.MY_SERVER = MY_SERVER;
         this.$http = $http;
+        this.criteriaChar = "&";
+        this.currentItem = { name: "All" };
     }
 
     _createClass(baseServerService, [{
+        key: "addItemsIfNeeded",
+        value: function addItemsIfNeeded() {}
+    }, {
+        key: "setCurrentProjectId",
+        value: function setCurrentProjectId(project_id) {
+            this.currentProjectId = project_id;
+            this.url = this.MY_SERVER.url;
+            this.baseUrl = this.MY_SERVER.url + this.typeUri;
+            this.getUrl = this.baseUrl + (this.currentProjectId ? "?project=" + this.currentProjectId : "?");
+            this.baseUrlWId = this.baseUrl + "?id=";
+
+            console.log("setCurrentProjectId", this);
+            this.addItemsIfNeeded();
+        }
+    }, {
         key: "getItems",
         value: function getItems() {
+            var _this = this;
+
             var getAllItemsItem = function getAllItemsItem(items) {
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].name.indexOf("All ") !== -1) {
@@ -28,9 +47,9 @@ var baseServerService = (function () {
                 return undefined;
             };
 
-            return this.$http.get(this.baseUrl).then(function (response) {
+            return this.$http.get(this.getUrl).then(function (response) {
                 var items = response.data;
-                items.currentItem = getAllItemsItem(items);
+                items.currentItem = _this.currentItem;
                 //console.log("response.data.currentItem", response.data.currentItem);
                 return items;
             });
@@ -38,8 +57,8 @@ var baseServerService = (function () {
     }, {
         key: "getItem",
         value: function getItem(fieldname, expectedValue) {
-            var criteria = "?" + fieldname + "=" + expectedValue;
-            return this.$http.get(this.baseUrl + criteria).then(function (response) {
+            var criteria = this.criteriaChar + fieldname + "=" + expectedValue;
+            return this.$http.get(this.getUrl + criteria).then(function (response) {
                 var items = response.data;
                 if (items.length > 0) {
                     return items[0];
@@ -50,6 +69,7 @@ var baseServerService = (function () {
     }, {
         key: "addItem",
         value: function addItem(item) {
+            item.project = this.currentProjectId;
             return this.$http.post(this.baseUrl, item).then(function (response) {
                 return response.data;
             });
@@ -73,47 +93,34 @@ var baseServerService = (function () {
     return baseServerService;
 })();
 
-var userStoryService = (function (_baseServerService) {
-    _inherits(userStoryService, _baseServerService);
-
-    function userStoryService($http, MY_SERVER) {
-        _classCallCheck(this, userStoryService);
-
-        _get(Object.getPrototypeOf(userStoryService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + MY_SERVER.storiesUri;
-        this.baseUrlWId = this.baseUrl + "?id=";
-    }
-
-    return userStoryService;
-})(baseServerService);
-
-angular.module("myApp").service("userStoryService", userStoryService);
-
-var statusService = (function (_baseServerService2) {
-    _inherits(statusService, _baseServerService2);
+var statusService = (function (_baseServerService) {
+    _inherits(statusService, _baseServerService);
 
     function statusService($http, MY_SERVER) {
         _classCallCheck(this, statusService);
 
         _get(Object.getPrototypeOf(statusService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.baseUrl = MY_SERVER.url + MY_SERVER.statusUri;
+        this.getUrl = this.baseUrl;
         this.baseUrlWId = this.baseUrl + "?id=";
+        this.criteriaChar = "?";
 
         this.setupStatusesIfNeeded();
+        console.log("init statusService", this);
     }
 
     _createClass(statusService, [{
         key: "setupStatusesIfNeeded",
         value: function setupStatusesIfNeeded() {
-            var _this = this;
+            var _this2 = this;
 
             this.getItems().then(function (items) {
                 if (items.length === 0) {
-                    _this.addItem({ name: "not started" });
-                    _this.addItem({ name: "in progress" });
-                    _this.addItem({ name: "impeded" });
-                    _this.addItem({ name: "done" });
-                    _this.addItem({ name: "rejected" });
+                    _this2.addItem({ name: "not started" });
+                    _this2.addItem({ name: "in progress" });
+                    _this2.addItem({ name: "impeded" });
+                    _this2.addItem({ name: "done" });
+                    _this2.addItem({ name: "rejected" });
                 }
             });
         }
@@ -124,6 +131,34 @@ var statusService = (function (_baseServerService2) {
 
 angular.module("myApp").service("statusService", statusService);
 
+var projectService = (function (_baseServerService2) {
+    _inherits(projectService, _baseServerService2);
+
+    function projectService($http, MY_SERVER) {
+        _classCallCheck(this, projectService);
+
+        _get(Object.getPrototypeOf(projectService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
+        this.getUrl = this.baseUrl;
+        this.baseUrlWId = this.baseUrl + "?id=";
+        this.criteriaChar = "?";
+        console.log("init projectService", this);
+    }
+
+    _createClass(projectService, [{
+        key: "addItem",
+        value: function addItem(item) {
+            return this.$http.post(this.baseUrl, item).then(function (response) {
+                return response.data;
+            });
+        }
+    }]);
+
+    return projectService;
+})(baseServerService);
+
+angular.module("myApp").service("projectService", projectService);
+
 var featureService = (function (_baseServerService3) {
     _inherits(featureService, _baseServerService3);
 
@@ -131,17 +166,22 @@ var featureService = (function (_baseServerService3) {
         _classCallCheck(this, featureService);
 
         _get(Object.getPrototypeOf(featureService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + MY_SERVER.featuresUri;
-        this.baseUrlWId = this.baseUrl + "?id=";
+        this.typeUri = MY_SERVER.featuresUri;
+        this.currentItem = { name: "All Features" };
+        console.log("init featureService", this);
     }
 
     _createClass(featureService, [{
-        key: "currentFeature",
-        get: function get() {
-            return this.currentFeature;
-        },
-        set: function set(value) {
-            this.currentFeature = value;
+        key: "addItemsIfNeeded",
+        value: function addItemsIfNeeded() {
+            var _this3 = this;
+
+            this.getItems().then(function (items) {
+                if (items.length === 0) {
+                    _this3.addItem({ name: "Feature1", project: _this3.currentProjectId });
+                    _this3.addItem({ name: "Feature2", project: _this3.currentProjectId });
+                }
+            });
         }
     }]);
 
@@ -157,29 +197,49 @@ var teamMemberService = (function (_baseServerService4) {
         _classCallCheck(this, teamMemberService);
 
         _get(Object.getPrototypeOf(teamMemberService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + MY_SERVER.membersUri;
-        this.baseUrlWId = this.baseUrl + "?id=";
+        this.typeUri = MY_SERVER.membersUri;
+        console.log("init teamMemberService", this);
     }
+
+    _createClass(teamMemberService, [{
+        key: "addItemsIfNeeded",
+        value: function addItemsIfNeeded() {
+            var _this4 = this;
+
+            this.getItems().then(function (items) {
+                if (items.length === 0) {
+                    _this4.addItem({ name: "Test Member1",
+                        authId: _this4.currentProjectId, authProvider: "facebook",
+                        email: _this4.currentProjectId,
+                        currentProject: _this4.currentProjectId });
+                    _this4.addItem({ name: "Test Member2",
+                        authId: _this4.currentProjectId + 1, authProvider: "facebook",
+                        email: _this4.currentProjectId + 1,
+                        currentProject: _this4.currentProjectId });
+                }
+            });
+        }
+    }]);
 
     return teamMemberService;
 })(baseServerService);
 
 angular.module("myApp").service("teamMemberService", teamMemberService);
 
-var projectService = (function (_baseServerService5) {
-    _inherits(projectService, _baseServerService5);
+var userStoryService = (function (_baseServerService5) {
+    _inherits(userStoryService, _baseServerService5);
 
-    function projectService($http, MY_SERVER) {
-        _classCallCheck(this, projectService);
+    function userStoryService($http, MY_SERVER) {
+        _classCallCheck(this, userStoryService);
 
-        _get(Object.getPrototypeOf(projectService.prototype), "constructor", this).call(this, $http, MY_SERVER);
-        this.baseUrl = MY_SERVER.url + MY_SERVER.projectsUri;
-        this.baseUrlWId = this.baseUrl + "?id=";
+        _get(Object.getPrototypeOf(userStoryService.prototype), "constructor", this).call(this, $http, MY_SERVER);
+        this.typeUri = MY_SERVER.storiesUri;
+        console.log("init userStoryService", this);
     }
 
-    return projectService;
+    return userStoryService;
 })(baseServerService);
 
-angular.module("myApp").service("projectService", projectService);
+angular.module("myApp").service("userStoryService", userStoryService);
 
 //# sourceMappingURL=baseServerService-compiled.js.map

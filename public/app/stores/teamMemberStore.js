@@ -4,6 +4,7 @@ var ADD_TEAM_MEMBER = "ADD_TEAM_MEMBER";
 var REMOVE_TEAM_MEMBER = "REMOVE_TEAM_MEMBER";
 var SAVE_TEAM_MEMBER = "SAVE_TEAM_MEMBER";
 var SET_AUTH_USER = "SET_AUTH_USER";
+var PROJECT_SET = "PROJECT_SET";
 
 class teamMemberActions {
     constructor(dispatcher) {
@@ -37,6 +38,13 @@ class teamMemberActions {
             item: item
         });
     }
+
+    projectSet(item) {
+        this.dispatcher.emit({
+            actionType: PROJECT_SET,
+            item: item
+        });
+    }
 }
 angular.module("myApp").service("teamMemberActions", teamMemberActions);
 
@@ -52,7 +60,8 @@ class TeamMemberStore extends EventEmitter {
         this.authUserInfo = undefined;
         this.errorMsg = "";
 
-        this.emitChange();
+        console.log("init TeamMemberStore");
+
     }
 
     getTeamMembers() {
@@ -152,6 +161,10 @@ angular.module("myApp").service("teamMemberStore", function ($log, C, dispatcher
                 teamMemberStore.setAuthUser(action.item).then(function (response) {
                     teamMemberStore.emitChange();
                 });
+                break;
+
+            case PROJECT_SET:
+                teamMemberStore.emitChange();
                 break;
         }
 

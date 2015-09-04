@@ -1,7 +1,7 @@
 "use strict";
 
 class ScrumBoardController {
-    constructor(C, MY_SERVER, userStoryStore, userStoryActions, statusStore,
+    constructor(C, MY_SERVER, statusStore, userStoryStore, userStoryActions,
                 featureStore, teamMemberStore) {
         this.C = C;
         this.url = MY_SERVER.url;
@@ -38,8 +38,7 @@ class ScrumBoardController {
     }
 
     featureSelected() {
-        return this.currentFeature &&
-            (this.currentFeature._id !== this.C.ALL_FEATURES_ID);
+        return this.currentFeature && this.currentFeature._id;
     }
 
     get currentFeatureId() {
@@ -48,11 +47,15 @@ class ScrumBoardController {
 
     get currentMemberId() {
         var memberSelected = function(self) {
-            return self.currentMember &&
-                (self.currentMember._id !== self.C.ALL_MEMBERS_ID);
+            return self.currentMember && self.currentMember._id;
         }
 
-        return memberSelected(this) ? this.currentMember._id : "";
+        var notAssigned = function(self) {
+            return self.currentMember.name === "not assigned";
+        }
+
+        return memberSelected(this) ? this.currentMember._id :
+            notAssigned(this) ? null : "";
     }
 
     resetStatuses() {
@@ -63,11 +66,14 @@ class ScrumBoardController {
 
     resetFeatures() {
         this.features = this.featureStore.getFeatures();
+        this.features.unshift({name:"All Features", noShow:true});
         this.currentFeature = this.features.currentItem;
     }
 
     resetTeamMembers() {
         this.teamMembers = this.teamMemberStore.getTeamMembers();
+        this.teamMembers.unshift({name:"not assigned"});
+        this.teamMembers.unshift({name:"All Team Members", noShow:true});
         this.currentMember = this.teamMembers.currentItem;
     }
 

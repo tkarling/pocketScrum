@@ -33,7 +33,7 @@ var schema = new mongoose.Schema ({
         ],
         default: "dev team member"
     },
-    currentProject: {
+    project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Project"
     },

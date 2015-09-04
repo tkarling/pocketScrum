@@ -121,7 +121,7 @@ app.delete("/api/pocketScrum/projects", aProjectCtrl.delete.bind(aProjectCtrl));
 
 
 var mongoose = require('mongoose');
-var mongoUri = 'mongodb://localhost:27017/pocketScrum';
+var mongoUri = 'mongodb://localhost:27017/pocketScrum3';
 mongoose.set('debug', true);
 mongoose.connect(mongoUri);
 mongoose.connection.once('open', function() {

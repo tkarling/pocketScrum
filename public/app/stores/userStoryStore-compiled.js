@@ -11,6 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ADD_STORY = "ADD_STORY";
 var REMOVE_STORY = "REMOVE_STORY";
 var SAVE_STORY = "SAVE_STORY";
+var PROJECT_SET = "PROJECT_SET";
 
 var userStoryActions = (function () {
     function userStoryActions(dispatcher) {
@@ -43,6 +44,14 @@ var userStoryActions = (function () {
                 item: item
             });
         }
+    }, {
+        key: "projectSet",
+        value: function projectSet(item) {
+            this.dispatcher.emit({
+                actionType: PROJECT_SET,
+                item: item
+            });
+        }
     }]);
 
     return userStoryActions;
@@ -63,7 +72,8 @@ var UserStoryStore = (function (_EventEmitter) {
         this.stories = [];
         this.errorMsg = "";
 
-        this.emitChange();
+        //this.emitChange();
+        console.log("init UserStoryStore");
     }
 
     _createClass(UserStoryStore, [{
@@ -137,6 +147,10 @@ angular.module("myApp").service("userStoryStore", function (C, dispatcher, userS
                 userStoryStore.saveStory(action.item).then(function (response) {
                     userStoryStore.emitChange();
                 });
+                break;
+
+            case PROJECT_SET:
+                userStoryStore.emitChange();
                 break;
 
         }

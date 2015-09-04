@@ -30,7 +30,7 @@ var schema = new mongoose.Schema({
         'enum': ['scrum master', 'product owner', 'dev team member', 'other'],
         'default': "dev team member"
     },
-    currentProject: {
+    project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Project"
     },
