@@ -5,7 +5,6 @@ class C {
     constructor($http, $log, $q, projectService, statusService, userStoryService,
                 featureService, teamMemberService, picsService,
                 userStoryActions, featureActions, teamMemberActions) {
-        console.log("init C");
         this.$http = $http;
         this.$log = $log;
         this.$q = $q;
@@ -26,6 +25,8 @@ class C {
             this.getDefaultValues();
             this.emitProjectSet();
         });
+
+        console.log("init C", this);
 
         // FOR TESTING & DB FIXING
         //this.readAll();

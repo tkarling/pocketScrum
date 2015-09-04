@@ -50,7 +50,7 @@ class FeatureStore extends EventEmitter {
         this.errorMsg = "";
 
         //this.emitChange();
-        console.log("init FeatureStore");
+        console.log("init Feature S T O R E", this);
     }
 
     getFeatures() {

@@ -12,7 +12,6 @@ var C = (function () {
 
         _classCallCheck(this, C);
 
-        console.log("init C");
         this.$http = $http;
         this.$log = $log;
         this.$q = $q;
@@ -33,6 +32,8 @@ var C = (function () {
             _this.getDefaultValues();
             _this.emitProjectSet();
         });
+
+        console.log("init C", this);
 
         // FOR TESTING & DB FIXING
         //this.readAll();

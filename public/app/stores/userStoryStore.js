@@ -51,7 +51,7 @@ class UserStoryStore extends EventEmitter {
         this.errorMsg = "";
 
         //this.emitChange();
-        console.log("init UserStoryStore");
+        console.log("init UserStory S T O R E", this);
     }
 
     getStories() {

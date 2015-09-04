@@ -59,15 +59,15 @@ var ScrumBoardController = (function () {
         value: function resetFeatures() {
             this.features = this.featureStore.getFeatures();
             this.features.unshift({ name: "All Features", noShow: true });
-            this.currentFeature = this.features.currentItem;
+            this.currentFeature = this.features[0];
         }
     }, {
         key: "resetTeamMembers",
         value: function resetTeamMembers() {
             this.teamMembers = this.teamMemberStore.getTeamMembers();
-            this.teamMembers.unshift({ name: "not assigned" });
+            this.teamMembers.unshift({ name: "not assigned", noShow: false });
             this.teamMembers.unshift({ name: "All Team Members", noShow: true });
-            this.currentMember = this.teamMembers.currentItem;
+            this.currentMember = this.teamMembers[0];
         }
     }, {
         key: "resetStories",
@@ -107,7 +107,7 @@ var ScrumBoardController = (function () {
     }, {
         key: "setStoryAssignedTo",
         value: function setStoryAssignedTo(story, member) {
-            story.assignedTo = member._id;
+            story.assignedTo = member.name === "not assigned" ? null : member._id;
             this.userStoryActions.saveStory(story);
         }
     }, {
