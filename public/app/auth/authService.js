@@ -23,7 +23,7 @@ class authService {
         var self = this;
         //console.log('authService timeout getAuthInfo');
         self.$http.get(this.MY_SERVER.url + this.MY_SERVER.meUri).then(function (result) {
-            console.log("result", result);
+            //console.log("result", result);
             if (result.data) {
                 var authInfo = {
                     id: result.data.id,

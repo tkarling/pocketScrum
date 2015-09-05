@@ -71,9 +71,10 @@ class AuthUserController extends BaseUserController {
     resetCurrentPic() {
         this.currentPic = this.picsStore.getCurrentPic();
         //console.log("resetCurrentPic", this.currentPic);
-        if(this.currentPic._id) {
+        if(this.currentPic._id && this.savePlease) {
             this.myInfo.picId = this.currentPic.picId;
             this.saveInfo();
+            this.savePlease = undefined;
         }
     }
 
@@ -84,6 +85,7 @@ class AuthUserController extends BaseUserController {
     }
 
     savePic(pic) {
+        this.savePlease = true;
         this.picsActions.addPic(pic);
     }
 }

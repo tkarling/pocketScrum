@@ -61,7 +61,7 @@ class TeamMemberStore extends EventEmitter {
         this.authUserInfo = undefined;
         this.errorMsg = "";
 
-        console.log("init TeamMember S T O R E", this);
+        //console.log("init TeamMember S T O R E", this);
 
     }
 

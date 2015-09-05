@@ -27,7 +27,7 @@ class C {
             this.emitProjectSet();
         });
 
-        console.log("init C", this);
+        //console.log("init C", this);
 
         // FOR TESTING & DB FIXING
         //this.readAll();

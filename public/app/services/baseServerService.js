@@ -19,7 +19,7 @@ class baseServerService {
         this.getUrl = this.baseUrl + (this.currentProjectId ? ("?project=" + this.currentProjectId) : "?");
         this.baseUrlWId = this.baseUrl + "?id=";
 
-        console.log("setCurrentProjectId", this);
+        //console.log("setCurrentProjectId", this);
         this.addItemsIfNeeded();
     }
 
@@ -90,7 +90,7 @@ class statusService extends baseServerService {
 
 
         this.setupStatusesIfNeeded();
-        console.log("init statusService", this);
+        //console.log("init statusService", this);
     }
 
     setupStatusesIfNeeded() {
@@ -130,7 +130,7 @@ class projectService extends baseServerService {
         this.getUrl = this.baseUrl;
         this.baseUrlWId = this.baseUrl + "?id=";
         this.criteriaChar = "?";
-        console.log("init projectService", this);
+        //console.log("init projectService", this);
     }
 
     addItem(item) {
@@ -148,7 +148,7 @@ class featureService extends baseServerService {
         super($http, MY_SERVER);
         this.typeUri = MY_SERVER.featuresUri;
         this.currentItem = {name: "All Features"};
-        console.log("init featureService", this);
+        //console.log("init featureService", this);
     }
 
     addItemsIfNeeded() {
@@ -168,7 +168,7 @@ class teamMemberService extends baseServerService {
     constructor($http, MY_SERVER) {
         super($http, MY_SERVER);
         this.typeUri = MY_SERVER.membersUri;
-        console.log("init teamMemberService", this);
+        //console.log("init teamMemberService", this);
     }
 
     addItemsIfNeeded() {
@@ -194,7 +194,7 @@ class userStoryService extends baseServerService {
         super($http, MY_SERVER);
         this.statusService = statusService;
         this.typeUri = MY_SERVER.storiesUri;
-        console.log("init userStoryService", this);
+        //console.log("init userStoryService", this);
     }
 
     addItem(item) {

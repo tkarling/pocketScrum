@@ -30,7 +30,7 @@ var baseServerService = (function () {
             this.getUrl = this.baseUrl + (this.currentProjectId ? "?project=" + this.currentProjectId : "?");
             this.baseUrlWId = this.baseUrl + "?id=";
 
-            console.log("setCurrentProjectId", this);
+            //console.log("setCurrentProjectId", this);
             this.addItemsIfNeeded();
         }
     }, {
@@ -110,7 +110,7 @@ var statusService = (function (_baseServerService) {
         this.criteriaChar = "?";
 
         this.setupStatusesIfNeeded();
-        console.log("init statusService", this);
+        //console.log("init statusService", this);
     }
 
     _createClass(statusService, [{
@@ -163,7 +163,7 @@ var projectService = (function (_baseServerService2) {
         this.getUrl = this.baseUrl;
         this.baseUrlWId = this.baseUrl + "?id=";
         this.criteriaChar = "?";
-        console.log("init projectService", this);
+        //console.log("init projectService", this);
     }
 
     _createClass(projectService, [{
@@ -189,7 +189,7 @@ var featureService = (function (_baseServerService3) {
         _get(Object.getPrototypeOf(featureService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.typeUri = MY_SERVER.featuresUri;
         this.currentItem = { name: "All Features" };
-        console.log("init featureService", this);
+        //console.log("init featureService", this);
     }
 
     _createClass(featureService, [{
@@ -219,7 +219,7 @@ var teamMemberService = (function (_baseServerService4) {
 
         _get(Object.getPrototypeOf(teamMemberService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.typeUri = MY_SERVER.membersUri;
-        console.log("init teamMemberService", this);
+        //console.log("init teamMemberService", this);
     }
 
     _createClass(teamMemberService, [{
@@ -256,7 +256,7 @@ var userStoryService = (function (_baseServerService5) {
         _get(Object.getPrototypeOf(userStoryService.prototype), "constructor", this).call(this, $http, MY_SERVER);
         this.statusService = statusService;
         this.typeUri = MY_SERVER.storiesUri;
-        console.log("init userStoryService", this);
+        //console.log("init userStoryService", this);
     }
 
     _createClass(userStoryService, [{

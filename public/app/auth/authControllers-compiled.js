@@ -105,9 +105,10 @@ var AuthUserController = (function (_BaseUserController2) {
         value: function resetCurrentPic() {
             this.currentPic = this.picsStore.getCurrentPic();
             //console.log("resetCurrentPic", this.currentPic);
-            if (this.currentPic._id) {
+            if (this.currentPic._id && this.savePlease) {
                 this.myInfo.picId = this.currentPic.picId;
                 this.saveInfo();
+                this.savePlease = undefined;
             }
         }
     }, {
@@ -120,6 +121,7 @@ var AuthUserController = (function (_BaseUserController2) {
     }, {
         key: "savePic",
         value: function savePic(pic) {
+            this.savePlease = true;
             this.picsActions.addPic(pic);
         }
     }]);
