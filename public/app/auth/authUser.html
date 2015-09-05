@@ -1,0 +1,32 @@
+<div class="user-page">
+    <form ng-submit="authUser.saveInfo()">
+    <div>
+    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+            ng-click="scrumBoard.deleteVisible = ! scrumBoard.deleteVisible">
+        <i class="material-icons ps-no-icon">save</i>
+    </button>
+    <span>You are logged in with {{authUser.myInfo.authProvider}}</span>
+    </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="name" ng-model="authUser.myInfo.name"
+                   placeholder="name"/>
+            <!--<label class="mdl-textfield__label" for="name">Name</label>-->
+        </div>
+        <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">-->
+            <!--<input class="mdl-textfield__input" type="text" id="email" ng-model="authUser.myInfo.email"-->
+                   <!--placeholder="email"/>-->
+            <!--&lt;!&ndash;<label class="mdl-textfield__label" for="email">Name</label>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label">-->
+            <!--<input class="mdl-textfield__input" type="text" id="role" ng-model="authUser.myInfo.role"-->
+                   <!--placeholder="scrum role"/>-->
+            <!--&lt;!&ndash;<label class="mdl-textfield__label" for="role">Name</label>&ndash;&gt;-->
+        <!--</div>-->
+    </form>
+    <button type="file" ngf-select="authUser.savePic($file)"
+            accept="image/*" ngf-max-size="4MB">
+        <!--ngf-max-height="1000"-->
+        <img class="ps-avatar" ng-src="{{authUser.thumbnailUrl}}"/>
+    </button>
+
+</div>

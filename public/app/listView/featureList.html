@@ -7,7 +7,7 @@
     <div class="ps-group">
         <div class="ps-group-item"
              ng-repeat="feature in features.features | filter: features.data.search |
-             filter: { noShow: false }">
+             filter: { noShow: false } | orderBy: 'name'">
             <span>
                 <button ng-if="features.data.deleteVisible"
                         class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"

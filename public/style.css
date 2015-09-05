@@ -28,6 +28,17 @@ header img {
   margin: auto;
   min-height: initial;
 }
+.user-page {
+  max-width: 600px;
+  width: 100%;
+  margin: 2% auto;
+  padding: 2%;
+  border: 2px solid #3f51b5;
+  text-align: center;
+}
+.user-page .ps-no-icon {
+  color: white;
+}
 .pics-list .ps-tool-container {
   text-align: right;
   padding: 2% 0px;

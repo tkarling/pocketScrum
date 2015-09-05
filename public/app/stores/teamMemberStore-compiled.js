@@ -15,10 +15,11 @@ var SET_AUTH_USER = "SET_AUTH_USER";
 var PROJECT_SET = "PROJECT_SET";
 
 var teamMemberActions = (function () {
-    function teamMemberActions(dispatcher) {
+    function teamMemberActions(dispatcher, userStoryActions) {
         _classCallCheck(this, teamMemberActions);
 
         this.dispatcher = dispatcher;
+        this.userStoryActions = userStoryActions;
     }
 
     _createClass(teamMemberActions, [{
@@ -44,6 +45,7 @@ var teamMemberActions = (function () {
                 actionType: SAVE_TEAM_MEMBER,
                 item: item
             });
+            this.userStoryActions.projectSet();
         }
     }, {
         key: "setAuthUser",

@@ -125,9 +125,15 @@ class C {
             console.log("teamMemberService items", items);
             for (var i = 0; i < items.length; i++) {
                 //console.log(items[i]);
-                items[i].currentProject = "55e61a9eb63286404af60c61";
-                this.teamMemberService.saveItem(items[i]);
+                items[i].project = "55e61a9eb63286404af60c61";
+                this.teamMemberService.saveItem(items[i]).then((response)=> {
+                    console.log("setProjectForMembers", response);
+                }, (err) => {
+                    console.log("setProjectForMembers err", err);
+                });
             }
+        }, (err) => {
+            console.log("setProjectForMembers getItems err", err);
         });
     }
 
@@ -148,7 +154,11 @@ class C {
             for (var i = 0; i < items.length; i++) {
                 //console.log(items[i]);
                 items[i].project = "55e87e9bb793347fd0da84ff";
-                this.userStoryService.saveItem(items[i]);
+                this.userStoryService.saveItem(items[i]).then((response)=> {
+                    console.log("setProjectForUserStories", response);
+                }, (err) => {
+                    console.log("setProjectForUserStories err", err);
+                });
             }
         });
     }

@@ -7,8 +7,9 @@ var SET_AUTH_USER = "SET_AUTH_USER";
 var PROJECT_SET = "PROJECT_SET";
 
 class teamMemberActions {
-    constructor(dispatcher) {
+    constructor(dispatcher, userStoryActions) {
         this.dispatcher = dispatcher;
+        this.userStoryActions = userStoryActions;
     }
 
     addTeamMember(item) {
@@ -30,6 +31,7 @@ class teamMemberActions {
             actionType: SAVE_TEAM_MEMBER,
             item: item
         });
+        this.userStoryActions.projectSet();
     }
 
     setAuthUser(item) {

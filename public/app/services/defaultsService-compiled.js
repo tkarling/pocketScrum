@@ -142,9 +142,15 @@ var C = (function () {
                 console.log("teamMemberService items", items);
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
-                    items[i].currentProject = "55e61a9eb63286404af60c61";
-                    _this5.teamMemberService.saveItem(items[i]);
+                    items[i].project = "55e61a9eb63286404af60c61";
+                    _this5.teamMemberService.saveItem(items[i]).then(function (response) {
+                        console.log("setProjectForMembers", response);
+                    }, function (err) {
+                        console.log("setProjectForMembers err", err);
+                    });
                 }
+            }, function (err) {
+                console.log("setProjectForMembers getItems err", err);
             });
         }
     }, {
@@ -171,7 +177,11 @@ var C = (function () {
                 for (var i = 0; i < items.length; i++) {
                     //console.log(items[i]);
                     items[i].project = "55e87e9bb793347fd0da84ff";
-                    _this7.userStoryService.saveItem(items[i]);
+                    _this7.userStoryService.saveItem(items[i]).then(function (response) {
+                        console.log("setProjectForUserStories", response);
+                    }, function (err) {
+                        console.log("setProjectForUserStories err", err);
+                    });
                 }
             });
         }

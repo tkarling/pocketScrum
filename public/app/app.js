@@ -31,6 +31,10 @@ angular.module("myApp")
                 templateUrl: "./app/listView/featureList.html",
                 controller: "FeatureListController as features"
             })
+            .when("/user", {
+                templateUrl: "./app/auth/authUser.html",
+                controller: "AuthUserController as authUser"
+            })
             .when("/scrumBoard", {
                 templateUrl: "./app/scrumBoard/scrumBoard.html",
                 controller: "ScrumBoardController as scrumBoard"
