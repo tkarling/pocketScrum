@@ -27,8 +27,14 @@
                     <p class="menu-item" ng-repeat="member in scrumBoard.teamMembers | filter: { noShow: false } | orderBy:'name'"
                        ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
                 </ul>
-                <img ng-if="! sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
-                <img ng-if="sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="./images/defaultTeamMember.jpg"/>
+                <div class="tooltip">
+                    <img ng-if="! sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
+                    <img ng-if="sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="./images/defaultTeamMember.jpg"/>
+                    <span ng-if="story.assignedTo.name">
+                        {{story.assignedTo.name}}
+                    </span>
+                </div>
+
             </div>
 
             <div class="ps-group-item-content">

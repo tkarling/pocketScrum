@@ -64,6 +64,9 @@ header img {
 .pics-list .ps-detailled-img {
   max-width: 100%;
 }
+.scrum-board {
+  /*CSS3 extras*/
+}
 .scrum-board scrum-board-tools,
 .scrum-board scrum-board-groups {
   width: 100%;
@@ -146,6 +149,39 @@ header img {
 }
 .scrum-board .menu-item {
   width: 100px;
+}
+.scrum-board div.tooltip {
+  outline: none;
+}
+.scrum-board div.tooltip:hover {
+  text-decoration: none;
+}
+.scrum-board div.tooltip span {
+  z-index: 10;
+  display: none;
+  padding: 14px 20px;
+  margin-top: -30px;
+  margin-left: 28px;
+  width: 100px;
+  line-height: 16px;
+}
+.scrum-board div.tooltip:hover span {
+  display: inline;
+  position: absolute;
+  color: #3f51b5;
+  border: 1px solid #3f51b5;
+  background: white;
+}
+.scrum-board .callout {
+  z-index: 20;
+  position: absolute;
+  top: 30px;
+  border: 0;
+  left: -12px;
+}
+.scrum-board div.tooltip span {
+  border-radius: 4px;
+  box-shadow: 5px 5px 8px #3f51b5;
 }
 .list-view {
   max-width: 600px;
