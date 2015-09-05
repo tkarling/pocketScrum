@@ -34,15 +34,50 @@ var FeatureListController = (function (_BaseListController) {
     _createClass(FeatureListController, [{
         key: "resetFeatures",
         value: function resetFeatures() {
+            var setEditedFeature = function setEditedFeature(self, id) {
+                for (var i = 0; i < self.features.length; i++) {
+                    if (self.features[i]._id === id) {
+                        self.editedFeature = self.features[i];
+                        self.editedFeature.editing = true;
+                        return;
+                    }
+                }
+            };
+
             this.features = this.featureStore.getFeatures();
+            if (this.editedFeatureId) {
+                setEditedFeature(this, this.editedFeatureId);
+            }
         }
     }, {
         key: "removeFeature",
         value: function removeFeature(feature, $event) {
+            if (feature._id !== this.editedFeatureId) {
+                this.stopEditing();
+            }
             this.featureActions.removeFeature(feature);
             if (event) {
                 event.stopPropagation();
                 event.preventDefault();
+            }
+        }
+    }, {
+        key: "stopEditing",
+        value: function stopEditing() {
+            if (this.editedFeature) {
+                this.featureActions.saveFeature(this.editedFeature);
+                this.editedFeatureId = undefined;
+            }
+        }
+    }, {
+        key: "startStopEditing",
+        value: function startStopEditing(feature) {
+            //console.log(feature.name, this.editedFeature? this.editedFeature.name: undefined);
+            this.stopEditing();
+            if (!feature.editing) {
+                feature.editing = true;
+                this.editedFeature = feature;
+                this.editedFeatureId = feature._id;
             }
         }
     }]);

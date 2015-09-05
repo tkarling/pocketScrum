@@ -1,5 +1,6 @@
 .list-view {
   max-width: 600px;
+  width: 100%;
   margin: auto;
 
   list-view-tools {
@@ -7,15 +8,16 @@
 
     input {
       display: inline;
-      width: calc(~'100% - 36px');
+      width: calc(~'100% - 50px');
     }
 
     .ps-tool-container {
       width: 100%;
+      padding: 1%;
     }
 
     .ps-tool-group {
-      margin: 1% auto;
+      margin: 0px auto;
       //padding: 1%;
     }
   }
@@ -27,8 +29,9 @@
   }
 
   .ps-group {
-    width: 100%;
+    width: 92%;
     padding: 1%;
+    margin: 0px @default-padding;
     border: 3px solid @primary-color;
     display: flex;
     flex-direction: column;
@@ -36,10 +39,27 @@
 
   .ps-group-item {
     border: 1px solid @primary-color;
-    width: calc(~'100% - 2*@default-padding');
+    width: 96%;
     display: flex;
+    flex-direction: row;
+    //justify-content: space-between;
     margin: @default-padding;
   }
 
+  .ps-item-content {
+    width: 100%;
+    margin: 0px;
+    //border: 1px solid red;
+  }
+
+  .name-input {
+    margin: 0px auto;
+    //border: 1px solid red;
+  }
+
+  textarea {
+    margin: 0px auto;
+    //border: 1px solid red;
+  }
 
 }
