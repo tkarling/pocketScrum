@@ -27,6 +27,11 @@ header img {
 .login-page .ps-auth-page-content .mdl-card {
   margin: auto;
   min-height: initial;
+  width: 100%;
+  max-width: 400px;
+}
+.login-page .visit-button {
+  float: right;
 }
 .user-page {
   max-width: 600px;

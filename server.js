@@ -15,8 +15,8 @@ var FACEBOOK_APP_SECRET = keys.FACEBOOK_APP_SECRET;
 //
 
 var app = express();
-//var config = require('./config.js');
-var config = {portNum: 3039};
+var config = require('./config.js');
+console.log("config", config);
 
 app.use(function(req, res, next){
     console.log('%s %s', req.method, req.url);
@@ -42,7 +42,7 @@ app.use(cors());
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: 'http://localhost:' + config.portNum + '/auth/facebook/callback'
+    callbackURL: 'http://'+ config.ip + ':' + config.portNum + '/auth/facebook/callback'
 }, function(token, refreshToken, profile, done) {
     console.log("profile: ", profile);
     return done(null, profile);
@@ -65,7 +65,7 @@ passport.deserializeUser(function(obj, done) {
 
 app.get('/api/pocketScrum/logout', function(req, res){
     req.logout();
-    res.redirect("http://localhost:3039/#/login");
+    res.redirect("http://" + config.ip + ":" + config.portNum + "/#/login");
 });
 app.get('/api/pocketScrum/me', function(req, res) {
     console.log("me", req.user);
@@ -122,7 +122,8 @@ app.delete("/api/pocketScrum/projects", aProjectCtrl.delete.bind(aProjectCtrl));
 
 
 var mongoose = require('mongoose');
-var mongoUri = 'mongodb://localhost:27017/pocketScrum';
+var mongoUri = 'mongodb://' + config.ip + ':27017/pocketScrum';
+console.log("mongoUri", mongoUri);
 mongoose.set('debug', true);
 mongoose.connect(mongoUri);
 mongoose.connection.once('open', function() {
