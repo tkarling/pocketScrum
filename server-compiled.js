@@ -19,7 +19,8 @@ var FACEBOOK_APP_SECRET = keys.FACEBOOK_APP_SECRET;
 //
 
 var app = express();
-var config = require('./config.js');
+//var config = require('./config.js');
+var config = { portNum: 3039 };
 
 app.use(function (req, res, next) {
     console.log('%s %s', req.method, req.url);
