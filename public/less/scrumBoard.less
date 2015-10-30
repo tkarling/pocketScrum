@@ -22,7 +22,7 @@
   }
 
   .ps-tool-group {
-    margin: 6px;
+    margin: @default-padding;
     padding: 1%;
   }
 
@@ -40,20 +40,32 @@
 
   .ps-groups h5 {
     margin: @default-padding 0px;
+    padding-left: @default-padding;
   }
 
   .ps-group {
-    padding: 1%;
+    padding: @default-padding;
     border: 3px solid @primary-color;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
     flex-direction: column;
   }
 
   .ps-group-item {
     border: 2px solid @primary-color;
     width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     margin: @default-padding 0px;
+    padding: @default-padding;
   }
 
   .ps-group-item .ps-avatar {
@@ -87,7 +99,7 @@
     float: right;
   }
 
- .menu {
+  .menu {
     position: absolute;
     top: 0px;
     left:8px;

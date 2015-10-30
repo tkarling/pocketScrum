@@ -1,3 +1,133 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+* {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
 .tk-header-row {
   padding-left: 16px;
 }
@@ -22,7 +152,7 @@ header img {
   height: auto;
 }
 .login-page .ps-auth-page-content {
-  margin: 2%;
+  margin: 4px;
 }
 .login-page .ps-auth-page-content .mdl-card {
   margin: auto;
@@ -46,7 +176,7 @@ header img {
 }
 .pics-list .ps-tool-container {
   text-align: right;
-  padding: 2% 0px;
+  padding: 4px 0px;
 }
 .pics-list .ps-search-box {
   float: left;
@@ -54,14 +184,26 @@ header img {
   width: calc(100% - 72px);
 }
 .pics-list .ps-thumbnails {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
   justify-content: left;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 .pics-list .ps-thumbnail-img {
-  padding: 2%;
-  width: 96%;
+  padding: 4px;
+  width: 92px;
 }
 .pics-list .ps-thumbnail-container {
   position: relative;
@@ -71,8 +213,8 @@ header img {
 }
 .pics-list .ps-small-delete-button {
   position: absolute;
-  bottom: 2%;
-  right: 2%;
+  bottom: 4px;
+  right: 4px;
 }
 .pics-list .ps-notes-container {
   width: 100%;
@@ -101,41 +243,53 @@ header img {
   width: 100%;
 }
 .scrum-board .ps-tool-group {
-  margin: 6px;
+  margin: 4px;
   padding: 1%;
 }
 .scrum-board .ps-feature-select {
   float: right;
   width: 46%;
   height: 32px;
-  margin: 2%;
+  margin: 4px;
 }
 .scrum-board .ps-groups {
   width: 100%;
 }
 .scrum-board .ps-groups h5 {
-  margin: 2% 0px;
+  margin: 4px 0px;
+  padding-left: 4px;
 }
 .scrum-board .ps-group {
-  padding: 1%;
+  padding: 4px;
   border: 3px solid #3f51b5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 .scrum-board .ps-group-item {
   border: 2px solid #3f51b5;
   width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  margin: 2% 0px;
+  margin: 4px 0px;
+  padding: 4px;
 }
 .scrum-board .ps-group-item .ps-avatar {
   width: 30px;
   height: 30px;
-  margin: 2%;
-  padding: 2%;
+  margin: 4px;
+  padding: 4px;
 }
 .scrum-board .ps-group-item .ps-group-item-content {
-  padding: 0px 2%;
+  padding: 0px 4px;
   width: calc(100% - 30px);
 }
 .scrum-board .ps-group-item .ps-first-row {
@@ -226,17 +380,31 @@ header img {
 .list-view .ps-group {
   width: 92%;
   padding: 1%;
-  margin: 0px 2%;
+  margin: 0px 4px;
   border: 3px solid #3f51b5;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 .list-view .ps-group-item {
   border: 1px solid #3f51b5;
   width: 96%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
-  margin: 2%;
+  margin: 4px;
 }
 .list-view .ps-item-content {
   width: 100%;
