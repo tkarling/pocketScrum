@@ -28,8 +28,11 @@
                        ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
                 </ul>
                 <div class="tooltip">
-                    <img ng-if="! sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
-                    <img ng-if="sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="./images/defaultTeamMember.jpg"/>
+                    <div class="no-pic" ng-if="! story.assignedTo.name"></div>
+                    <div ng-if="story.assignedTo.name">
+                        <img ng-if="! sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
+                        <img ng-if="sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="./images/defaultTeamMember.jpg"/>
+                    </div>
                     <span ng-if="story.assignedTo.name">
                         {{story.assignedTo.name}}
                     </span>
