@@ -52,7 +52,7 @@
                                    ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
                                    ng-click="scrumBoard.setStoryFeature(story, feature)">{{feature.name}}</p>
                             </ul>
-                            <span class="ps-feature">{{story.feature.name}}</span>
+                            <span class="ps-feature">{{story.feature.name || "Unknown"}}</span>
                         </span>
 
                     <span class="ps-sprint-release">sprint-1</span>
