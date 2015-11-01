@@ -4,57 +4,53 @@
     width: 100%;
   }
 
-  textarea {
-    width: 98%;
+  scrum-board-tools {
+    .ps-tool-container {
+      width: 100%;
+    }
+
+    .ps-tool-group {
+      margin-top:0px;
+      margin-bottom:0px;
+    }
+
+    .ps-feature-select {
+      float: right;
+      margin: @min-space;
+      margin-top: @touch-space;
+    }
+
+    button {
+      margin: @min-space;
+    }
+
+    input {
+      display: inline;
+      width: calc(~'100% - 56px');
+    }
+
   }
 
-  input {
-    display: inline;
-    width: calc(~'100% - 36px');
+  textarea {
+    width: 100%;
   }
 
   .mdl-grid {
     padding: 0px;
   }
 
-  .ps-tool-container {
-    width: 100%;
-  }
-
-  .ps-tool-group {
-    margin: @default-padding;
-    padding: 1%;
-  }
-
-  .ps-feature-select {
-    float: right;
-    width: 46%;
-    height: 32px;
-    //margin-top: @default-padding;
-    margin: @default-padding;
-  }
 
   .ps-groups {
     width: 100%;
   }
 
-  .ps-groups h5 {
-    margin: @default-padding 0px;
-    padding-left: @default-padding;
+  .ps-groups h6 {
+    //padding-left: @min-space;
   }
 
   .ps-group {
-    padding: @default-padding;
+    padding: 0px @min-space;
     border: 3px solid @primary-color;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
   }
 
   .ps-group-item {
@@ -64,18 +60,25 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    margin: @default-padding 0px;
-    padding: @default-padding;
+    margin: @min-space 0px;
+    padding: @min-space;
   }
 
   .ps-group-item .ps-avatar {
-    width: 30px;
-    height: 30px;
+    width: @avatar-width;
+    height: @avatar-width;
+    margin: @avatar-space;
   }
 
+  .ps-group-item .no-pic {
+    border: 1px solid @primary-color;
+  }
+
+
   .ps-group-item .ps-group-item-content {
-    padding: 0px @default-padding;
-    width: calc(~'100% - 30px');
+    //padding: 0px @min-space;
+    padding-left: @min-space;
+    width: 100%;
   }
 
   .ps-group-item .ps-first-row {
@@ -97,11 +100,6 @@
     float: right;
   }
 
-  .no-pic {
-    width: 30px;
-    height: 30px;
-    border: 1px solid @primary-color;
-  }
 
   .menu {
     position: absolute;

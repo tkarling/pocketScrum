@@ -53,6 +53,10 @@ table {
   box-sizing: border-box;
 }
 
+textarea, input {
+  font-family: @default-font;
+}
+
 .tk-header-row {
   padding-left: 16px;
 }
@@ -70,10 +74,35 @@ html, body, main, ng-view {
 
 .ps-page-content {
   margin: auto;
-  padding: 0px 2%;
 }
 
 header img {
   width: 30px;
   height: auto;
 }
+
+.tk-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  opacity: 0.87;
+  margin: @title-space 0px;
+}
+
+.tk-subheading {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  opacity: 0.87;
+  margin-top:10px;
+}
+
+.tk-body1 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  opacity: 0.87;
+  margin-top:10px;
+  margin-bottom: @min-space;
+}
+

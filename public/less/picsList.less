@@ -1,13 +1,21 @@
 .pics-list {
-  .ps-tool-container {
-    text-align: right;
-    padding: @default-padding 0px;
-  }
 
-  .ps-search-box {
-    float: left;
-    display: inline;
-    width: calc(~'100% - 72px');
+  pics-tools {
+    .ps-tool-container {
+      //text-align: right;
+      //padding: @default-padding 0px;
+    }
+
+    .ps-search-box {
+      //float: left;
+      display: inline;
+      width: calc(~'100% - 104px');
+    }
+
+    button {
+      margin: @min-space;
+    }
+
   }
 
   .ps-thumbnails {
@@ -49,9 +57,11 @@
 
   .ps-notes-container {
     width: 100%;
+    padding:0px;
   }
 
   .ps-detailled-img {
     max-width: 100%;
+    max-height: 600px;
   }
 }

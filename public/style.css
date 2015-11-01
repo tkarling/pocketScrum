@@ -128,6 +128,10 @@ table {
   /* Firefox, other Gecko */
   box-sizing: border-box;
 }
+textarea,
+input {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
 .tk-header-row {
   padding-left: 16px;
 }
@@ -145,11 +149,32 @@ ng-view {
 }
 .ps-page-content {
   margin: auto;
-  padding: 0px 2%;
 }
 header img {
   width: 30px;
   height: auto;
+}
+.tk-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  opacity: 0.87;
+  margin: 12px 0px;
+}
+.tk-subheading {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  opacity: 0.87;
+  margin-top: 10px;
+}
+.tk-body1 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  opacity: 0.87;
+  margin-top: 10px;
+  margin-bottom: 8px;
 }
 .login-page .ps-auth-page-content {
   margin: 4px;
@@ -174,14 +199,12 @@ header img {
 .user-page .ps-no-icon {
   color: white;
 }
-.pics-list .ps-tool-container {
-  text-align: right;
-  padding: 4px 0px;
-}
-.pics-list .ps-search-box {
-  float: left;
+.pics-list pics-tools .ps-search-box {
   display: inline;
-  width: calc(100% - 72px);
+  width: calc(100% - 104px);
+}
+.pics-list pics-tools button {
+  margin: 8px;
 }
 .pics-list .ps-thumbnails {
   display: -webkit-box;
@@ -218,9 +241,11 @@ header img {
 }
 .pics-list .ps-notes-container {
   width: 100%;
+  padding: 0px;
 }
 .pics-list .ps-detailled-img {
   max-width: 100%;
+  max-height: 600px;
 }
 .scrum-board {
   /*CSS3 extras*/
@@ -229,48 +254,37 @@ header img {
 .scrum-board scrum-board-groups {
   width: 100%;
 }
-.scrum-board textarea {
-  width: 98%;
+.scrum-board scrum-board-tools .ps-tool-container {
+  width: 100%;
 }
-.scrum-board input {
+.scrum-board scrum-board-tools .ps-tool-group {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.scrum-board scrum-board-tools .ps-feature-select {
+  float: right;
+  margin: 8px;
+  margin-top: 16px;
+}
+.scrum-board scrum-board-tools button {
+  margin: 8px;
+}
+.scrum-board scrum-board-tools input {
   display: inline;
-  width: calc(100% - 36px);
+  width: calc(100% - 56px);
+}
+.scrum-board textarea {
+  width: 100%;
 }
 .scrum-board .mdl-grid {
   padding: 0px;
 }
-.scrum-board .ps-tool-container {
-  width: 100%;
-}
-.scrum-board .ps-tool-group {
-  margin: 4px;
-  padding: 1%;
-}
-.scrum-board .ps-feature-select {
-  float: right;
-  width: 46%;
-  height: 32px;
-  margin: 4px;
-}
 .scrum-board .ps-groups {
   width: 100%;
 }
-.scrum-board .ps-groups h5 {
-  margin: 4px 0px;
-  padding-left: 4px;
-}
 .scrum-board .ps-group {
-  padding: 4px;
+  padding: 0px 8px;
   border: 3px solid #3f51b5;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
 }
 .scrum-board .ps-group-item {
   border: 2px solid #3f51b5;
@@ -279,16 +293,20 @@ header img {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin: 4px 0px;
-  padding: 4px;
+  margin: 8px 0px;
+  padding: 8px;
 }
 .scrum-board .ps-group-item .ps-avatar {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+}
+.scrum-board .ps-group-item .no-pic {
+  border: 1px solid #3f51b5;
 }
 .scrum-board .ps-group-item .ps-group-item-content {
-  padding: 0px 4px;
-  width: calc(100% - 30px);
+  padding-left: 8px;
+  width: 100%;
 }
 .scrum-board .ps-group-item .ps-first-row {
   /*border: 1px solid orange;*/
@@ -304,11 +322,6 @@ header img {
 .scrum-board .ps-group-item .ps-sprint-release {
   /*border: 1px solid green;*/
   float: right;
-}
-.scrum-board .no-pic {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #3f51b5;
 }
 .scrum-board .menu {
   position: absolute;
@@ -366,25 +379,26 @@ header img {
 }
 .list-view list-view-tools input {
   display: inline;
-  width: calc(100% - 50px);
+  width: calc(100% - 68px);
+  margin: 8px;
 }
 .list-view list-view-tools .ps-tool-container {
   width: 100%;
-  padding: 1%;
+  padding: 0px;
 }
 .list-view list-view-tools .ps-tool-group {
-  margin: 0px auto;
+  width: 50%;
+  margin: 0px;
 }
-.list-view h4 {
+.list-view button {
+  margin: 8px;
+}
+.list-view h6 {
   width: 100%;
-  margin: 1%;
   text-align: center;
 }
 .list-view .ps-group {
-  width: 92%;
-  padding: 1%;
-  margin: 0px 4px;
-  border: 3px solid #3f51b5;
+  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -397,7 +411,7 @@ header img {
 }
 .list-view .ps-group-item {
   border: 1px solid #3f51b5;
-  width: 96%;
+  width: calc(100% - 2*@min-space);
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -409,13 +423,18 @@ header img {
   flex-direction: row;
   margin: 4px;
 }
+.list-view .ps-list-button {
+  margin: 16px;
+}
 .list-view .ps-item-content {
   width: 100%;
   margin: 0px;
 }
 .list-view .name-input {
-  margin: 0px auto;
+  margin: 8px auto;
+  width: 100%;
 }
 .list-view textarea {
   margin: 0px auto;
+  width: 100%;
 }

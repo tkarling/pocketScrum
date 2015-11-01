@@ -4,7 +4,7 @@
          droppable drop-fn="scrumBoard.setStatus" drop-ctrl="scrumBoard"
          ng-repeat="status in scrumBoard.statuses" drop-value="{{status._id}}">
 
-        <h5>{{status.name}}</h5>
+        <h6 class="tk-title">{{status.name}}</h6>
 
         <div class="ps-group-item" draggable dragstart-fn="scrumBoard.setDraggedStory"
              drag-ctrl="scrumBoard" drag-index="$index"
@@ -28,7 +28,7 @@
                        ng-click="scrumBoard.setStoryAssignedTo(story, member)">{{member.name}}</p>
                 </ul>
                 <div class="tooltip">
-                    <div class="no-pic" ng-if="! story.assignedTo.name"></div>
+                    <div class="ps-avatar no-pic" ng-if="! story.assignedTo.name"></div>
                     <div ng-if="story.assignedTo.name">
                         <img ng-if="! sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="{{scrumBoard.thumbnailUrl}}{{story.assignedTo.picId}}"/>
                         <img ng-if="sbGroups.showDefaultImage(story)" class="ps-avatar" ng-src="./images/defaultTeamMember.jpg"/>
@@ -43,22 +43,23 @@
             <div class="ps-group-item-content">
 
                 <div class="ps-first-row">
-                    <span ng-if="!story.editName" visibility-clicker visiblity="story.editName" item="story" ctrl="scrumBoard">{{story.name}}</span>
-                    <textarea ng-if="story.editName" type="text" ng-model="story.name"></textarea>
+                    <span ng-if="!story.editName" class=" tk-subheading" visibility-clicker visiblity="story.editName" item="story" ctrl="scrumBoard">{{story.name}}</span>
+                    <textarea ng-if="story.editName" class="mdl-textfield__input" type="text" ng-model="story.name"></textarea>
                 </div>
 
                 <div class="ps-second-row">
 
-                        <span style="position: relative" visibility-clicker visiblity="story.featureMenuVisible" item="story" ctrl="scrumBoard">
-                            <ul class="menu" ng-show="story.featureMenuVisible">
-                                <p class="menu-item"
-                                   ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
-                                   ng-click="scrumBoard.setStoryFeature(story, feature)">{{feature.name}}</p>
-                            </ul>
-                            <span class="ps-feature">{{story.feature.name || "Unknown"}}</span>
-                        </span>
+                    <span style="position: relative" visibility-clicker visiblity="story.featureMenuVisible"
+                          item="story" ctrl="scrumBoard">
+                        <ul class="menu" ng-show="story.featureMenuVisible">
+                            <p class="menu-item"
+                               ng-repeat="feature in scrumBoard.features | filter: { noShow: false } | orderBy:'name'"
+                               ng-click="scrumBoard.setStoryFeature(story, feature)">{{feature.name}}</p>
+                        </ul>
+                        <span class="ps-feature tk-body1">{{story.feature.name || "Unknown"}}</span>
+                    </span>
 
-                    <span class="ps-sprint-release">sprint-1</span>
+                    <span class="ps-sprint-release tk-body1">sprint-1</span>
                 </div>
             </div>
 

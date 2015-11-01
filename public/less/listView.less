@@ -8,31 +8,32 @@
 
     input {
       display: inline;
-      width: calc(~'100% - 50px');
+      width: calc(~'100% - 68px');
+      margin: @min-space;
     }
 
     .ps-tool-container {
       width: 100%;
-      padding: 1%;
+      padding: 0px;
     }
 
     .ps-tool-group {
-      margin: 0px auto;
-      //padding: 1%;
+      width: 50%;
+      margin: 0px;
     }
   }
 
-  h4 {
+  button {
+    margin: @min-space;
+  }
+
+  h6 {
     width: 100%;
-    margin: 1%;
     text-align: center;
   }
 
   .ps-group {
-    width: 92%;
-    padding: 1%;
-    margin: 0px @default-padding;
-    border: 3px solid @primary-color;
+    width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -46,7 +47,7 @@
 
   .ps-group-item {
     border: 1px solid @primary-color;
-    width: 96%;
+    width: calc(~'100% - 2*@min-space');
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -57,7 +58,11 @@
     -ms-flex-direction: row;
     flex-direction: row;
     //justify-content: space-between;
-    margin: @default-padding;
+    margin: @min-space/2;
+  }
+
+  .ps-list-button {
+    margin: @touch-space;
   }
 
   .ps-item-content {
@@ -67,12 +72,14 @@
   }
 
   .name-input {
-    margin: 0px auto;
+    margin: @min-space auto;
+    width: 100%;
     //border: 1px solid red;
   }
 
   textarea {
     margin: 0px auto;
+    width: 100%;
     //border: 1px solid red;
   }
 

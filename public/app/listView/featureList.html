@@ -1,6 +1,6 @@
 <!--{{features.test}}-->
 <div class="list-view ">
-    <h4>Features</h4>
+    <h6 class="tk-title">Features</h6>
 
     <list-view-tools get-these="features.data"></list-view-tools>
 
@@ -10,24 +10,26 @@
              filter: { noShow: false } | orderBy: 'name'">
             <span>
                 <button ng-if="features.data.deleteVisible"
-                        class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                        class="ps-list-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                         ng-click="features.removeFeature(feature, $event)">
                     <i class="material-icons">delete</i>
                 </button>
                 <button ng-if="! features.data.deleteVisible"
-                        class="ps-small-delete-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
+                        class="ps-list-button mdl-button mdl-js-button mdl-button--icon mdl-button--accent"
                         ng-click="features.startStopEditing(feature)">
                     <i class="material-icons">edit</i>
                 </button>
             </span>
-            <span ng-if="! feature.editing" class="mdl-grid ps-item-content">
-                <span class="mdl-cell">{{feature.name}}</span>
-                <span class="mdl-cell">{{feature.description}}</span>
+            <span ng-if="! feature.editing" class="ps-item-content">
+                <div class="tk-subheading">{{feature.name}}</div>
+                <div class="tk-body1">{{feature.description}}</div>
             </span>
-            <span ng-if="feature.editing" class="mdl-grid ps-item-content">
-                <input class="mdl-cell mdl-cell--6-col name-input" type="text" ng-model="feature.name"
-                       placeholder="feature name"/>
-                <textarea class="mdl-cell mdl-cell--6-col" type="text" ng-model="feature.description"
+            <span ng-if="feature.editing" class="ps-item-content">
+                <div>
+                    <input class="mdl-textfield__input name-input" type="text" ng-model="feature.name"
+                           placeholder="feature name"/>
+                </div>
+                <textarea class="mdl-textfield__input" type="text" ng-model="feature.description"
                           placeholder="description"></textarea>
             </span>
         </div>
